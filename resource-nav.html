@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>長照資源導航站</title>
+  <link rel="stylesheet" href="./resource-nav.css?v=20260531-print-output">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">New Taipei Resource Navigator</p>
+      <h1>長照資源導航站</h1>
+    </div>
+    <div class="identity-actions">
+      <div class="status-pill" id="sourceStatus">等待身份確認</div>
+      <button type="button" class="verify-session-button" id="retrySessionVerify" hidden>重新驗證</button>
+    </div>
+  </header>
+
+  <nav class="view-tabs" role="tablist" aria-label="資源導航分頁">
+    <button type="button" class="view-tab is-active" id="navTabButton" data-view="nav" role="tab" aria-selected="true" aria-controls="navView">資源導航</button>
+    <button type="button" class="view-tab" id="workbenchTabButton" data-view="workbench" role="tab" aria-selected="false" aria-controls="workbenchView">我的資源組合</button>
+    <button type="button" class="view-tab" id="exchangeTabButton" data-view="exchange" role="tab" aria-selected="false" aria-controls="exchangeView">資源副本</button>
+  </nav>
+
+  <main class="page-shell tab-panel is-active" id="navView" role="tabpanel" aria-labelledby="navTabButton">
+    <div class="main-column">
+      <section class="filter-panel" aria-label="資源篩選">
+        <div class="filter-head">
+          <div>
+            <p class="eyebrow">查詢條件</p>
+            <h2>先鎖定地區，再選需求</h2>
+          </div>
+          <p class="compact-help">卡片可直接點選加入資源包。</p>
+        </div>
+
+        <div class="filter-controls">
+          <label class="field">
+            <span>行政區</span>
+            <select id="districtSelect">
+              <option value="">不限行政區</option>
+              <option>板橋區</option>
+              <option>三重區</option>
+              <option>中和區</option>
+              <option>永和區</option>
+              <option>新莊區</option>
+              <option>新店區</option>
+              <option>土城區</option>
+              <option>蘆洲區</option>
+              <option>汐止區</option>
+              <option>樹林區</option>
+              <option>淡水區</option>
+              <option value="新北市">新北市</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>主題分類</span>
+            <select id="categorySelect"></select>
+          </label>
+          <label class="field">
+            <span>急迫性</span>
+            <select id="urgencySelect">
+              <option value="">不限</option>
+              <option>一般</option>
+              <option>本週內</option>
+              <option>緊急</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="choice-block">
+          <div class="choice-title">
+            <span>子主題</span>
+            <small>可複選</small>
+          </div>
+          <div id="topicChips" class="chip-row"></div>
+        </div>
+
+        <div class="smart-search">
+          <label class="field smart-field">
+            <span>智慧查詢補充</span>
+            <input id="smartQueryInput" type="text" placeholder="例如：獨居、最近沒錢買飯、家屬不穩定">
+          </label>
+          <div class="quick-actions">
+            <button type="button" id="applySmartQuery">套用智慧查詢</button>
+            <button type="button" class="help-button" data-help="smart" aria-label="智慧查詢說明">?</button>
+            <button type="button" id="googleSearchButton">用 Google 延伸搜尋</button>
+            <button type="button" class="help-button" data-help="google" aria-label="Google 延伸搜尋說明">?</button>
+            <span class="button-help">說明可點 ? 查看；Google 只開搜尋頁。</span>
+          </div>
+          <p class="nav-package-notice" id="navPackageNotice" aria-live="polite">點選卡片後會加入目前資源組合。</p>
+        </div>
+
+        <section class="selected-insights" aria-label="已選資源線索" hidden>
+          <div class="choice-title">
+            <span>已選資源線索</span>
+            <small>由已加入資源整理</small>
+          </div>
+          <div id="derivedIdentityChips" class="chip-row muted-chip-row"></div>
+        </section>
+      </section>
+
+      <section class="summary-band">
+        <div>
+          <p class="eyebrow">目前範圍</p>
+          <h2 id="currentScope">資源查詢</h2>
+          <p id="scopeMeta">正在載入資料...</p>
+        </div>
+        <div class="card-size-control" role="group" aria-label="資源卡片大小">
+          <span>卡片大小</span>
+          <button type="button" data-card-size="small">小</button>
+          <button type="button" data-card-size="medium">中</button>
+          <button type="button" data-card-size="large">大</button>
+        </div>
+      </section>
+
+      <section id="cards" class="cards" aria-live="polite">
+        <div class="empty loading-state">正在載入資源資料...</div>
+      </section>
+    </div>
+
+  </main>
+
+  <section class="workbench-shell tab-panel" id="workbenchView" role="tabpanel" aria-labelledby="workbenchTabButton" hidden>
+    <div class="workbench-head">
+      <div>
+        <p class="eyebrow">My Resource Packs</p>
+        <h2>我的資源組合</h2>
+        <p class="muted-text" id="workbenchStatus">請從 Discord 入口連結身份後查看自己的資源組合。</p>
+      </div>
+      <button type="button" id="refreshWorkbench">刷新紀錄</button>
+    </div>
+    <section class="current-pack-panel panel" aria-label="目前編輯中的資源組合">
+      <div class="package-head">
+        <div>
+          <p class="eyebrow">Current Resource Pack</p>
+          <h2>目前編輯中的資源組合</h2>
+          <p class="muted-text" id="loginStatus">請從 Discord 資源導航按鈕開啟，才能儲存並建立資源包結果。</p>
+        </div>
+        <p class="package-count" id="packageCount">0 筆</p>
+      </div>
+      <details class="session-debug" id="sessionDebug" hidden>
+        <summary>連線診斷（開發用）</summary>
+        <dl class="session-debug-list">
+          <div><dt>session</dt><dd id="sessionTokenStatus">未檢查</dd></div>
+          <div><dt>api_base</dt><dd id="apiBaseStatus">未檢查</dd></div>
+          <div><dt>驗證</dt><dd id="sessionVerifyStatus">未檢查</dd></div>
+          <div><dt>原因</dt><dd id="sessionReasonStatus">等待確認</dd></div>
+        </dl>
+      </details>
+      <div class="current-package-layout">
+        <div class="current-package-main">
+          <label class="field">
+            <span>資源組合名稱</span>
+            <input id="packageNameInput" type="text" placeholder="例如：板橋獨居送餐急難">
+          </label>
+          <p class="privacy-hint">請勿填姓名、電話、身分證、完整地址。</p>
+          <p class="muted-text" id="packageStatus">尚未加入資源。</p>
+        </div>
+        <div class="current-package-actions">
+          <p class="muted-text output-moved-note">輸出格式已移到 Web B 結果頁，可在結果頁切換家屬版、電話確認、行政清單、交接摘要與完整資料。</p>
+          <button type="button" id="saveDraftButton">更新儲存</button>
+        </div>
+      </div>
+    </section>
+    <div class="workbench-empty" id="workbenchEmpty" hidden>
+      目前還沒有資源組合。回到資源導航，點選卡片後會先建立草稿。
+    </div>
+    <div class="workbench-grid" id="workbenchList" aria-live="polite"></div>
+  </section>
+
+  <section class="exchange-shell tab-panel" id="exchangeView" role="tabpanel" aria-labelledby="exchangeTabButton" hidden>
+    <div class="workbench-head">
+      <div>
+        <p class="eyebrow">Resource Pack Exchange</p>
+        <h2>資源副本</h2>
+        <p class="muted-text" id="exchangeStatus">匯入或匯出資源副本封包，方便備份、移交或重新形成草稿。</p>
+      </div>
+    </div>
+    <section class="import-pack-panel panel" aria-label="匯入資源副本">
+      <div class="import-pack-head">
+        <div>
+          <p class="eyebrow">Import Resource Pack</p>
+          <h2>匯入資源副本</h2>
+          <p class="muted-text">支援 .resourcepack.json、含封包區塊的 Markdown，或貼上正式 Web B 結果連結。匯入後會建立新的草稿，不覆蓋原本紀錄。</p>
+        </div>
+      </div>
+      <div class="import-pack-grid">
+        <label class="field">
+          <span>上傳封包或 Markdown</span>
+          <input id="resourcePackFileInput" type="file" accept=".json,.resourcepack.json,.md,.markdown,application/json,text/markdown">
+        </label>
+        <label class="field">
+          <span>貼上 Web B 結果連結</span>
+          <input id="resourcePackUrlInput" type="url" placeholder="https://.../viewer.html?id=...">
+        </label>
+      </div>
+      <label class="field">
+        <span>貼上封包 JSON 或 Markdown manifest</span>
+        <textarea id="resourcePackPasteInput" rows="4" placeholder="可貼上 .resourcepack.json 內容，或 Markdown 裡的 RESOURCE_PACK_MANIFEST 區塊"></textarea>
+      </label>
+      <div class="import-pack-actions">
+        <button type="button" id="importResourcePackButton">匯入資源副本</button>
+        <button type="button" id="clearImportResourcePackButton">清除匯入內容</button>
+        <p class="muted-text" id="importResourcePackStatus" aria-live="polite">匯入會歸到目前 Discord 使用者底下。</p>
+      </div>
+    </section>
+    <section class="exchange-export-panel panel" aria-label="匯出資源副本">
+      <div class="import-pack-head">
+        <div>
+          <p class="eyebrow">Export Resource Packs</p>
+          <h2>匯出既有資源組合</h2>
+          <p class="muted-text">選擇自己的資源組合，匯出可再匯入的 JSON 封包，或可閱讀的 Markdown 備份。</p>
+        </div>
+      </div>
+      <div class="exchange-empty" id="exchangeEmpty" hidden>目前沒有可匯出的資源組合。</div>
+      <div class="exchange-export-list" id="exchangeExportList" aria-live="polite"></div>
+    </section>
+  </section>
+
+  <template id="resourceCardTemplate">
+    <article class="resource-card">
+      <div class="card-head">
+        <div>
+          <div class="card-meta">
+            <p class="category"></p>
+            <span class="checked-at-inline"></span>
+          </div>
+          <h3></h3>
+        </div>
+        <div class="card-badges">
+          <span class="scope-badge"></span>
+          <span class="smart-hit" hidden>智慧查詢命中</span>
+          <span class="confidence"></span>
+        </div>
+      </div>
+      <p class="summary"></p>
+      <div class="resource-tags">
+        <span class="tag-strip eligibility"></span>
+        <span class="tag-strip urgency-tags"></span>
+      </div>
+      <dl>
+        <div><dt>下一步</dt><dd class="next-step"></dd></div>
+      </dl>
+      <details class="internal-details">
+        <summary>查看內部註記</summary>
+        <dl class="internal-detail-grid">
+          <div><dt>聯絡/申請</dt><dd class="contact"></dd></div>
+          <div class="required-docs-row"><dt>常備文件</dt><dd class="required-docs"></dd></div>
+          <div><dt>電話確認</dt><dd><ul class="phone-questions"></ul></dd></div>
+          <div><dt>內部註記</dt><dd><p class="internal-note"></p></dd></div>
+          <div><dt>風險提醒</dt><dd><ul class="risk-flags"></ul></dd></div>
+        </dl>
+      </details>
+    </article>
+  </template>
+
+  <div class="help-dialog-backdrop" id="helpDialog" hidden>
+    <section class="help-dialog" role="dialog" aria-modal="true" aria-labelledby="helpDialogTitle">
+      <div class="help-dialog-head">
+        <h2 id="helpDialogTitle">說明</h2>
+        <button type="button" id="closeHelpDialog" aria-label="關閉說明">關閉</button>
+      </div>
+      <div id="helpDialogBody" class="help-dialog-body"></div>
+    </section>
+  </div>
+
+  <script src="./resource-nav.js?v=20260531-print-output"></script>
+</body>
+</html>
