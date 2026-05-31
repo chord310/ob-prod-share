@@ -1,0 +1,9 @@
+{
+  "api_base": "https://api.pt-sync.top",
+  "version": "20260531-print-output",
+  "generated_at": "2026-05-31T17:06:18+00:00",
+  "tunnel_type": "configured",
+  "health_checked_at": "2026-05-31T17:06:18+00:00",
+  "health_ok": true,
+  "health_reason": "ok"
+}
