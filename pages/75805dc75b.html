@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>選擇補助代碼 — 長照智慧諮詢</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--primary:#2563eb;--primary-light:#dbeafe;--primary-dark:#1d4ed8;--bg:#f8fafc;--card:#fff;--text:#1e293b;--muted:#64748b;--border:#e2e8f0;--danger:#ef4444;--success:#16a34a;--radius:12px;
+  /* CARD-042：count 美術 token — type chip + 進度條 4 色 */
+  --chip-buy-bg:#dcfce7;--chip-buy-fg:#166534;
+  --chip-rent-bg:#fef3c7;--chip-rent-fg:#854d0e;
+  --chip-both-bg:#dbeafe;--chip-both-fg:#1e40af;
+  --b1-color:#3b82f6;--b2-color:#10b981;--b3-color:#f59e0b;--b4-color:#8b5cf6;
+  --warn:#f59e0b;--warn-light:#fef3c7
+}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+.container{max-width:1200px;margin:0 auto;padding:16px 16px 120px}
+header{background:linear-gradient(135deg,#1e40af,#3b82f6);color:#fff;padding:20px 24px;border-radius:var(--radius);margin-bottom:16px;text-align:center}
+header h1{font-size:1.3em;margin-bottom:4px;letter-spacing:1px}
+header .subtitle{font-size:.85em;opacity:.85}
+.toolbar{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:10px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.toolbar .counter{font-size:.9em;color:var(--muted)}
+.toolbar .counter strong{color:var(--primary);font-size:1.05em}
+.toolbar button{padding:7px 14px;font-size:.82em;border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:6px;cursor:pointer;font-family:inherit}
+.toolbar button:hover{background:var(--primary-light);border-color:var(--primary)}
+.sections-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:24px}
+@media (max-width:1024px){.sections-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:768px){.sections-grid{grid-template-columns:1fr}.container{padding-bottom:100px}}
+.sec{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;display:flex;flex-direction:column}
+.sec-header{display:flex;justify-content:space-between;align-items:center;padding-bottom:8px;border-bottom:1px solid var(--border);margin-bottom:8px;gap:8px}
+.sec-header h2{font-size:.95em;color:var(--primary-dark);font-weight:700;flex:1;min-width:0}
+.sec-header .sec-actions{display:flex;gap:4px}
+.sec-header .sec-actions button{font-size:.72em;padding:3px 8px;border:1px solid var(--border);background:var(--card);color:var(--muted);border-radius:4px;cursor:pointer;font-family:inherit}
+.sec-header .sec-actions button:hover{background:var(--primary-light);color:var(--primary);border-color:var(--primary)}
+.sec-header .sec-count{font-size:.75em;color:var(--muted);white-space:nowrap}
+.sec-header .sec-count.has{color:var(--success);font-weight:700}
+.items{display:flex;flex-direction:column;gap:2px;max-height:260px;overflow-y:auto}
+/* CARD-054：D / S / OT 大區暫無資料時顯示佔位字（CARD-056 處理） */
+.items:empty::before{content:"📋 待補資料（CARD-056 處理中）";color:#999;font-size:.85em;display:block;padding:10px;font-style:italic}
+/* CARD-058g：6 包預設摺疊 wrapper — Codex 補強 .bucket-wrapper 維持 058d progress bar grid-column:1/-1 在 wrapper 內生效 */
+.bucket-wrapper{display:grid;grid-template-columns:1fr;margin-bottom:8px;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-sizing:border-box}
+.bucket-wrapper > summary{list-style:none;cursor:pointer;user-select:none}
+.bucket-wrapper > summary::-webkit-details-marker{display:none}
+.bucket-wrapper > summary::before{content:"▶ ";color:var(--muted);font-size:.8em;margin-right:4px;transition:transform .2s;display:inline-block}
+.bucket-wrapper[open] > summary::before{content:"▼ "}
+/* CARD-058g：6 大包配色（標頭背景漸層 + border-left 4px 強調色）— 對齊 058d 進度條配色 */
+.bucket-summary[data-bucket="B1"]{background:linear-gradient(135deg,#dbeafe,#bfdbfe);border-left:4px solid #3b82f6;box-sizing:border-box}
+.bucket-summary[data-bucket="B2"]{background:linear-gradient(135deg,#fef3c7,#fde68a);border-left:4px solid #f59e0b;box-sizing:border-box}
+.bucket-summary[data-bucket="B3"]{background:linear-gradient(135deg,#d1fae5,#a7f3d0);border-left:4px solid #10b981;box-sizing:border-box}
+.bucket-summary[data-bucket="B4"]{background:linear-gradient(135deg,#f3e8ff,#e9d5ff);border-left:4px solid #a855f7;box-sizing:border-box}
+.bucket-summary[data-bucket="S"]{background:linear-gradient(135deg,#cffafe,#a5f3fc);border-left:4px solid #06b6d4;box-sizing:border-box}
+.bucket-summary[data-bucket="OT"]{background:linear-gradient(135deg,#f3f4f6,#e5e7eb);border-left:4px solid #9ca3af;box-sizing:border-box}
+/* CARD-058c：bucket-summary 主行 — 058g 移除 grid-column:1/-1（已在 details wrapper 不需要）+ margin/border 改 wrapper 控管 */
+.bucket-summary{display:flex;flex-wrap:wrap;align-items:center;gap:14px;padding:10px 14px}
+.bucket-summary .bs-title{font-size:.95em;font-weight:700;color:var(--primary-dark);flex:1;min-width:0}
+.bucket-summary .bs-title .bs-tag{font-family:"SF Mono",Menlo,monospace;font-size:.85em;background:var(--primary);color:#fff;padding:1px 7px;border-radius:4px;margin-right:6px;letter-spacing:.5px}
+/* CARD-058d：包別碼（BC/D/EF/G 包）對齊 epizy 視覺 */
+.bucket-summary .bs-title .bs-pkg{color:var(--muted);font-weight:600;margin-right:6px;font-size:.92em}
+/* CARD-058d：bucket-summary 進度條（4 包各色漸層 + over 紅；NOTE 不放） */
+.bucket-summary .bucket-progress{position:relative;flex-basis:100%;height:10px;background:#f1f5f9;border-radius:5px;overflow:hidden;margin-top:4px}
+.bucket-summary .bp-fill{height:100%;border-radius:5px;transition:width .35s;width:0%}
+.bucket-summary .bp-fill.bp-b1{background:linear-gradient(90deg,#3b82f6,#1e40af)}
+.bucket-summary .bp-fill.bp-b2{background:linear-gradient(90deg,#f59e0b,#d97706)}
+.bucket-summary .bp-fill.bp-b3{background:linear-gradient(90deg,#10b981,#059669)}
+.bucket-summary .bp-fill.bp-b4{background:linear-gradient(90deg,#a855f7,#7e22ce)}
+.bucket-summary .bp-fill.over{background:linear-gradient(90deg,#ef4444,#b91c1c)!important}
+.bucket-summary .bp-pct{position:absolute;right:6px;top:50%;transform:translateY(-50%);font-size:.7em;color:var(--muted);font-weight:700;font-variant-numeric:tabular-nums;text-shadow:0 0 3px #fff}
+.bucket-summary .ss-cell{white-space:nowrap;font-variant-numeric:tabular-nums;font-size:.85em;min-width:120px;text-align:right}
+.bucket-summary .ss-cell .ss-label{color:var(--muted);margin-right:4px}
+.bucket-summary .ss-cell .ss-val{font-weight:700;color:var(--text)}
+.bucket-summary .ss-cell.coshare .ss-val{color:var(--danger)}
+.bucket-summary .ss-cell.remaining .ss-val{color:var(--success)}
+.bucket-summary .ss-cell.remaining .ss-val.zero{color:var(--danger)}
+.bucket-summary .ss-cell.remaining .ss-val.muted{color:var(--muted);font-weight:600}
+/* CARD-058g：058c 的 .placeholder/.note-only 背景與 border 覆蓋已移除（data-bucket 配色優先；只保留文案色彩） */
+.bucket-summary.note-only{font-style:italic}
+.bucket-summary.note-only .bs-title,.bucket-summary.note-only .ss-note{color:#854d0e}
+.bucket-summary.placeholder .ss-note{color:#666;font-weight:600}
+@media (max-width:768px){
+  .bucket-summary{flex-direction:column;align-items:flex-start;gap:6px;padding:8px 10px}
+  .bucket-summary .bs-title{font-size:.88em}
+  .bucket-summary .ss-cell{font-size:.78em;min-width:auto;text-align:left}
+}
+/* CARD-058e：S/OT 解鎖（058c 鎖回退）— stepper 可點、自付/進度條啟用；既有 .sec[data-bucket=note] 鎖樣式整段移除 */
+/* CARD-058e：S 包進度條粉藍漸層（仿 epizy 視覺）；OT 包不放進度條 */
+.bucket-summary .bp-fill.bp-s{background:linear-gradient(90deg,#06b6d4,#0891b2)}
+.bucket-summary .bp-fill.bp-ot{background:linear-gradient(90deg,#fbbf24,#f59e0b)}
+/* CARD-058g：點包展開後 .bucket-content 內細項區 grid 3 欄並排 */
+.bucket-content{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;padding:12px;background:#fafbfc;box-sizing:border-box}
+@media (max-width:1024px){.bucket-content{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:768px){.bucket-content{grid-template-columns:1fr}}
+/* CARD-058g：sticky quota 改 epizy 表格樣式（4 欄 × 6 row + sticky 掛外層 div 不掛 table/tr） */
+.quota-table{width:100%;border-collapse:collapse;font-size:.78em;background:var(--card);box-sizing:border-box}
+.quota-table thead{background:linear-gradient(135deg,#1e40af,#3b82f6);color:#fff}
+.quota-table thead th{padding:6px 8px;text-align:right;font-weight:600;font-size:.92em;letter-spacing:.3px}
+.quota-table thead th:first-child{text-align:left}
+.quota-table tbody tr{border-bottom:1px solid var(--border)}
+.quota-table tbody tr:last-child{border-bottom:none}
+.quota-table tbody td{padding:5px 8px;text-align:right;font-variant-numeric:tabular-nums;color:var(--text)}
+.quota-table tbody td:first-child{text-align:left;font-weight:600}
+.quota-table tbody tr[data-bucket="B1"] td:first-child{border-left:3px solid #3b82f6;padding-left:6px}
+.quota-table tbody tr[data-bucket="B2"] td:first-child{border-left:3px solid #f59e0b;padding-left:6px}
+.quota-table tbody tr[data-bucket="B3"] td:first-child{border-left:3px solid #10b981;padding-left:6px}
+.quota-table tbody tr[data-bucket="B4"] td:first-child{border-left:3px solid #a855f7;padding-left:6px}
+.quota-table tbody tr[data-bucket="S"] td:first-child{border-left:3px solid #06b6d4;padding-left:6px}
+.quota-table tbody tr[data-bucket="OT"] td:first-child{border-left:3px solid #9ca3af;padding-left:6px}
+.quota-table tbody td.qt-coshare{color:var(--danger);font-weight:600}
+.quota-table tbody td.qt-remaining{color:var(--success);font-weight:600}
+.quota-table tbody td.qt-remaining.qt-zero{color:var(--danger)}
+.quota-table tbody td.qt-muted{color:var(--muted)}
+@media (max-width:768px){.quota-table{font-size:.72em}.quota-table thead th,.quota-table tbody td{padding:4px 5px}}
+/* CARD-058e：S/OT 警示橫幅（取代 058c 的「補助規則洽縣市政府」） */
+.bucket-summary.warn-estimate .bs-warn{flex-basis:100%;color:#854d0e;font-size:.78em;font-style:italic;line-height:1.4}
+.bucket-summary.warn-estimate .ss-val::before{content:"[暫估] ";color:#854d0e;font-size:.85em;font-weight:600;font-style:italic}
+.itm{display:flex;align-items:center;gap:8px;padding:6px 4px;border-bottom:1px solid rgba(0,0,0,.04);transition:background .12s}
+.itm:last-child{border-bottom:none}
+.itm:hover{background:var(--primary-light)}
+.itm .i-body{flex:1;min-width:0}
+.itm .i-code{font-size:1.05em;font-weight:600;color:var(--primary-dark);font-family:"SF Mono",Menlo,Monaco,monospace;letter-spacing:.5px}/* CARD-056b：code 字放大粗體（個管師習慣以碼別溝通） */
+.itm .i-name{font-size:.85em;line-height:1.4}
+.itm.checked{background:var(--primary-light)}
+.itm.checked .i-name{font-weight:600;color:var(--primary-dark)}
+/* CARD-053a：epizy 風格 stepper（class 名與 epizy DOM 對齊） */
+.div_price_count{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.div_price_count .div_CI_price{font-size:.78em;color:var(--success);font-weight:600;min-width:54px;text-align:right;font-variant-numeric:tabular-nums}
+.div_price_count .div_CI_price .span_CI_price{display:inline-block}
+.div_price_count.no-price .div_CI_price{color:var(--muted)}
+.div_counter{display:inline-flex;align-items:center;background:#f1f5f9;border-radius:6px;padding:2px}
+.div_counter .btn{width:28px;height:28px;border:none;background:#e2e8f0;color:var(--text);font-size:14px;font-weight:700;cursor:pointer;border-radius:4px;font-family:inherit;padding:0;line-height:1}
+.div_counter .btn_minus:hover,.div_counter .btn_plus:hover{background:var(--primary-light);color:var(--primary)}
+.div_counter .btn:active{background:var(--primary);color:#fff}
+.div_counter .txt_CI_qty{width:36px;height:24px;border:1px solid var(--border);background:#fff;text-align:center;font-size:13px;font-weight:600;font-family:inherit;margin:0 4px;padding:0;border-radius:4px;color:var(--text)}
+.div_counter .txt_CI_qty:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 2px var(--primary-light)}
+.div_price_count .no-price-note{font-size:.68em;color:var(--muted);margin-left:4px}
+.footer-bar{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--border);padding:12px 16px;display:flex;justify-content:center;box-shadow:0 -2px 12px rgba(0,0,0,.06);z-index:20}
+.footer-bar-inner{max-width:1200px;width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.footer-bar .footer-bar-stats{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1}
+.footer-bar .sum{font-size:.9em;color:var(--muted)}
+.footer-bar .sum strong{color:var(--primary);font-size:1.05em}
+/* CARD-053a：footer 兩行估算（並排不混算，前綴必含「估算」字樣） */
+.footer-bar .estimate-row{display:flex;flex-wrap:wrap;gap:14px;font-size:.82em;color:var(--muted)}
+.footer-bar .estimate-row strong{font-variant-numeric:tabular-nums;font-weight:700}
+.footer-bar .estimate-row .estimate-buy strong{color:var(--success)}
+.footer-bar .estimate-row .estimate-rent strong{color:#854d0e}
+@media (max-width:560px){.footer-bar .estimate-row{flex-direction:column;gap:2px}}
+.next-btn{padding:12px 28px;border-radius:10px;border:none;font-size:.98em;font-weight:700;cursor:pointer;background:var(--success);color:#fff;box-shadow:0 2px 8px rgba(22,163,74,.2);transition:all .15s;font-family:inherit}
+.next-btn:hover:not(:disabled){background:#15803d;transform:translateY(-1px)}
+.next-btn:disabled{background:#cbd5e1;cursor:not-allowed;box-shadow:none}
+footer.page-footer{text-align:center;padding:20px 0 100px;font-size:.78em;color:var(--muted)}
+/* === CARD-042：status banner + 進度條 + 租賃 UI === */
+.status-banner{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:10px 14px;margin-bottom:12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:.82em}
+.status-banner .sb-tag{background:var(--primary-light);color:var(--primary);padding:3px 10px;border-radius:20px;font-weight:600;font-size:.92em;white-space:nowrap}
+.status-banner .sb-tag.warn{background:var(--warn-light);color:#854d0e}
+.status-banner .sb-label{color:var(--muted);margin-right:4px}
+.quota-bars{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:10px 14px;margin-bottom:14px;position:sticky;top:6px;z-index:9;box-shadow:0 2px 6px rgba(0,0,0,.03)}
+.quota-bars .qb-title{font-size:.78em;color:var(--muted);margin-bottom:8px;font-weight:600}
+.quota-bars .qb-row{display:grid;grid-template-columns:34px 1fr auto;gap:8px;align-items:center;margin-bottom:6px;font-size:.75em}
+.quota-bars .qb-row:last-child{margin-bottom:0}
+.quota-bars .qb-label{font-weight:700}
+.quota-bars .qb-label.b1{color:var(--b1-color)}
+.quota-bars .qb-label.b2{color:var(--b2-color)}
+.quota-bars .qb-label.b3{color:var(--b3-color)}
+.quota-bars .qb-label.b4{color:var(--b4-color)}
+.quota-bars .qb-bar{height:8px;background:#f1f5f9;border-radius:4px;overflow:hidden;position:relative}
+.quota-bars .qb-fill{height:100%;border-radius:4px;transition:width .3s}
+.quota-bars .qb-fill.b1{background:var(--b1-color)}
+.quota-bars .qb-fill.b2{background:var(--b2-color)}
+.quota-bars .qb-fill.b3{background:var(--b3-color)}
+.quota-bars .qb-fill.b4{background:var(--b4-color)}
+.quota-bars .qb-fill.over{background:var(--danger)!important}
+.quota-bars .qb-nums{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.itm .price-row{display:flex;align-items:center;gap:6px;margin-top:3px;font-size:.72em;flex-wrap:wrap}
+.itm .price-chip{padding:1px 6px;border-radius:4px;font-weight:600;letter-spacing:.3px}
+.itm .price-chip.buy{background:var(--chip-buy-bg);color:var(--chip-buy-fg)}
+.itm .price-chip.rent{background:var(--chip-rent-bg);color:var(--chip-rent-fg)}
+.itm .price-chip.both{background:var(--chip-both-bg);color:var(--chip-both-fg)}
+/* CARD-052：service 型（BA/BB/BC/BD/C/G）chip 樣式——中性灰，與 buy/rent/both 區分但不搶眼 */
+.itm .price-chip.service{background:#f1f5f9;color:#475569}
+.itm .rent-switch{display:inline-flex;gap:6px;margin-left:4px}
+.itm .rent-switch label{display:inline-flex;align-items:center;gap:2px;cursor:pointer;font-size:.95em;color:var(--muted)}
+.itm .rent-switch input[type="radio"]{accent-color:var(--primary);cursor:pointer}
+.single-approval-note{text-align:center;margin:12px 0 4px;padding:10px 14px;background:var(--warn-light);color:#854d0e;border:1px dashed #f59e0b;border-radius:8px;font-size:.78em;line-height:1.6}
+.single-approval-note strong{color:#b45309}
+/* CARD-058f：案主條件 3 下拉（CMS / 個案身分 / 服務限制）即時重算 */
+.case-conditions{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:10px 14px;margin-bottom:12px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;font-size:.85em;box-sizing:border-box}
+.case-conditions .cc-row{display:flex;align-items:center;gap:6px;flex:1;min-width:200px}
+.case-conditions label{color:var(--muted);font-weight:600;white-space:nowrap}
+.case-conditions select{padding:5px 8px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--text);font-size:.95em;font-family:inherit;cursor:pointer;flex:1;min-width:0}
+.case-conditions select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 2px var(--primary-light)}
+.case-conditions .cc-warn{flex-basis:100%;color:#854d0e;font-size:.78em;font-style:italic;margin-top:2px;display:none}
+.case-conditions.has-multi-identity .cc-warn{display:block}
+@media (max-width:768px){.case-conditions{flex-direction:column;align-items:stretch}.case-conditions .cc-row{min-width:auto}}
+/* CARD-058-modal：點 code 跳 modal 顯官方說明 */
+.modal{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px;box-sizing:border-box}
+.modal[hidden]{display:none!important}
+.modal .modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.5);cursor:pointer}
+.modal .modal-dialog{position:relative;max-width:600px;width:100%;background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,.25);max-height:80vh;display:flex;flex-direction:column;overflow:hidden;box-sizing:border-box}
+.modal .modal-header{position:sticky;top:0;background:linear-gradient(135deg,#1e40af,#3b82f6);color:#fff;padding:14px 48px 14px 18px;border-bottom:1px solid var(--border);z-index:1}
+.modal .modal-title{margin:0;font-size:1.1em;font-weight:700;line-height:1.4}
+.modal .modal-close{position:absolute;top:8px;right:8px;border:none;background:rgba(255,255,255,.15);color:#fff;width:36px;height:36px;border-radius:50%;font-size:1.4em;cursor:pointer;line-height:1;font-weight:700}
+.modal .modal-close:hover{background:rgba(255,255,255,.3)}
+.modal .modal-body{padding:18px;overflow-y:auto;font-size:.92em;line-height:1.7;color:var(--text);flex:1}
+.modal .modal-body section{margin-bottom:14px}
+.modal .modal-body section:last-child{margin-bottom:0}
+.modal .modal-body section h3{font-size:.95em;color:var(--primary-dark);margin:0 0 6px;font-weight:700;padding-left:8px;border-left:3px solid var(--primary)}
+.modal .modal-body section p{margin:0;white-space:pre-wrap;color:var(--text)}
+.modal .modal-body section ul{margin:0;padding-left:22px}
+.modal .modal-body section ul li{margin-bottom:4px}
+.modal .modal-body .muted{color:var(--muted);font-style:italic;text-align:center;padding:20px 0}
+.modal .modal-source{padding:10px 18px;border-top:1px solid var(--border);font-size:.7em;color:var(--muted);background:#f8fafc}
+@media (max-width:600px){.modal .modal-dialog{max-height:90vh}.modal .modal-header{padding-right:44px}}
+/* CARD-058b：D 區「縣市/行政區」下拉 — 只影響 D 包 B2 per_trip 計算 */
+.d-zone-picker{display:flex;flex-wrap:wrap;gap:8px;padding:6px 10px;background:#fffbeb;border-bottom:1px solid var(--warn-light);font-size:.78em;align-items:center}
+.d-zone-picker label{color:#854d0e;font-weight:600;white-space:nowrap}
+.d-zone-picker select{padding:3px 6px;border:1px solid var(--border);border-radius:4px;background:#fff;font-size:.95em;font-family:inherit;cursor:pointer;min-width:100px}
+.d-zone-picker select:focus{outline:none;border-color:var(--warn)}
+/* CARD-058b-fix：行政區下拉 disabled 視覺（無 remote_districts 縣市顯灰底） */
+.d-zone-picker #d-district:disabled{background:#f3f4f6;color:#9ca3af;cursor:not-allowed;border-color:#e5e7eb}
+.d-zone-picker .dz-hint{color:var(--muted);font-size:.92em;margin-left:auto}
+/* CARD-058b：DA01 user_input pricing 視覺差別 */
+.div_price_count.user-input .txt_CI_qty{width:80px}
+.div_price_count.user-input .user-input-note{display:inline-block}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>🔍 選擇補助代碼</h1>
+    <div class="subtitle">請勾選要查詢的補助項目，可跨族多選</div>
+  </header>
+
+  <!-- CARD-042：status banner（CMS/收入/縣市/zone/外看）-->
+  <div id="status-banner" class="status-banner" style="display:none"></div>
+
+  <!-- CARD-058f：案主條件 3 下拉（CMS / 個案身分 / 服務限制）— 改下拉即時 ripple 全頁額度重算 -->
+  <div id="case-conditions" class="case-conditions">
+    <div class="cc-row">
+      <label for="cc-cms">照顧需求等級</label>
+      <select id="cc-cms" aria-label="CMS 照顧需求等級">
+        <option value="2">第 2 級</option>
+        <option value="3">第 3 級</option>
+        <option value="4">第 4 級</option>
+        <option value="5">第 5 級</option>
+        <option value="6">第 6 級</option>
+        <option value="7">第 7 級</option>
+        <option value="8">第 8 級</option>
+      </select>
+    </div>
+    <div class="cc-row">
+      <label for="cc-income">個案身分</label>
+      <select id="cc-income" aria-label="個案身分">
+        <option value="general">一般戶</option>
+        <option value="mid_low">中低收入戶</option>
+        <option value="low">第一類（社福或長照低收入戶）</option>
+      </select>
+    </div>
+    <div class="cc-row">
+      <label for="cc-identity">個案服務限制條件</label>
+      <select id="cc-identity" aria-label="個案服務限制條件">
+        <option value="">無</option>
+        <option value="foreign_caregiver">有外籍看護</option>
+        <option value="indigenous">原住民</option>
+      </select>
+    </div>
+    <div class="cc-warn" id="cc-warn-multi">⚠️ URL 含多項身分標記，本介面僅顯第一個，需多選請手動編輯 URL</div>
+  </div>
+
+  <!-- CARD-042 + CARD-058g：sticky 額度表格（4 欄 × 6 row 對齊 epizy 樣式；sticky 掛外層 div 不掛 table/tr） -->
+  <div id="quota-bars" class="quota-bars">
+    <div class="qb-title">💰 額度使用概況（總覽）</div>
+    <table class="quota-table">
+      <thead>
+        <tr><th>服務項目</th><th>自付額</th><th>已使用額</th><th>餘額</th></tr>
+      </thead>
+      <tbody id="quota-bars-body"></tbody>
+    </table>
+  </div>
+
+  <div class="toolbar">
+    <div class="counter">已選 <strong id="counter">0</strong> 項</div>
+    <div>
+      <!-- CARD-058g：拿掉「全部展開 / 全部收合」按鈕（details 自帶展開 toggle） -->
+      <button type="button" id="btn-clear-all">全部清除</button>
+    </div>
+  </div>
+
+  <div id="sections"></div>
+
+  <!-- CARD-042：單次核定降級為文字提醒（114 JSON 無 max_per_approval 欄位，CARD-041 確認）-->
+  <div class="single-approval-note">
+    ⚠️ <strong>單次核定上限提醒</strong>：
+    同一勾選批次建議不超過 1 組輔具組合送出（實際核定依照服務項目規定為準）。
+    本介面不做自動限制，請個管師自行判斷。
+  </div>
+</div>
+
+<div class="footer-bar">
+  <div class="footer-bar-inner">
+    <div class="footer-bar-stats">
+      <div class="sum">已選 <strong id="counter-bottom">0</strong> 項補助</div>
+      <!-- CARD-058c：footer 雙行估算移除（與 per-bucket summary 資訊重複）；保留「已選 N 項」counter -->
+    </div>
+    <button id="next-btn" class="next-btn" type="button" disabled>下一步 →</button>
+  </div>
+</div>
+
+<footer class="page-footer">
+  <p>長照智慧諮詢 · 補助代碼選擇 · POC 版本</p>
+</footer>
+
+<!-- CARD-058-modal：點 code 跳 modal 顯官方說明（一份模板事件 delegation） -->
+<div id="code-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="code-modal-title" hidden>
+  <div class="modal-backdrop" data-modal-close="1"></div>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <button class="modal-close" type="button" data-modal-close="1" aria-label="關閉">×</button>
+      <h2 id="code-modal-title" class="modal-title"></h2>
+    </div>
+    <div class="modal-body" id="code-modal-body"></div>
+    <div class="modal-source" id="code-modal-source"></div>
+  </div>
+</div>
+
+<script id="query-base-url" type="application/json">"https://chord310.github.io/ob-prod-share/viewer.html?id=0d07491488"</script>
+<script id="item-meta" type="application/json">{"EA01-1": {"type": "buy", "price": 1200, "rent_price": null, "unit": "", "pricing_type": null}, "EA01-2": {"type": "buy", "price": 1200, "rent_price": null, "unit": "", "pricing_type": null}, "EA01-3": {"type": "buy", "price": 1200, "rent_price": null, "unit": "", "pricing_type": null}, "EB01": {"type": "buy", "price": 1000, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。本項輔具選配服務得由輔具供應人員逕行提供。柺杖如依實際需求同時申請雙側使用者，可給付額度加倍", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EB02": {"type": "buy", "price": 500, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。本項輔具選配服務得由輔具供應人員逕行提供。柺杖如依實際需求同時申請雙側使用者，可給付額度加倍", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EB03": {"type": "buy", "price": 800, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。本項輔具選配服務得由輔具供應人員逕行提供", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EB04": {"type": "both", "price": 3000, "rent_price": 300, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢、定期追蹤使用狀況、清潔消毒、運送、回收整備及相關服務。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。本組合租賃費用以一月為一給（支）付單位。未滿一個月者，按比率計算價格。帶輪型助步車應符合下列功能條件：附手控煞車及煞車鎖定功能。附臨時休憩座位功能", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EC01": {"type": "buy", "price": 3500, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、輔具各項尺寸調整配置、諮詢及相關服務。本項輔具選配服務得由輔具供應人員逕行提供。規格或功能規範：輪椅均應配備骨盆帶。EC01輪椅-A款（非輕量化量產型）、EC02輪椅-B款（輕量化量產型）、EC03輪椅-C款（量身訂製型）僅能擇一給付", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EC02": {"type": "both", "price": 4000, "rent_price": 450, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢、定期追蹤使用狀況、清潔消毒、運送、回收整備及相關服務。本項輔具選配服務得由輔具供應人員逕行提供。本組合租賃費用以一月為一給（支）付單位。未滿一個月者，按比率計算價格。規格或功能規範：輪椅均應配備骨盆帶。EC01輪椅-A款（非輕量化量產型）、EC02輪椅-B款（輕量化量產型）、EC03輪椅-C款（量身訂製型）僅能擇一給付", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EC03": {"type": "buy", "price": 9000, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。本組合免部分負擔。規格或功能規範：輪椅均應配備骨盆帶，並應符合下列規範之一：一百五十公斤以上之載重能力。十四英吋以下或二十二英吋以上座寬。具有四英吋以上座深調整、二英吋以上座寬調整並可依個別化需求設定座背靠角度之設計。EC01輪椅-A款（非輕量化量產型）、EC02輪椅-B款（輕量化量產型）、EC03輪椅-C款（量身訂製型）僅能擇一給付", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EC04": {"type": "both", "price": 5000, "rent_price": 150, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢、定期追蹤使用狀況、清潔消毒、運送、回收整備及相關服務。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。本組合免部分負擔。本組合租賃費用以一月為一給（支）付單位。未滿一個月者，按比率計算價格。規格或功能規範：輪椅附加功能-A款：兼具可拆掀式扶手及可拆卸式腳靠以利於移位。輪椅附加功能-B款：具不及座面連動之椅背仰躺功能（無段式調整），且應配備胸帶及防傾桿。輪椅附加功能-C款：具及椅背連動之無段式座面空中傾倒功能，及配備胸帶及防傾桿。應搭配EC02輪椅-B款（輕量化量產型）或EC03輪椅-C款（量身訂製型）同時申請", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EC05": {"type": "both", "price": 2000, "rent_price": 150, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢、定期追蹤使用狀況、清潔消毒、運送、回收整備及相關服務。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。本組合免部分負擔。本組合租賃費用以一月為一給（支）付單位。未滿一個月者，按比率計算價格。規格或功能規範：輪椅附加功能-A款：兼具可拆掀式扶手及可拆卸式腳靠以利於移位。輪椅附加功能-B款：具不及座面連動之椅背仰躺功能（無段式調整），且應配備胸帶及防傾桿。輪椅附加功能-C款：具及椅背連動之無段式座面空中傾倒功能，及配備胸帶及防傾桿。應搭配EC02輪椅-B款（輕量化量產型）或EC03輪椅-C款（量身訂製型）同時申請", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EC06": {"type": "both", "price": 4000, "rent_price": 150, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢、定期追蹤使用狀況、清潔消毒、運送、回收整備及相關服務。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。本組合免部分負擔。本組合租賃費用以一月為一給（支）付單位。未滿一個月者，按比率計算價格。規格或功能規範：輪椅附加功能-A款：兼具可拆掀式扶手及可拆卸式腳靠以利於移位。輪椅附加功能-B款：具不及座面連動之椅背仰躺功能（無段式調整），且應配備胸帶及防傾桿。輪椅附加功能-C款：具及椅背連動之無段式座面空中傾倒功能，及配備胸帶及防傾桿。應搭配EC02輪椅-B款（輕量化量產型）或EC03輪椅-C款（量身訂製型）同時申請", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EC07": {"type": "buy", "price": 1000, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。本組合免部分負擔。規格或功能規範：平面型輪椅背靠應含硬式底板及軟墊。曲面適形輪椅背靠應符合適形硬式底板及適形軟墊、可快速拆裝設計，以及可調整深度或角度之嵌入式吊掛系統之規範。軀幹側支撐架：具有依身型調整功能。頭靠系統：具有可調整支撐高度、前後位置及角度之結構。本項應為輪椅使用者。申請單支軀幹側支撐架者補助金額減半。EC07（擺位系統-A款）與EC08（擺位系統-B款）僅能擇一項申請", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EC08": {"type": "buy", "price": 6000, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。本組合免部分負擔。規格或功能規範：平面型輪椅背靠應含硬式底板及軟墊。曲面適形輪椅背靠應符合適形硬式底板及適形軟墊、可快速拆裝設計，以及可調整深度或角度之嵌入式吊掛系統之規範。軀幹側支撐架：具有依身型調整功能。頭靠系統：具有可調整支撐高度、前後位置及角度之結構。本項應為輪椅使用者。申請單支軀幹側支撐架者補助金額減半。EC07（擺位系統-A款）與EC08（擺位系統-B款）僅能擇一項申請", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EC09": {"type": "buy", "price": 3000, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。本組合免部分負擔。規格或功能規範：平面型輪椅背靠應含硬式底板及軟墊。曲面適形輪椅背靠應符合適形硬式底板及適形軟墊、可快速拆裝設計，以及可調整深度或角度之嵌入式吊掛系統之規範。軀幹側支撐架：具有依身型調整功能。頭靠系統：具有可調整支撐高度、前後位置及角度之結構。本項應為輪椅使用者。申請單支軀幹側支撐架者補助金額減半。EC07（擺位系統-A款）與EC08（擺位系統-B款）僅能擇一項申請", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EC10": {"type": "buy", "price": 2500, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。本組合免部分負擔。規格或功能規範：平面型輪椅背靠應含硬式底板及軟墊。曲面適形輪椅背靠應符合適形硬式底板及適形軟墊、可快速拆裝設計，以及可調整深度或角度之嵌入式吊掛系統之規範。軀幹側支撐架：具有依身型調整功能。頭靠系統：具有可調整支撐高度、前後位置及角度之結構。本項應為輪椅使用者。申請單支軀幹側支撐架者補助金額減半。EC07（擺位系統-A款）與EC08（擺位系統-B款）僅能擇一項申請", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EC11": {"type": "rent", "price": 2500, "rent_price": 2500, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢、定期追蹤使用狀況、清潔消毒、運送、回收整備及相關服務。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。本組合租賃費用以一月為一給（支）付單位。未滿一個月者，按比率計算價格。電動輪椅與電動代步車僅能擇一申請", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EC12": {"type": "rent", "price": 1200, "rent_price": 1200, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢、定期追蹤使用狀況、清潔消毒、運送、回收整備及相關服務。組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。本組合租賃費用以一月為一給（支）付單位。未滿一個月按比率計算價格。電動輪椅與電動代步車只能擇一申請", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "ED01": {"type": "buy", "price": 1500, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。本組合由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。規格或功能規範：移位腰帶之寬度至少應有十公分，接觸面不可有銳利部分；且應有四個以上之提把可供抓握", "restrictions": ["規格或功能規範：移位腰帶之寬度至少應有十公分，接觸面不可有銳利部分"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "ED02": {"type": "buy", "price": 2000, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。規格或功能規範：移位板可作為坐姿移位時相鄰平面之橋板，長度至少應六十公分、寬度至少二十公分、厚度為一公分以下", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "ED03": {"type": "buy", "price": 4000, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。規格或功能規範：人力移位吊帶至少應有四個提把以利個案於坐姿或臥姿下以人力搬運移位", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "ED04": {"type": "buy", "price": 3000, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。規格或功能規範：移位滑墊-A款應使用容易滑動之材質以利個案在坐姿下之平行位移並降低及接觸面之摩擦。其寬度、長度至少應達到五十公分以上", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "ED05": {"type": "buy", "price": 8000, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。本組合租賃費用以一月為一給（支）付單位。未滿一個月者，按比率計算價格。規格或功能規範：移位滑墊-B款應使用容易滑動之材質以利個案在臥姿下之平行位移並降低及接觸面之摩擦。其寬度至少應達四十五公分以上、長度至少應達一百七十公分以上", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "ED06": {"type": "buy", "price": 2000, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。規格或功能規範：移位轉盤之上下兩接觸面應為防滑材質，且整體厚度為二公分以下", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "ED07": {"type": "both", "price": 40000, "rent_price": 2000, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢、定期追蹤使用狀況、清潔消毒、運送、回收整備及相關服務。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。本組合租賃費用以一月為一給（支）付單位。未滿一個月者，按比率計算價格。本項移位機係指懸吊式電動移位設備，應包含吊帶", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "ED08": {"type": "buy", "price": 6000, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。本組合適用ED07移位機購置三年後，吊帶更換", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EE01": {"type": "buy", "price": 2000, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、設定、諮詢及相關服務。本項輔具選配服務得由輔具供應人員逕行提供", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EE02": {"type": "buy", "price": 2000, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、設定、諮詢及相關服務。本項輔具選配服務得由輔具供應人員逕行提供", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EE03": {"type": "buy", "price": 2000, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、設定、諮詢及相關服務。本項輔具選配服務得由輔具供應人員逕行提供", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EE04": {"type": "buy", "price": 2000, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、設定、諮詢及相關服務。本項輔具選配服務得由輔具供應人員逕行提供", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EE05": {"type": "buy", "price": 2000, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、設定、諮詢及相關服務。本項輔具選配服務得由輔具供應人員逕行提供", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EF01": {"type": "buy", "price": 500, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。本項輔具選配服務得由輔具供應人員逕行提供。規格或功能規範：可協助衣著之穿衣桿、穿鞋器、襪輔助器、長柄取物鉗及相關項目", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EF02": {"type": "buy", "price": 500, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。本項輔具選配服務得由輔具供應人員逕行提供。規格或功能規範：有助於居家活動之特殊門把、烹調用具、開瓶罐器、特製開關、洗衣、備藥、提醒服藥及相關項目", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EF03": {"type": "buy", "price": 500, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。本項輔具選配服務得由輔具供應人員逕行提供。規格或功能規範：可協助飲食之特殊刀、叉、湯匙、筷子、杯盤、防滑墊及相關項目", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EG01": {"type": "both", "price": 8000, "rent_price": 300, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢、定期追蹤使用狀況、清潔消毒、運送、回收整備及相關服務。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。本組合租賃費用以一月為一給（支）付單位。未滿一個月者，按比率計算價格。本組合免部分負擔。規格或功能規範：氣墊床應具預防褥瘡及減輕褥瘡症狀之效果，並符合下列規定：氣墊床-A款：應含十八管以上具可交替充氣功能之電動空氣幫浦及管狀氣囊組。氣墊床-B款：應含交替充氣功能之電動空氣幫浦及管狀氣囊組，且購置應提供保固三年，並應符合以下條件：(1)交替式充氣之管狀氣囊組，氣囊之管徑四英吋以上，並含有異常壓力警示及可暫停交替之開關。(2)氣管為三管交替式。(3).單管材質:「PU聚氨酯（Polyurethane）」或「PU聚氨酯（Polyurethane）+尼龍（Nylon）」。(4)單管壓力流量每分鐘四公升（四L/Min）以上", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EG02": {"type": "both", "price": 12000, "rent_price": 500, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢、定期追蹤使用狀況、清潔消毒、運送、回收整備及相關服務。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。本組合租賃費用以一月為一給（支）付單位。未滿一個月者，按比率計算價格。本組合免部分負擔。規格或功能規範：氣墊床應具預防褥瘡及減輕褥瘡症狀之效果，並符合下列規定：氣墊床-A款：應含十八管以上具可交替充氣功能之電動空氣幫浦及管狀氣囊組。氣墊床-B款：應含交替充氣功能之電動空氣幫浦及管狀氣囊組，且購置應提供保固三年，並應符合以下條件：(1)交替式充氣之管狀氣囊組，氣囊之管徑四英吋以上，並含有異常壓力警示及可暫停交替之開關。(2)氣管為三管交替式。(3).單管材質:「PU聚氨酯（Polyurethane）」或「PU聚氨酯（Polyurethane）+尼龍（Nylon）」。(4)單管壓力流量每分鐘四公升（四L/Min）以上", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EG03": {"type": "buy", "price": 5000, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。本組合免部分負擔。規格或功能規範：各款應分別符合下列規範：A款及B款：氣囊數量應大於二十顆，且氣囊高度應大於二英吋。C款：應搭配適形泡棉底座，其凝膠覆蓋面積不得小於座墊二分之一，且凝膠厚度應大於一英吋。D款：「固態凝膠座墊」應搭配適形泡棉底座，其凝膠覆蓋面積不得小於座墊之二分之一，且其凝膠厚度應大（等）於一英吋。E款：「填充式氣囊氣墊座」其高度應大於二英吋。F款：「交替充氣型座墊」應含電動空氣幫浦及交替充氣功能之氣囊組。G款：應依個別需求取模製作座墊", "restrictions": ["C款：應搭配適形泡棉底座，其凝膠覆蓋面積不得小於座墊二分之一，且凝膠厚度應大於一英吋", "D款：「固態凝膠座墊」應搭配適形泡棉底座，其凝膠覆蓋面積不得小於座墊之二分之一，且其凝膠厚度應大（等）於一英吋"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EG04": {"type": "buy", "price": 10000, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。本組合免部分負擔。規格或功能規範：各款應分別符合下列規範：A款及B款：氣囊數量應大於二十顆，且氣囊高度應大於二英吋。C款：應搭配適形泡棉底座，其凝膠覆蓋面積不得小於座墊二分之一，且凝膠厚度應大於一英吋。D款：「固態凝膠座墊」應搭配適形泡棉底座，其凝膠覆蓋面積不得小於座墊之二分之一，且其凝膠厚度應大（等）於一英吋。E款：「填充式氣囊氣墊座」其高度應大於二英吋。F款：「交替充氣型座墊」應含電動空氣幫浦及交替充氣功能之氣囊組。G款：應依個別需求取模製作座墊", "restrictions": ["C款：應搭配適形泡棉底座，其凝膠覆蓋面積不得小於座墊二分之一，且凝膠厚度應大於一英吋", "D款：「固態凝膠座墊」應搭配適形泡棉底座，其凝膠覆蓋面積不得小於座墊之二分之一，且其凝膠厚度應大（等）於一英吋"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EG05": {"type": "buy", "price": 10000, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。本組合免部分負擔。規格或功能規範：各款應分別符合下列規範：A款及B款：氣囊數量應大於二十顆，且氣囊高度應大於二英吋。C款：應搭配適形泡棉底座，其凝膠覆蓋面積不得小於座墊二分之一，且凝膠厚度應大於一英吋。D款：「固態凝膠座墊」應搭配適形泡棉底座，其凝膠覆蓋面積不得小於座墊之二分之一，且其凝膠厚度應大（等）於一英吋。E款：「填充式氣囊氣墊座」其高度應大於二英吋。F款：「交替充氣型座墊」應含電動空氣幫浦及交替充氣功能之氣囊組。G款：應依個別需求取模製作座墊", "restrictions": ["C款：應搭配適形泡棉底座，其凝膠覆蓋面積不得小於座墊二分之一，且凝膠厚度應大於一英吋", "D款：「固態凝膠座墊」應搭配適形泡棉底座，其凝膠覆蓋面積不得小於座墊之二分之一，且其凝膠厚度應大（等）於一英吋"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EG06": {"type": "buy", "price": 8000, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。本組合免部分負擔。規格或功能規範：各款應分別符合下列規範：A款及B款：氣囊數量應大於二十顆，且氣囊高度應大於二英吋。C款：應搭配適形泡棉底座，其凝膠覆蓋面積不得小於座墊二分之一，且凝膠厚度應大於一英吋。D款：「固態凝膠座墊」應搭配適形泡棉底座，其凝膠覆蓋面積不得小於座墊之二分之一，且其凝膠厚度應大（等）於一英吋。E款：「填充式氣囊氣墊座」其高度應大於二英吋。F款：「交替充氣型座墊」應含電動空氣幫浦及交替充氣功能之氣囊組。G款：應依個別需求取模製作座墊", "restrictions": ["C款：應搭配適形泡棉底座，其凝膠覆蓋面積不得小於座墊二分之一，且凝膠厚度應大於一英吋", "D款：「固態凝膠座墊」應搭配適形泡棉底座，其凝膠覆蓋面積不得小於座墊之二分之一，且其凝膠厚度應大（等）於一英吋"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EG07": {"type": "buy", "price": 8000, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。本組合免部分負擔。規格或功能規範：各款應分別符合下列規範：A款及B款：氣囊數量應大於二十顆，且氣囊高度應大於二英吋。C款：應搭配適形泡棉底座，其凝膠覆蓋面積不得小於座墊二分之一，且凝膠厚度應大於一英吋。D款：「固態凝膠座墊」應搭配適形泡棉底座，其凝膠覆蓋面積不得小於座墊之二分之一，且其凝膠厚度應大（等）於一英吋。E款：「填充式氣囊氣墊座」其高度應大於二英吋。F款：「交替充氣型座墊」應含電動空氣幫浦及交替充氣功能之氣囊組。G款：應依個別需求取模製作座墊", "restrictions": ["C款：應搭配適形泡棉底座，其凝膠覆蓋面積不得小於座墊二分之一，且凝膠厚度應大於一英吋", "D款：「固態凝膠座墊」應搭配適形泡棉底座，其凝膠覆蓋面積不得小於座墊之二分之一，且其凝膠厚度應大（等）於一英吋"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EG08": {"type": "buy", "price": 5000, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。本組合免部分負擔。規格或功能規範：各款應分別符合下列規範：A款及B款：氣囊數量應大於二十顆，且氣囊高度應大於二英吋。C款：應搭配適形泡棉底座，其凝膠覆蓋面積不得小於座墊二分之一，且凝膠厚度應大於一英吋。D款：「固態凝膠座墊」應搭配適形泡棉底座，其凝膠覆蓋面積不得小於座墊之二分之一，且其凝膠厚度應大（等）於一英吋。E款：「填充式氣囊氣墊座」其高度應大於二英吋。F款：「交替充氣型座墊」應含電動空氣幫浦及交替充氣功能之氣囊組。G款：應依個別需求取模製作座墊", "restrictions": ["C款：應搭配適形泡棉底座，其凝膠覆蓋面積不得小於座墊二分之一，且凝膠厚度應大於一英吋", "D款：「固態凝膠座墊」應搭配適形泡棉底座，其凝膠覆蓋面積不得小於座墊之二分之一，且其凝膠厚度應大（等）於一英吋"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EG09": {"type": "buy", "price": 10000, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。本組合免部分負擔。規格或功能規範：各款應分別符合下列規範：A款及B款：氣囊數量應大於二十顆，且氣囊高度應大於二英吋。C款：應搭配適形泡棉底座，其凝膠覆蓋面積不得小於座墊二分之一，且凝膠厚度應大於一英吋。D款：「固態凝膠座墊」應搭配適形泡棉底座，其凝膠覆蓋面積不得小於座墊之二分之一，且其凝膠厚度應大（等）於一英吋。E款：「填充式氣囊氣墊座」其高度應大於二英吋。F款：「交替充氣型座墊」應含電動空氣幫浦及交替充氣功能之氣囊組。G款：應依個別需求取模製作座墊", "restrictions": ["C款：應搭配適形泡棉底座，其凝膠覆蓋面積不得小於座墊二分之一，且凝膠厚度應大於一英吋", "D款：「固態凝膠座墊」應搭配適形泡棉底座，其凝膠覆蓋面積不得小於座墊之二分之一，且其凝膠厚度應大（等）於一英吋"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EH01": {"type": "both", "price": 8000, "rent_price": 1000, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢、定期追蹤使用狀況、清潔消毒、運送、回收整備及相關服務。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。本組合租賃費用以一月為一給（支）付單位。未滿一個月者，按比率計算價格。規格或功能規範：居家用照顧床床面應為三片以上之設計，至少應具備頭部及腿靠床片升降之功能", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EH02": {"type": "both", "price": 5000, "rent_price": 200, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢、定期追蹤使用狀況、清潔消毒、運送、回收整備及相關服務。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。本組合租賃費用以一月為一給（支）付單位。未滿一個月者，按比率計算價格。規格或功能規範：居家用照顧床附加功能A款係指床面具升降功能", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EH03": {"type": "both", "price": 5000, "rent_price": 500, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢、定期追蹤使用狀況、清潔消毒、運送、回收整備及相關服務。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。本組合租賃費用以一月為一給（支）付單位。未滿一個月者，按比率計算價格。規格或功能規範：居家用照顧床附加功能B款係指具電動調整升降功能之產品", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EH04": {"type": "rent", "price": 700, "rent_price": 700, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢、操作人員、定期追蹤使用狀況、清潔消毒、運送、回收整備及相關服務。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。本組合租賃費用以一趟為一給（支）付單位。本組合係按趟（上樓或下樓）計費，操作人員應受過訓練始得操作使用", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "EH05": {"type": "rent", "price": 4000, "rent_price": 4000, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢、定期追蹤使用狀況、清潔消毒、運送、回收整備及相關服務。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。本組合租賃費用以一月為一給（支）付單位。本組合係按月計費，操作人員應受過訓練", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA01": {"type": "buy", "price": 150, "rent_price": null, "unit": "每10cm", "pricing_type": null, "description": "修繕細節說明及施工圖、估價、與長照給付對象或家人溝通、修繕、保固。修繕標的：樓梯、出入口、通路、廁所、浴室、臥室及相關活動空間安裝之固定扶手。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。扶手針對提供握持部位之長度每十公分補助一百五十元", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA02": {"type": "buy", "price": 3600, "rent_price": null, "unit": "", "pricing_type": null, "description": "估價、與長照給付對象或家人溝通、修繕、使用說明、保固。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。本組合係按單支計價", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA03": {"type": "buy", "price": 3500, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。輔具適配度評估應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。規格或功能規範：「非固定式斜坡板」係指可任意移動之斜坡板，分成A、B、C 三款：A款為非輕量化材質，不具可收折及攜帶功能或長度超過三十公分之攜帶式輕量化斜坡版；B款為輕量化材質，具可收折及攜帶功能，長度超過九十公分之斜坡板；C款為輕量化材質，具可收折及攜帶功能，長度超過一百二十公分，且荷重能力達一百八十公斤以上之斜坡板", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA04": {"type": "buy", "price": 5000, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。輔具適配度評估應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。規格或功能規範：「非固定式斜坡板」係指可任意移動之斜坡板，分成A、B、C 三款：A款為非輕量化材質，不具可收折及攜帶功能或長度超過三十公分之攜帶式輕量化斜坡版；B款為輕量化材質，具可收折及攜帶功能，長度超過九十公分之斜坡板；C款為輕量化材質，具可收折及攜帶功能，長度超過一百二十公分，且荷重能力達一百八十公斤以上之斜坡板", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA05": {"type": "buy", "price": 10000, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。輔具適配度評估應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。規格或功能規範：「非固定式斜坡板」係指可任意移動之斜坡板，分成A、B、C 三款：A款為非輕量化材質，不具可收折及攜帶功能或長度超過三十公分之攜帶式輕量化斜坡版；B款為輕量化材質，具可收折及攜帶功能，長度超過九十公分之斜坡板；C款為輕量化材質，具可收折及攜帶功能，長度超過一百二十公分，且荷重能力達一百八十公斤以上之斜坡板", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA06": {"type": "buy", "price": 10000, "rent_price": null, "unit": "", "pricing_type": null, "description": "修繕細節說明及施工圖、估價、與長照給付對象或家人溝通、修繕、保固。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。修繕標的：「固定式斜坡道」係指固定於地面無法移動之斜坡，且材質應為金屬材質或泥做工程，鋪面應有防滑功能且長度達一百五十公分以上", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA07": {"type": "buy", "price": 5000, "rent_price": null, "unit": "", "pricing_type": null, "description": "修繕細節說明及施工圖、估價、與長照給付對象或家人溝通、修繕、保固。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。修繕標的：消除出入口、通路、臥室、廁所、浴室及相關生活空間地面局部高低差所進行之修繕，及浴室去除門檻伴隨之截水溝工程，不包含升降設備及藉由動力來消除高低差機器之工程", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA08": {"type": "buy", "price": 3000, "rent_price": null, "unit": "", "pricing_type": null, "description": "修繕細節說明及施工圖、估價、與長照給付對象或家人溝通、修繕、保固。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。修繕標的：樓梯、通路、浴室、廁所、臥房或相關空間之地面鋪設穩定且固定止(防)滑材質地面、反光貼條及消光處理、地面改裝伴隨之修補工程。本組合係單處計價", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA09": {"type": "buy", "price": 600, "rent_price": null, "unit": "", "pricing_type": null, "description": "修繕細節說明及施工圖、估價、與長照給付對象或家人溝通、修繕、保固。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。隔間以牆面每平方公尺補助六百元", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA10": {"type": "buy", "price": 3000, "rent_price": null, "unit": "", "pricing_type": null, "description": "修繕細節說明及施工圖、估價、與長照給付對象或家人溝通、修繕、保固。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。本組合係單處計價", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA11": {"type": "buy", "price": 7000, "rent_price": null, "unit": "", "pricing_type": null, "description": "修繕細節說明及施工圖、估價、與長照給付對象或家人溝通、修繕、保固。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。修繕標的：為改變門片類型、門檻降低、順平或剔除、加裝橫式截水槽或相關修繕任一項或一項以上之工程。本組合係單處計價", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA12": {"type": "buy", "price": 10000, "rent_price": null, "unit": "", "pricing_type": null, "description": "修繕細節說明及施工圖、估價、與長照給付對象或家人溝通、修繕、保固。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。修繕標的：門之加寬、加高、新增、調整位置或相關修繕任一項或一項以上之工程。門之改善一處僅能擇一款(A款或B款)申請。本組合係單處計價", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA13": {"type": "buy", "price": 3000, "rent_price": null, "unit": "", "pricing_type": null, "description": "修繕細節說明及施工圖、估價、與長照給付對象或家人溝通、修繕、保固。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。修繕標的：「水龍頭」係指改裝為撥桿式、單閥式或電子感應式。本組合係單處計價", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA14": {"type": "buy", "price": 7000, "rent_price": null, "unit": "", "pricing_type": null, "description": "修繕細節說明及施工圖、估價、與長照給付對象或家人溝通、修繕、保固。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。修繕標的：無障礙乾濕分離淋浴隔離設施、拆除浴缸、冷熱水管線新增或遷移、淋浴龍頭、糞管新增、遷移及相關修繕", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA15": {"type": "buy", "price": 3000, "rent_price": null, "unit": "", "pricing_type": null, "description": "修繕細節說明及施工圖、估價、與長照給付對象或家人溝通、修繕、保固。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA16": {"type": "buy", "price": 5000, "rent_price": null, "unit": "", "pricing_type": null, "description": "修繕細節說明及施工圖、估價、與長照給付對象或家人溝通、修繕、保固。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。修繕標的：浴缸、洗臉台、馬桶之新增、改換、移除、原處填補、壁掛式淋浴椅(床)、蹲式馬桶改坐式馬桶及加裝免治馬桶", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA17": {"type": "buy", "price": 5000, "rent_price": null, "unit": "", "pricing_type": null, "description": "修繕細節說明及施工圖、估價、與長照給付對象或家人溝通、修繕、保固。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA18": {"type": "buy", "price": 15000, "rent_price": null, "unit": "", "pricing_type": null, "description": "修繕細節說明及施工圖、估價、與長照給付對象或家人溝通、修繕、保固。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合。修繕標的：流理台新增或改換、抽油煙機高度調整。改善流理台於可靠近之邊緣二十公分範圍內，至少應有高度六十五公分以上之腿部淨空間", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA19": {"type": "buy", "price": 1000, "rent_price": null, "unit": "", "pricing_type": null, "description": "修繕細節說明及施工圖、估價、與長照給付對象或家人溝通、修繕、保固。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA20": {"type": "buy", "price": 2000, "rent_price": null, "unit": "", "pricing_type": null, "description": "修繕細節說明及施工圖、估價、與長照給付對象或家人溝通、修繕、保固。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA21": {"type": "buy", "price": 5000, "rent_price": null, "unit": "", "pricing_type": null, "description": "修繕細節說明及施工圖、估價、與長照給付對象或家人溝通、修繕、保固。本組合應由輔具評估人員出具評估報告，判定為本輔具需要者，始得給付。適配度評估費用不包含在本組合", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA22": {"type": "buy", "price": 160, "rent_price": null, "unit": "", "pricing_type": null, "description": "修繕施工圖、估價、施作、保固。修繕標的：扶手形狀得為圓形、橢圓形；圓形直徑二點八公分至四公分，其他形狀者，外緣周邊長九公分至十三公分，且應鎖固於牆面、天花板或地面", "unit_detail": "本組合以提供握持部位每十公分為一給支付單位", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA23": {"type": "buy", "price": 3600, "rent_price": null, "unit": "", "pricing_type": null, "description": "估價、修繕、使用說明、保固。修繕標的：扶手形狀可為圓形、橢圓形，圓形直徑二點八公分至四公分，其他形狀者，外緣周邊長九公分至十三公分，且基座須鎖固於牆面，並具可動關節", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA24": {"type": "buy", "price": 1000, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。規格或功能規範：置放於床板、床架或床旁地面，提供穩定支撐之裝置", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA25": {"type": "buy", "price": 1000, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。規格或功能規範：改善高度十公分以下之門檻等高低落差處，所使用之非固定式斜坡磚、斜坡塊、訂製導坡等。跨門檻斜角單件產品若同時處理門檻兩側，則視為兩側補助。門檻斜角、非固定式斜坡板各項次(FA25至FA29碼)於改善門檻或其他高低落差處，同一側於最低使用年限內僅得擇一申請", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA26": {"type": "buy", "price": 3500, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。規格或功能規範：(一)「非固定式斜坡板」係指可任意移動之輕量化材質斜坡板，包含軌道式、單體式斜坡板，分成A、B、C、D四款，並符合下列各項規格：A款：具攜帶功能，長度未達九十公分。B款：具可收折及攜帶功能，長度九十公分以上，未達一百二十公分。C款：具可收折及攜帶功能，長度一百二十公分以上，未達一百五十公分。D款：具可收折及攜帶功能，長度一百五十公分以上。(二)軌道式斜坡板荷重能力須達二百公斤以上，單體式斜坡板(含單片式、收折式)荷重能力須達三百公斤以上，若單體式斜坡板長度小於七十公分，荷重能力須達二百公斤以上。(三)軌道式斜坡板通行面之寬度不得小於十一公分，單片式斜坡板及收折式斜坡板展開後通行面寬度不得小於六十公分，非固定式斜坡板B、C、D款須有二公分以上側板(護緣)。(四)若處理門檻兩側高低差，可申請單處二個補助。(五)門檻斜角、非固定式斜坡板各項次(FA25至FA29碼)於改善門檻等高低落差處，同一側於最低使用年限內僅得擇一申請", "restrictions": ["(三)軌道式斜坡板通行面之寬度不得小於十一公分，單片式斜坡板及收折式斜坡板展開後通行面寬度不得小於六十公分，非固定式斜坡板B、C、D款須有二公分以上側板(護緣)"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA27": {"type": "buy", "price": 5000, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。規格或功能規範：(一)「非固定式斜坡板」係指可任意移動之輕量化材質斜坡板，包含軌道式、單體式斜坡板，分成A、B、C、D四款，並符合下列各項規格：A款：具攜帶功能，長度未達九十公分。B款：具可收折及攜帶功能，長度九十公分以上，未達一百二十公分。C款：具可收折及攜帶功能，長度一百二十公分以上，未達一百五十公分。D款：具可收折及攜帶功能，長度一百五十公分以上。(二)軌道式斜坡板荷重能力須達二百公斤以上，單體式斜坡板(含單片式、收折式)荷重能力須達三百公斤以上，若單體式斜坡板長度小於七十公分，荷重能力須達二百公斤以上。(三)軌道式斜坡板通行面之寬度不得小於十一公分，單片式斜坡板及收折式斜坡板展開後通行面寬度不得小於六十公分，非固定式斜坡板B、C、D款須有二公分以上側板(護緣)。(四)若處理門檻兩側高低差，可申請單處二個補助。(五)門檻斜角、非固定式斜坡板各項次(FA25至FA29碼)於改善門檻等高低落差處，同一側於最低使用年限內僅得擇一申請", "restrictions": ["(三)軌道式斜坡板通行面之寬度不得小於十一公分，單片式斜坡板及收折式斜坡板展開後通行面寬度不得小於六十公分，非固定式斜坡板B、C、D款須有二公分以上側板(護緣)"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA28": {"type": "buy", "price": 7000, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。規格或功能規範：(一)「非固定式斜坡板」係指可任意移動之輕量化材質斜坡板，包含軌道式、單體式斜坡板，分成A、B、C、D四款，並符合下列各項規格：A款：具攜帶功能，長度未達九十公分。B款：具可收折及攜帶功能，長度九十公分以上，未達一百二十公分。C款：具可收折及攜帶功能，長度一百二十公分以上，未達一百五十公分。D款：具可收折及攜帶功能，長度一百五十公分以上。(二)軌道式斜坡板荷重能力須達二百公斤以上，單體式斜坡板(含單片式、收折式)荷重能力須達三百公斤以上，若單體式斜坡板長度小於七十公分，荷重能力須達二百公斤以上。(三)軌道式斜坡板通行面之寬度不得小於十一公分，單片式斜坡板及收折式斜坡板展開後通行面寬度不得小於六十公分，非固定式斜坡板B、C、D款須有二公分以上側板(護緣)。(四)若處理門檻兩側高低差，可申請單處二個補助。(五)門檻斜角、非固定式斜坡板各項次(FA25至FA29碼)於改善門檻等高低落差處，同一側於最低使用年限內僅得擇一申請", "restrictions": ["(三)軌道式斜坡板通行面之寬度不得小於十一公分，單片式斜坡板及收折式斜坡板展開後通行面寬度不得小於六十公分，非固定式斜坡板B、C、D款須有二公分以上側板(護緣)"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA29": {"type": "buy", "price": 10000, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。規格或功能規範：(一)「非固定式斜坡板」係指可任意移動之輕量化材質斜坡板，包含軌道式、單體式斜坡板，分成A、B、C、D四款，並符合下列各項規格：A款：具攜帶功能，長度未達九十公分。B款：具可收折及攜帶功能，長度九十公分以上，未達一百二十公分。C款：具可收折及攜帶功能，長度一百二十公分以上，未達一百五十公分。D款：具可收折及攜帶功能，長度一百五十公分以上。(二)軌道式斜坡板荷重能力須達二百公斤以上，單體式斜坡板(含單片式、收折式)荷重能力須達三百公斤以上，若單體式斜坡板長度小於七十公分，荷重能力須達二百公斤以上。(三)軌道式斜坡板通行面之寬度不得小於十一公分，單片式斜坡板及收折式斜坡板展開後通行面寬度不得小於六十公分，非固定式斜坡板B、C、D款須有二公分以上側板(護緣)。(四)若處理門檻兩側高低差，可申請單處二個補助。(五)門檻斜角、非固定式斜坡板各項次(FA25至FA29碼)於改善門檻等高低落差處，同一側於最低使用年限內僅得擇一申請", "restrictions": ["(三)軌道式斜坡板通行面之寬度不得小於十一公分，單片式斜坡板及收折式斜坡板展開後通行面寬度不得小於六十公分，非固定式斜坡板B、C、D款須有二公分以上側板(護緣)"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA30": {"type": "buy", "price": 3500, "rent_price": null, "unit": "", "pricing_type": null, "description": "修繕施工圖、估價、施作、保固。修繕標的：門檻或兩側地面之高低落差改善工程，如：門檻降低、門檻順平、門檻剔除、地軌移除、固定式斜坡道、架高式和式地板拆除、新增平台或階梯等施作工法，高度十公分以下", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA31": {"type": "buy", "price": 5000, "rent_price": null, "unit": "", "pricing_type": null, "description": "修繕施工圖、估價、施作、保固。修繕標的：門檻或兩側地面之高低落差改善工程，如：門檻降低、門檻順平、門檻剔除、地軌移除、固定式斜坡道、架高式和式地板拆除、新增平台或階梯等施作工法，高度逾十公分至二十公分以下", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA32": {"type": "buy", "price": 7000, "rent_price": null, "unit": "", "pricing_type": null, "description": "修繕施工圖、估價、施作、保固。修繕標的：門檻或兩側地面之高低落差改善工程，如：門檻降低、門檻順平、門檻剔除、地軌移除、固定式斜坡道、架高式和式地板拆除、新增平台或階梯等施作工法，高度逾二十公分至三十公分以下", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA33": {"type": "buy", "price": 10000, "rent_price": null, "unit": "", "pricing_type": null, "description": "修繕施工圖、估價、施作、保固。修繕標的：門檻或兩側地面之高低落差改善工程，如：門檻降低、門檻順平、門檻剔除、地軌移除、固定式斜坡道、架高式和式地板拆除、新增平台或階梯等施作工法，高度逾三十公分", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA34": {"type": "buy", "price": 6000, "rent_price": null, "unit": "", "pricing_type": null, "description": "修繕施工圖、估價、施作、保固。修繕標的：包含原地磚移除或地面整平，及裝設防滑地磚，單處施作區域至少一平方公尺以上", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA35": {"type": "buy", "price": 2000, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。規格或功能規範：指防滑貼片、防滑貼條、防滑地墊、防滑劑(液)等", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA36": {"type": "buy", "price": 800, "rent_price": null, "unit": "", "pricing_type": null, "description": "修繕施工圖、估價、施作、保固。修繕標的：新增固定於地面之牆面。隔間以牆面每平方公尺為一給支付單位(應扣除門之面積)", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA37": {"type": "buy", "price": 7000, "rent_price": null, "unit": "", "pricing_type": null, "description": "修繕施工圖、估價、施作、保固。修繕標的：為改變門片類型或增設門片(含裝設軌道)。同一扇門之門簡易型(FA37)、門進階型(FA38)於最低使用年限內僅能擇一申請，且僅移除門片或增設浴廁乾溼分離的門非屬本項補助", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA38": {"type": "buy", "price": 10000, "rent_price": null, "unit": "", "pricing_type": null, "description": "修繕施工圖、估價、施作、保固。修繕標的：含門框施工之門加寬、加高、新增、調整位置等任一項或一項以上之壁面施工工程 (包含門片增設)。同一扇門之門簡易型(FA37)、門進階型(FA38)於最低使用年限內僅能擇一申請，僅移除門片或增設浴廁乾溼分離的門非屬本項補助範圍", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA39": {"type": "buy", "price": 6000, "rent_price": null, "unit": "", "pricing_type": null, "description": "修繕施工圖、估價、施作、保固。修繕標的：施工長度須達六十公分以上，含面蓋及施工費", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA40": {"type": "buy", "price": 7000, "rent_price": null, "unit": "", "pricing_type": null, "description": "修繕施工圖、估價、施作、保固。修繕標的：(一)新增、改換：新增或改換為開門式浴缸。(二)移除：拆除浴缸", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA41": {"type": "buy", "price": 5000, "rent_price": null, "unit": "", "pricing_type": null, "description": "修繕施工圖、估價、施作、保固。修繕標的：馬桶之新增、改換、移除、原處填補、蹲式馬桶改坐式馬桶及加裝免治馬桶。改善馬桶若同一處因馬桶改換位置而新增或遷移糞管，可申請同處二個補助。僅更換免治馬桶座蓋非屬本項補助", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA42": {"type": "buy", "price": 2000, "rent_price": null, "unit": "", "pricing_type": null, "description": "修繕施工圖、估價、施作、保固。修繕標的：兼具平整及耐壓性，支撐面積至少為五百平方公分，且須鎖固於牆面", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA43": {"type": "buy", "price": 2000, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。規格或功能規範：須內建排水裝置，且應符合深度達十五公分以上", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "FA44": {"type": "buy", "price": 5000, "rent_price": null, "unit": "", "pricing_type": null, "description": "輔具、輔具選用建議、使用說明、輔具各項尺寸調整配置、諮詢及相關服務。規格或功能規範：應內建排水裝置，且應符合深度達二十五公分以上，且槽體面積須包覆全身(含折疊型產品或以床欄為支架之產品)", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BA01": {"type": "service", "price": 260, "rent_price": null, "unit": "次", "pricing_type": null, "description": "依長照給付對象之身體清潔需要完成以下項目：梳頭修面、穿脫衣服、床上擦澡、床上洗頭、排泄物清理（含當次更換尿片、倒尿袋或相關協助）。床上洗頭及排泄物清理，個案如無需求得不執行。本組合服務原則以一日使用一組合；必要時得早晚各使用一組合，且執行BA01之同一時段，不可併同申報BA07及BA23。本組合得依第二十一條規定，應長照給付對象突發性或臨時性之照顧需要，先行臨時提供服務，並應於服務提供後立即通知擬訂照顧計畫之社區整合型服務中心，且經照管中心確認", "restrictions": ["床上洗頭及排泄物清理，個案如無需求得不執行", "必要時得早晚各使用一組合，且執行BA01之同一時段，不可併同申報BA07及BA23"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BA02": {"type": "service", "price": 195, "rent_price": null, "unit": "次", "pricing_type": null, "description": "依長照給付對象之需要進行基本日常生活協助，例如：協助翻身、移位、上下床、坐下、離座、刷牙洗臉、穿脫衣服、如廁、更換尿片或衛生棉、倒尿桶、清洗便桶、造廔袋清理、清洗臉或手、刮鬍子、修剪指（趾）甲、協助用藥、服藥、整理床、更換床單、會陰沖洗（無使用身體清潔）或相關協助。第一點未列項目而屬基本日常照顧，得經照管中心同意後比照列入。為一給（支）付單位，一日限使用三小時。本組合不得與其他組合併用", "restrictions": ["本組合不得與其他組合併用"], "unit_detail": "本組合以每三十分鐘", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BA03": {"type": "service", "price": 35, "rent_price": null, "unit": "次", "pricing_type": null, "description": "長照給付對象因疾病需要應進行之監測測量長照給付對象之血壓、體溫、脈搏及呼吸。記錄及異常時轉知家屬及個案管理員（或照顧管理專員）。本組合係為配合長照給付對象生理狀況且獨立於其他服務所提供之服務，如為服務提供前後之觀察，則不適用。例如，為了解長照給付對象是否合適當下沐浴，於沐浴前測量血壓，本組合即不適用", "restrictions": ["本組合係為配合長照給付對象生理狀況且獨立於其他服務所提供之服務，如為服務提供前後之觀察，則不適用", "例如，為了解長照給付對象是否合適當下沐浴，於沐浴前測量血壓，本組合即不適用"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BA04": {"type": "service", "price": 130, "rent_price": null, "unit": "餐", "pricing_type": null, "description": "進食環境（含長照給付對象安置）準備、加熱飯菜、餐具準備、協助餵食（或灌食）、觀察進食之量及反應，提供受照顧者及家屬有關協助進食或管灌餵食之諮詢和討論，以及善後。對於個案或家庭照顧者給予指導、鼓勵或參與式照顧，以維持或提升個案自我照顧潛能。本組合一餐為一組合", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BA05-1": {"type": "service", "price": 310, "rent_price": null, "unit": "次", "pricing_type": null}, "BA05-2": {"type": "service", "price": 310, "rent_price": null, "unit": "次", "pricing_type": null}, "BA07": {"type": "service", "price": 325, "rent_price": null, "unit": "次", "pricing_type": null, "description": "依長照給付對象之身體清潔需要完成以下項目：協助或引導至浴間、穿脫衣服、全身淋浴、坐浴或盆浴、洗頭、排泄物清理（含當次更換尿片、倒尿袋）、浴間之事前準備及事後清理。洗頭及排泄物清理，個案如無需求得不執行。對於個案或家庭照顧者給予指導、鼓勵或參與式照顧，以維持或提升個案自我照顧潛能。本組合係指於浴間（或類似之場所）執行之項目，如為床上擦澡，則屬編號BA01；床上沐浴或原床泡澡比照列入本組合。本組合已包含BA01「基本身體清潔」、BA23「協助洗頭」之內容，同一時段不可併同申報BA01及BA23", "restrictions": ["洗頭及排泄物清理，個案如無需求得不執行", "本組合已包含BA01「基本身體清潔」、BA23「協助洗頭」之內容，同一時段不可併同申報BA01及BA23"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BA08": {"type": "service", "price": 500, "rent_price": null, "unit": "次", "pricing_type": null, "description": "評估趾甲及足部皮膚。趾甲及其周圍修剪、足部長繭處之處理、足部按摩及保養。轉介必要之醫療處置。紀錄。本組合以經診斷為糖尿病患者之長照給付對象為限，且評估結果之照顧問題清單應包含走路問題、皮膚照護問題或傷口問題，並具下列情形之一之長照給付對象：足部皮膚脫皮、龜裂、角質硬化(繭、雞眼)。問題甲(厚甲、捲甲、輕微崁甲)。本組合服務應由完成衛生福利部認可訓練之人員提供。如為日常指（趾）甲修剪，則屬BA02", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BA10": {"type": "service", "price": 155, "rent_price": null, "unit": "次", "pricing_type": null, "description": "扣背、震顫、翻身，及相關照顧指導（依衛生福利部所定指引執行）。本組合完整實施一次為一給（支）付單位", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BA11": {"type": "service", "price": 195, "rent_price": null, "unit": "次", "pricing_type": null, "description": "上肢、下肢被動運動，或督促長照給付對象進行主動運動或站立練習（依衛生福利部所定指引執行）。本組合完整實施一次為一給（支）付單位", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BA12": {"type": "service", "price": 130, "rent_price": null, "unit": "次", "pricing_type": null, "description": "協助上（下）樓梯、協助輪椅搬運上（下）樓梯，樓梯數為一層樓以上（含）者。範圍包含長照給付對象住家內及二樓以上之家門口至一樓。本組合限問題清單顯示「移位問題」或「上下樓梯問題」者。不適用於使用電梯、爬梯機、樓梯升降椅者。本組合得依第二十一條規定，應長照給付對象突發性或臨時性之照顧需要，先行臨時提供服務，並應於服務提供後立即通知擬訂照顧計畫之社區整合型服務中心，且經照管中心確認", "restrictions": ["不適用於使用電梯、爬梯機、樓梯升降椅者"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BA13": {"type": "service", "price": 195, "rent_price": null, "unit": "次", "pricing_type": null, "description": "外出工具之安排、陪同外出，及注意安全，以每三十分鐘為一給（支）付單位。外出目的包括：購物、社交活動、辦理事務、參與宗教活動、用餐、散步、上下學、定期式復健或透析治療、運動或其他情形。本組合金額不包括外出之交通工具；如符合BA12之給付條件，則本組合與BA12併同使用", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BA14": {"type": "service", "price": 685, "rent_price": null, "unit": "次", "pricing_type": null, "description": "協助掛號（含預約）、長照給付對象準備、陪同就診、聽取及轉知醫囑與注意事項。本組合價格不包括長照給付對象及陪同之照顧服務員之就醫交通工具費用。本組合不適用定期式復健或透析治療。。超過一點五小時，得依實際陪同就醫時數使用BA13。本組合得依第二十一條規定，應長照給付對象突發性或臨時性之照顧需要，先行臨時提供服務，並應於服務提供後立即通知擬訂照顧計畫之社區整合型服務中心，且經照管中心確認", "restrictions": ["本組合不適用定期式復健或透析治療"], "unit_detail": "本組合以陪同長照給付對象就醫為主，陪同時間自案家出門起算一點五小時內，適用本組合", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BA15-1": {"type": "service", "price": 195, "rent_price": null, "unit": "次", "pricing_type": null}, "BA16-1": {"type": "service", "price": 130, "rent_price": null, "unit": "次", "pricing_type": null, "description": "5 公里距離限制；非受益人項目補助 50%。"}, "BA18": {"type": "service", "price": 200, "rent_price": null, "unit": "次", "pricing_type": null, "description": "至案家陪伴、支持（如遊戲或嗜好）、看視注意安全或協助（如日常生活參與），並注意異常狀況。以三十分鐘為一給（支）付單位。本組合限心智障礙者使用。本組合不得與其他組合併同使用，但可接續使用", "restrictions": ["本組合不得與其他組合併同使用，但可接續使用"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BA20": {"type": "service", "price": 175, "rent_price": null, "unit": "次", "pricing_type": null, "description": "至案家陪伴看視、日常生活參與，或讀紙本或電子新聞或書信。以三十分鐘為一給（支）付單位。本組合不得與其他組合併同使用，但可接續使用", "restrictions": ["本組合不得與其他組合併同使用，但可接續使用"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BA22": {"type": "service", "price": 130, "rent_price": null, "unit": "次", "pricing_type": null, "description": "上午六點至晚上八點，至案家探視長照給付對象，並進行簡易協助，至少三次。不得搭配本照顧組合表之其他照顧組合。個案於接受服務時，如有突發性或臨時性之照顧需要，得依第二十一條規定，提供規定得臨時提供服務之照顧組合，並應於服務提供後通知擬訂照顧計畫之社區整合型服務中心，且經照管中心確認。非第一點時段內之巡視服務，得按照管中心或地方主管機關審核同意後，依實際情況加計AA08", "restrictions": ["不得搭配本照顧組合表之其他照顧組合"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BA23": {"type": "service", "price": 200, "rent_price": null, "unit": "次", "pricing_type": null, "description": "依長照給付對象之需要完成以下全部或部分項目：協助移位或引導至浴間、穿脫衣服、洗頭、弄濕或弄髒之身體部位之清潔、環境之事前準備及事後整理。本組合係指於床上或浴間（或類似之場所）單獨執行洗頭之服務，同一時段，不可併同申請BA01及BA07。對於個案或家庭照顧者給予指導、鼓勵或參與式照顧，以維持或提升個案自我照顧潛能。本組合得依第二十一條規定，應長照給付對象突發性或臨時性之照顧需要，先行臨時提供服務，並應於服務提供後立即通知擬訂照顧計畫之社區整合型服務中心，且經照管中心確認", "restrictions": ["本組合係指於床上或浴間（或類似之場所）單獨執行洗頭之服務，同一時段，不可併同申請BA01及BA07"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BA24": {"type": "service", "price": 220, "rent_price": null, "unit": "次", "pricing_type": null, "description": "依長照給付對象之需要完成以下全部或部分項目：協助移位或引導至浴間、支持及協助一般小便、大便，及處理汗、痰或嘔吐物、觀察排泄物、尿袋更換、造廔袋清理、人工肛門造口周圍之照料（含造口袋之更換和排空）、生殖器官照顧之事後檢視、介紹如何大、小便控制或失禁處理。如於執行BA01或BA07過程中同時執行，則不得併計。本組合得依第二十一條規定，應長照給付對象突發性或臨時性之照顧需要，先行臨時提供服務，並應於服務提供後立即通知擬訂照顧計畫之社區整合型服務中心，且經照管中心確認", "restrictions": ["依長照給付對象之需要完成以下全部或部分項目：協助移位或引導至浴間、支持及協助一般小便、大便，及處理汗、痰或嘔吐物、觀察排泄物、尿袋更換、造廔袋清理、人工肛門造口周圍之照料（含造口袋之更換和排空）、生殖器官照顧之事後檢視、介紹如何大、小便控制或失禁處理", "如於執行BA01或BA07過程中同時執行，則不得併計"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BB01": {"type": "service", "price": 1000, "rent_price": null, "unit": "日", "pricing_type": null, "description": "生活照顧、健康促進、文康休閒活動、家屬指導及諮詢服務、備餐服務。以一日為一給（支）付單位。適用長照需要等級二級。使用交通接送者另計。全日服務，服務提供單位應於向地方主管機關申請特約時，敘明其服務之起迄時點，並經地方主管機關同意", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BB02": {"type": "service", "price": 600, "rent_price": null, "unit": "日", "pricing_type": null, "description": "生活照顧、健康促進、文康休閒活動、家屬指導及諮詢服務、備餐服務。以半日為一給（支）付單位，同日不得申請二次。適用長照需要等級二級。使用交通接送者另計。半日服務，服務提供單位應於向地方主管機關申請特約時，敘明其服務之起迄時點，並經地方主管機關同意", "restrictions": ["以半日為一給（支）付單位，同日不得申請二次"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BB03": {"type": "service", "price": 1200, "rent_price": null, "unit": "日", "pricing_type": null, "description": "生活照顧、健康促進、文康休閒活動、家屬指導及諮詢服務、備餐服務。以一日為一給（支）付單位。適用長照需要等級三級。使用交通接送者另計。全日服務，服務提供單位應於向地方主管機關申請特約時，敘明其服務之起迄時點，並經地方主管機關同意", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BB04": {"type": "service", "price": 700, "rent_price": null, "unit": "日", "pricing_type": null, "description": "生活照顧、健康促進、文康休閒活動、家屬指導及諮詢服務、備餐服務。以半日為一給（支）付單位，同日不得申請二次。適用長照需要等級三級。使用交通接送者另計。半日服務，服務提供單位應於向地方主管機關申請特約時，敘明其服務之起迄時點，並經地方主管機關同意", "restrictions": ["以半日為一給（支）付單位，同日不得申請二次"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BB05": {"type": "service", "price": 1500, "rent_price": null, "unit": "日", "pricing_type": null, "description": "生活照顧、健康促進、文康休閒活動、家屬指導及諮詢服務、備餐服務。以一日為一給（支）付單位。適用長照需要等級四級。使用交通接送者另計。全日服務，服務提供單位應於向地方主管機關申請特約時，敘明其服務之起迄時點，並經地方主管機關同意", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BB06": {"type": "service", "price": 900, "rent_price": null, "unit": "日", "pricing_type": null, "description": "生活照顧、健康促進、文康休閒活動、家屬指導及諮詢服務、備餐服務。以半日為一給（支）付單位，同日不得申請二次。適用長照需要等級四級。使用交通接送者另計。半日服務，服務提供單位應於向地方主管機關申請特約時，敘明其服務之起迄時點，並經地方主管機關同意", "restrictions": ["以半日為一給（支）付單位，同日不得申請二次"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BB07": {"type": "service", "price": 1800, "rent_price": null, "unit": "日", "pricing_type": null, "description": "生活照顧、健康促進、文康休閒活動、家屬指導及諮詢服務、備餐服務。以一日為一給（支）付單位。適用長照需要等級五級。使用交通接送者另計。全日服務，服務提供單位應於向地方主管機關申請特約時，敘明其服務之起迄時點，並經地方主管機關同意", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BB08": {"type": "service", "price": 1100, "rent_price": null, "unit": "日", "pricing_type": null, "description": "生活照顧、健康促進、文康休閒活動、家屬指導及諮詢服務、備餐服務。以半日為一給（支）付單位，同日不得申請二次。適用長照需要等級五級。使用交通接送者另計。半日服務，服務提供單位應於向地方主管機關申請特約時，敘明其服務之起迄時點，並經地方主管機關同意", "restrictions": ["以半日為一給（支）付單位，同日不得申請二次"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BB09": {"type": "service", "price": 1100, "rent_price": null, "unit": "日", "pricing_type": null, "description": "生活照顧、健康促進、文康休閒活動、家屬指導及諮詢服務、備餐服務。以一日為一給（支）付單位。適用長照需要等級六級。使用交通接送者另計。全日服務，服務提供單位應於向地方主管機關申請特約時，敘明其服務之起迄時點，並經地方主管機關同意", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BB10": {"type": "service", "price": 1300, "rent_price": null, "unit": "日", "pricing_type": null, "description": "生活照顧、健康促進、文康休閒活動、家屬指導及諮詢服務、備餐服務。以半日為一給（支）付單位，同日不得申請二次。適用長照需要等級六級。使用交通接送者另計。半日服務，服務提供單位應於向地方主管機關申請特約時，敘明其服務之起迄時點，並經地方主管機關同意", "restrictions": ["以半日為一給（支）付單位，同日不得申請二次"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BB11": {"type": "service", "price": 1600, "rent_price": null, "unit": "日", "pricing_type": null, "description": "生活照顧、健康促進、文康休閒活動、家屬指導及諮詢服務、備餐服務。以一日為一給（支）付單位。適用長照需要等級七級。使用交通接送者另計。全日服務，服務提供單位應於向地方主管機關申請特約時，敘明其服務之起迄時點，並經地方主管機關同意", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BB12": {"type": "service", "price": 1900, "rent_price": null, "unit": "日", "pricing_type": null, "description": "生活照顧、健康促進、文康休閒活動、家屬指導及諮詢服務、備餐服務。以半日為一給（支）付單位，同日不得申請二次。適用長照需要等級七級。使用交通接送者另計。半日服務，服務提供單位應於向地方主管機關申請特約時，敘明其服務之起迄時點，並經地方主管機關同意", "restrictions": ["以半日為一給（支）付單位，同日不得申請二次"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BB13": {"type": "service", "price": 100, "rent_price": null, "unit": "日", "pricing_type": null, "description": "生活照顧、健康促進、文康休閒活動、家屬指導及諮詢服務、備餐服務。以一日為一給（支）付單位。適用長照需要等級八級。使用交通接送者另計。全日服務，服務提供單位應於向地方主管機關申請特約時，敘明其服務之起迄時點，並經地方主管機關同意", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BB14": {"type": "service", "price": 300, "rent_price": null, "unit": "日", "pricing_type": null, "description": "生活照顧、健康促進、文康休閒活動、家屬指導及諮詢服務、備餐服務。以半日為一給（支）付單位，同日不得申請二次。適用長照需要等級八級。使用交通接送者另計。半日服務，服務提供單位應於向地方主管機關申請特約時，敘明其服務之起迄時點，並經地方主管機關同意", "restrictions": ["以半日為一給（支）付單位，同日不得申請二次"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BC01": {"type": "service", "price": 800, "rent_price": null, "unit": "日", "pricing_type": null, "description": "身體照顧、日常生活照顧服務與安全性照顧、備餐服務。以一日為一給（支）付單位。適用長照需要等級二級。使用交通接送者另計", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BC02": {"type": "service", "price": 500, "rent_price": null, "unit": "日", "pricing_type": null, "description": "身體照顧、日常生活照顧服務與安全性照顧、備餐服務。以半日為一給（支）付單位，同日不得申請二次。適用長照需要等級二級。使用交通接送者另計", "restrictions": ["以半日為一給（支）付單位，同日不得申請二次"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BC03": {"type": "service", "price": 1000, "rent_price": null, "unit": "日", "pricing_type": null, "description": "身體照顧、日常生活照顧服務與安全性照顧、備餐服務。以一日為一給（支）付單位。適用長照需要等級三級。使用交通接送者另計", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BC04": {"type": "service", "price": 600, "rent_price": null, "unit": "日", "pricing_type": null, "description": "身體照顧、日常生活照顧服務與安全性照顧、備餐服務。以半日為一給（支）付單位，同日不得申請二次。適用長照需要等級三級。使用交通接送者另計", "restrictions": ["以半日為一給（支）付單位，同日不得申請二次"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BC05": {"type": "service", "price": 1200, "rent_price": null, "unit": "日", "pricing_type": null, "description": "身體照顧、日常生活照顧服務與安全性照顧、備餐服務。以一日為一給（支）付單位。適用長照需要等級四級。使用交通接送者另計", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BC06": {"type": "service", "price": 720, "rent_price": null, "unit": "日", "pricing_type": null, "description": "身體照顧、日常生活照顧服務與安全性照顧、備餐服務。以半日為一給（支）付單位，同日不得申請二次。適用長照需要等級四級。使用交通接送者另計", "restrictions": ["以半日為一給（支）付單位，同日不得申請二次"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BC07": {"type": "service", "price": 1500, "rent_price": null, "unit": "日", "pricing_type": null, "description": "身體照顧、日常生活照顧服務與安全性照顧、備餐服務。以一日為一給（支）付單位。適用長照需要等級五級。使用交通接送者另計", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BC08": {"type": "service", "price": 900, "rent_price": null, "unit": "日", "pricing_type": null, "description": "身體照顧、日常生活照顧服務與安全性照顧、備餐服務。以半日為一給（支）付單位，同日不得申請二次。適用長照需要等級五級。使用交通接送者另計", "restrictions": ["以半日為一給（支）付單位，同日不得申請二次"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BC09": {"type": "service", "price": 900, "rent_price": null, "unit": "日", "pricing_type": null, "description": "身體照顧、日常生活照顧服務與安全性照顧、備餐服務。以一日為一給（支）付單位。適用長照需要等級六級。使用交通接送者另計", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BC10": {"type": "service", "price": 1100, "rent_price": null, "unit": "日", "pricing_type": null, "description": "身體照顧、日常生活照顧服務與安全性照顧、備餐服務。以半日為一給（支）付單位，同日不得申請二次。適用長照需要等級六級。使用交通接送者另計", "restrictions": ["以半日為一給（支）付單位，同日不得申請二次"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BC11": {"type": "service", "price": 1300, "rent_price": null, "unit": "日", "pricing_type": null, "description": "身體照顧、日常生活照顧服務與安全性照顧、備餐服務。以一日為一給（支）付單位。適用長照需要等級七級。使用交通接送者另計", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BC12": {"type": "service", "price": 1600, "rent_price": null, "unit": "日", "pricing_type": null, "description": "身體照顧、日常生活照顧服務與安全性照顧、備餐服務。以半日為一給（支）付單位，同日不得申請二次。適用長照需要等級七級。使用交通接送者另計", "restrictions": ["以半日為一給（支）付單位，同日不得申請二次"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BC13": {"type": "service", "price": 100, "rent_price": null, "unit": "日", "pricing_type": null, "description": "身體照顧、日常生活照顧服務與安全性照顧、備餐服務。以一日為一給（支）付單位。適用長照需要等級八級。使用交通接送者另計", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BC14": {"type": "service", "price": 200, "rent_price": null, "unit": "日", "pricing_type": null, "description": "身體照顧、日常生活照顧服務與安全性照顧、備餐服務。以半日為一給（支）付單位，同日不得申請二次。適用長照需要等級八級。使用交通接送者另計", "restrictions": ["以半日為一給（支）付單位，同日不得申請二次"], "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BD01": {"type": "service", "price": 280, "rent_price": null, "unit": "次", "pricing_type": null, "description": "協助或引導至浴間、穿脫衣服、全身淋浴或坐浴（或洗頭）、刷牙洗臉、浴間使用後之清理。本組合係指於日間照顧中心（含小規模多機能）或托顧家庭之浴間執行之項目", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BD02": {"type": "service", "price": 280, "rent_price": null, "unit": "次", "pricing_type": null, "description": "準備晚餐、協助進食（或餵食）及飯後口腔清潔。本組合係指於日間照顧中心（含小規模多機能）或托顧家庭執行之項目", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "BD03": {"type": "service", "price": 320, "rent_price": null, "unit": "次", "pricing_type": null, "description": "接（送）長照給付對象居家至社區式服務類長照機構（日間照顧中心、小規模多機能、托顧家庭、巷弄長照站、文化健康站、失智社區服務據點、輔具中心 或身心障礙日間照顧服務 含社區式日間照顧服務據點、身心障礙者托顧家庭及提供日間照顧服務之身心障礙福利機構。，超過十公里所需費用由長照給付對象自行負擔。以一趟為給（支）付單位。本組合應由持有職業駕照之駕駛員提供", "note": "與 DA01 區別：BD03 為社區補充型，DA01 為機構主要服務，不得同日申報。⚠️ 衛福部 BD03 官方為交通接送 per-trip，114/9/1 起一般區 115、偏遠 140；待 CARD-026 釐清命名。", "unit_detail": "本組合以長照給付對象住家與社區式服務類長照機構之距離十公里以內者，適用本組合", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "CA07": {"type": "service", "price": 1600, "rent_price": null, "unit": "組", "pricing_type": null, "description": "評估，並與長照給付對象及家屬討論IADLs、ADLs復能之項目及期待。擬訂復能計畫。指導措施及記錄。三次措施（含評估）為一給（支）付單位。復能目標：協助善用潛能。維持生活參與能力不退化。服務完成指標依衛生福利部公告之長照專業服務手冊規定", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "CB01": {"type": "service", "price": 2500, "rent_price": null, "unit": "組", "pricing_type": null, "description": "物理治療師首次到宅進行功能評估、擬訂復健計畫，並執行第一次復健治療。", "note": "⚠️ 衛福部官方 CB01 為「營養照護服務」，114/9/1 調整為 3 次 4,500 元（原 4 次 4,000 元）。113 JSON 此代碼命名可能已與衛福部不一致，待 CARD-026 核對。"}, "CB01a": {"type": "service", "price": 1800, "rent_price": null, "unit": "組", "pricing_type": null}, "CB02": {"type": "service", "price": 2500, "rent_price": null, "unit": "組", "pricing_type": null, "description": "評估、觀察與確認照護需求。指導措施。轉介必要之醫療處置。紀錄。六次措施（含評估）為一給（支）付單位。服務完成指標依衛生福利部公告之長照專業服務手冊規定", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "CB02a": {"type": "service", "price": 1800, "rent_price": null, "unit": "組", "pricing_type": null}, "CB03": {"type": "service", "price": 2500, "rent_price": null, "unit": "組", "pricing_type": null, "description": "評估、觀察與確認照護需求。指導措施。轉介必要之醫療處置。紀錄。三次措施（含評估）為一給（支）付單位。服務完成指標依衛生福利部公告之長照專業服務手冊規定", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "CB03a": {"type": "service", "price": 1800, "rent_price": null, "unit": "組", "pricing_type": null}, "CC01": {"type": "service", "price": 1500, "rent_price": null, "unit": "組", "pricing_type": null, "description": "指下列服務之一活動及照顧方式與策略建議、現有家具擺設、日常活動所需之輔具使用與復健運動之空間動線規劃及相關服務。居家環境檢視、提出居家安全環境改善之方式，以及教導家屬長照給付對象於家中維護安全之方式及注意事項。二次措施（含評估）為一給（支）付單位。為達到居家安全或無障礙空間所需之輔具或空間修繕，依輔具服務或居家無障礙環境改善服務之規定另計。服務完成指標依衛生福利部公告之長照專業服務手冊規定", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "CD01": {"type": "service", "price": 1500, "rent_price": null, "unit": "組", "pricing_type": null}, "GA03": {"type": "service", "price": 1800, "rent_price": null, "unit": "日", "pricing_type": null, "description": "長照給付對象至日間照顧中心接受照顧、停留，包含護理照護、協助沐浴、進食、服藥、活動安排及相關服務。含交通接送。提供護理照護服務應依護理人員法之規定辦理", "unit_detail": "每住院日", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "GA04": {"type": "service", "price": 2000, "rent_price": null, "unit": "日", "pricing_type": null, "description": "長照給付對象至日間照顧中心接受照顧、停留，包含護理照護、協助沐浴、進食、服藥、活動安排及相關服務。含交通接送。提供護理照護服務應依護理人員法之規定辦理", "restrictions": ["限領有身心障礙手冊者"], "unit_detail": "每住院日", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "GA05": {"type": "service", "price": 1200, "rent_price": null, "unit": "日", "pricing_type": null, "description": "長照給付對象至住宿式長照機構接受短暫照顧、停留，由機構工作人員提供二十四小時之照顧，服務內容包含護理照護、協助沐浴、進食、服藥、活動安排及相關服務。。含交通接送。提供護理照護服務應依護理人員法之規定辦理", "unit_detail": "每服務日", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "GA06": {"type": "service", "price": 2500, "rent_price": null, "unit": "次", "pricing_type": null, "description": "長照給付對象於夜間至小規模多機能服務中心，由機構工作人員提供包含生活照顧、協助沐浴、進食、服藥、活動安排、住宿及相關照顧服務。夜間係指每日下午六點至翌日上午八點。。含交通接送", "unit_detail": "每次（4小時）", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "GA07": {"type": "service", "price": null, "rent_price": null, "unit": "日", "pricing_type": null, "description": "長照給付對象至巷弄長照站接受照顧、停留，包含進食、服藥、活動安排及相關服務", "unit_detail": "每服務日", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "GA09": {"type": "service", "price": 2000, "rent_price": null, "unit": "支", "pricing_type": null, "description": "家庭照顧者與服務單位議定，由照顧服務人員至長照給付對象家中，提供長照給付對象身體照顧服務，包含協助如廁、沐浴、穿換衣服、口腔清潔、進食、服藥、翻身、拍背、簡單被動式肢體關節活動、上下床、陪同運動、協助使用日常生活輔助器具及其他服務，如有陪同就醫需求可加計BA14；前述陪同運動在安全情況下，得陪同至居家以外之地點及服務，如自家庭院、社區中庭或附近公園或其他場所運動、散步。，單日居家喘息服務以十小時為上限", "unit_detail": "每支 2 小時", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "SC03": {"type": "service", "price": 1250, "rent_price": null, "unit": "日", "pricing_type": null, "description": "長照給付對象至日間照顧中心接受照顧、停留，包含護理照護、協助沐浴、進食、服藥、活動安排及相關服務。含交通接送。提供護理照護服務應依護理人員法之規定辦理", "note": "與 GA05 機構型喘息（短期入住日照中心）同 service 不同政策分類；依衛福部分包獨立計入 S 系。", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "SC04": {"type": "service", "price": 625, "rent_price": null, "unit": "日", "pricing_type": null, "description": "長照給付對象至日間照顧中心接受照顧、停留，包含護理照護、協助沐浴、進食、服藥、活動安排及相關服務。含交通接送。提供護理照護服務應依護理人員法之規定辦理", "note": "與 GA05 機構型喘息（短期入住日照中心）同 service 不同政策分類；半日計價（SC03 全日的 50%）。", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "SC05": {"type": "service", "price": 2310, "rent_price": null, "unit": "日", "pricing_type": null, "description": "長照給付對象至住宿式長照機構接受短暫照顧、停留，由機構工作人員提供二十四小時之照顧，服務內容包含護理照護、協助沐浴、進食、服藥、活動安排及相關服務。。含交通接送。提供護理照護服務應依護理人員法之規定辦理", "note": "與 GA03 機構型喘息（護理機構/長照機構）同 service 不同政策分類；依衛福部分包獨立計入 S 系。", "unit_detail": "本組合以一日（二十四小時）為一給（支）付單位", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "SC06": {"type": "service", "price": 2000, "rent_price": null, "unit": "日", "pricing_type": null, "description": "長照給付對象於夜間至小規模多機能服務中心，由機構工作人員提供包含生活照顧、協助沐浴、進食、服藥、活動安排、住宿及相關照顧服務。夜間係指每日下午六點至翌日上午八點。。含交通接送", "note": "與 GA09 居家強化喘息為相近 service 但分屬不同政策（小規模多機能 vs 居家），獨立計入 S 系。", "unit_detail": "本組合以一次為一給（支）付單位", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "SC07": {"type": "service", "price": 170, "rent_price": null, "unit": "日", "pricing_type": null, "description": "長照給付對象至巷弄長照站接受照顧、停留，包含進食、服藥、活動安排及相關服務", "note": "與 GA07 巷弄站全日喘息同 service 不同政策分類；GA07 為議定價、SC07 採 epizy 標示固定價。", "unit_detail": "本組合以小時為給（支）付單位", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "SC09": {"type": "service", "price": 770, "rent_price": null, "unit": "日", "pricing_type": null, "description": "家庭照顧者與服務單位議定，由照顧服務人員至長照給付對象家中，提供長照給付對象身體照顧服務，包含協助如廁、沐浴、穿換衣服、口腔清潔、進食、服藥、翻身、拍背、簡單被動式肢體關節活動、上下床、陪同運動、協助使用日常生活輔助器具及其他服務，如有陪同就醫需求可加計BA14；前述陪同運動在安全情況下，得陪同至居家以外之地點及服務，如自家庭院、社區中庭或附近公園或其他場所運動、散步。，單日居家喘息服務以十小時為上限", "note": "與 GA06/GA09 居家型喘息同 service 不同政策分類；依衛福部分包獨立計入 S 系。", "unit_detail": "本組合以二小時為一給（支）付單位", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "OT01": {"type": "service", "price": 100, "rent_price": null, "unit": "餐", "pricing_type": null, "description": "經評估符合長照需要等級2至8級，且符合以下資格者：符合社會救助法審核認定之列冊低收入戶、中低收入戶。符合領取中低收入老人生活津貼發給辦法第五條第一項津貼資格者。符合領取身心障礙者生活補助資格者。獨居者。(部分縣市有第4點規範，請洽詢各縣市承辦單位)本組合所稱之獨居者定義如下：服務使用者自己一人居住。服務使用者與家人同住，每名家人應符合下列條件之一： (1)年齡未滿十八歲。(2)年齡十八歲以上未滿六十五歲，並領有身心障礙證明。(3)年齡十八歲以上未滿六十五歲，且長照需要等級為二至八級。(4)年齡六十五歲以上。(5)經確診之失智症者。服務使用者「無」以下情形之一：經直轄市、縣(市)政府評估無提供餐飲服務需要或可外出使用共餐服務者。 有吞嚥困難或僅能以無渣流質管灌進食或有特殊餐食需要者，其中特殊餐食係指非盒餐或團體膳食可滿足其需求。聘有外籍家庭看護工之個案。於機構內接受機構照顧服務", "note": "一般戶使用服務需自行連結特約單位或商家；補助身份別應依縣市公告為準。", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}, "DA01": {"type": "service", "price": 1, "rent_price": null, "unit": "趟", "pricing_type": "user_input", "description": "往（返）居家至醫療院所就醫、定期式復健或透析治療之交通接送。基於就醫、定期式復健或透析治療之目的，必要交通路程中之轉乘或接駁，經地方主管機關核認，起迄任有一端不限於居家或醫療院所", "note": "個案直接輸入單趟車資金額；114/9/1 衛福部公告 一般地區 $115/趟、偏遠/原住民 $140/趟（per_trip_rates_114_09_01）。實際補助比例依縣市 zone 1-4 與身分別決定。", "unit_detail": "本組合以一次為一給（支）付單位", "description_source": "epizy 計算機 3.0 modal 抓取（CARD-059c 2026-04-26）"}}</script>
+<!-- CARD-044：BB/BC/BD/C/G 5 區由 renderer 從 5 檔 JSON 注入；HTML 啟動時 prepend 進 CATS（插在 EA 之前）。
+     實作路徑（卡內二選一的「最小路徑」）：保留 EA-FA 既有 hardcode（CARD-034/042 鎖），只新增 5 區。
+     優點：不動既有 9 族 inline 結構、不改 type=both/rent radio 邏輯；缺點：碼別非單一真實來源（5 區走 JSON、9 族走 HTML）— 待後續 CARD 全部改 JSON 注入再重構。 -->
+<script id="extra-sections" type="application/json">[{"id": "BA", "name": "🛁 居家服務(BA碼)", "items": [{"c": "BA01", "n": "基本身體清潔"}, {"c": "BA02", "n": "基本日常照顧"}, {"c": "BA03", "n": "測量生命徵象"}, {"c": "BA04", "n": "協助進食或管灌餵食"}, {"c": "BA05-1", "n": "餐食照顧（一般備餐）"}, {"c": "BA05-2", "n": "餐食照顧（管灌飲食備餐）"}, {"c": "BA07", "n": "協助沐浴及洗頭"}, {"c": "BA08", "n": "足部照護"}, {"c": "BA10", "n": "翻身拍背"}, {"c": "BA11", "n": "肢體關節活動"}, {"c": "BA12", "n": "協助上（下）樓梯"}, {"c": "BA13", "n": "陪同外出"}, {"c": "BA14", "n": "陪同就醫"}, {"c": "BA15-1", "n": "家務協助（自用）"}, {"c": "BA16-1", "n": "代購或代領或代送服務（自用）"}, {"c": "BA18", "n": "安全看視"}, {"c": "BA20", "n": "陪伴服務"}, {"c": "BA22", "n": "巡視服務"}, {"c": "BA23", "n": "協助洗頭"}, {"c": "BA24", "n": "協助排泄"}]}, {"id": "BB", "name": "🏠 日照服務(BB碼)", "items": [{"c": "BB01", "n": "日間照顧（全日）CMS 2-3 級"}, {"c": "BB02", "n": "日間照顧（半日）CMS 2-3 級"}, {"c": "BB03", "n": "日間照顧（全日）CMS 4-5 級"}, {"c": "BB04", "n": "日間照顧（半日）CMS 4-5 級"}, {"c": "BB05", "n": "日間照顧（全日）CMS 6-7 級"}, {"c": "BB06", "n": "日間照顧（半日）CMS 6-7 級"}, {"c": "BB07", "n": "日間照顧（全日）CMS 8 級"}, {"c": "BB08", "n": "日間照顧（半日）CMS 8 級"}, {"c": "BB09", "n": "日間照顧失智專區（全日）CMS 2-3 級"}, {"c": "BB10", "n": "日間照顧失智專區（全日）CMS 4-5 級"}, {"c": "BB11", "n": "日間照顧失智專區（全日）CMS 6-7 級"}, {"c": "BB12", "n": "日間照顧失智專區（全日）CMS 8 級"}, {"c": "BB13", "n": "日間照顧備餐服務（午餐）"}, {"c": "BB14", "n": "日間照顧交通接送（往返）"}]}, {"id": "BC", "name": "☀️ 家庭托顧(BC碼)", "items": [{"c": "BC01", "n": "家庭托顧（全日）CMS 2-3 級"}, {"c": "BC02", "n": "家庭托顧（半日）CMS 2-3 級"}, {"c": "BC03", "n": "家庭托顧（全日）CMS 4-5 級"}, {"c": "BC04", "n": "家庭托顧（半日）CMS 4-5 級"}, {"c": "BC05", "n": "家庭托顧（全日）CMS 6-7 級"}, {"c": "BC06", "n": "家庭托顧（半日）CMS 6-7 級"}, {"c": "BC07", "n": "家庭托顧（全日）CMS 8 級"}, {"c": "BC08", "n": "家庭托顧（半日）CMS 8 級"}, {"c": "BC09", "n": "家庭托顧失智照顧（全日）CMS 2-3 級"}, {"c": "BC10", "n": "家庭托顧失智照顧（全日）CMS 4-5 級"}, {"c": "BC11", "n": "家庭托顧失智照顧（全日）CMS 6-7 級"}, {"c": "BC12", "n": "家庭托顧失智照顧（全日）CMS 8 級"}, {"c": "BC13", "n": "家庭托顧備餐服務"}, {"c": "BC14", "n": "家庭托顧照顧者訓練補貼"}]}, {"id": "BD", "name": "🤝 社區式服務(BD碼)", "items": [{"c": "BD01", "n": "社區式身體照顧服務"}, {"c": "BD02", "n": "社區式日常生活照顧服務"}, {"c": "BD03", "n": "社區式失智照顧服務"}]}, {"id": "C", "name": "🛌 專業服務(C碼)", "items": [{"c": "CA07", "n": "護理師居家護理服務"}, {"c": "CB01", "n": "物理治療師居家復健（初次評估）"}, {"c": "CB01a", "n": "物理治療師居家復健（後續治療）"}, {"c": "CB02", "n": "職能治療師居家復健（初次評估）"}, {"c": "CB02a", "n": "職能治療師居家復健（後續治療）"}, {"c": "CB03", "n": "語言治療師居家語言治療（初次評估）"}, {"c": "CB03a", "n": "語言治療師居家語言治療（後續治療）"}, {"c": "CC01", "n": "營養師居家營養指導"}, {"c": "CD01", "n": "社會工作師居家社工服務"}]}, {"id": "D", "name": "🚐 交通接送(D項)", "items": [{"c": "DA01", "n": "交通接送服務（單趟車資由個案輸入）"}]}, {"id": "G", "name": "💤 喘息服務(G項)", "items": [{"c": "GA03", "n": "機構型喘息服務（短期入住護理機構）"}, {"c": "GA04", "n": "機構型喘息服務（短期入住身障機構）"}, {"c": "GA05", "n": "機構型喘息服務（短期入住日照中心）"}, {"c": "GA06", "n": "居家型喘息服務"}, {"c": "GA07", "n": "巷弄站全日喘息服務"}, {"c": "GA09", "n": "居家型強化喘息服務（含舊 GA01/GA02）"}]}, {"id": "S", "name": "🛋️ 短期替代照顧服務(S項)", "items": [{"c": "SC03", "n": "日間照顧中心短照服務（全日）"}, {"c": "SC04", "n": "日間照顧中心短照服務（半日）"}, {"c": "SC05", "n": "機構住宿式短照服務"}, {"c": "SC06", "n": "小規模多機能服務-夜間短照服務"}, {"c": "SC07", "n": "巷弄長照站短照服務"}, {"c": "SC09", "n": "居家短照服務"}]}, {"id": "OT", "name": "🍱 營養餐飲服務(OT項)", "items": [{"c": "OT01", "n": "營養餐飲"}]}]</script>
+<!-- CARD-058b：D 區「縣市/行政區」下拉資料（city_zones.json 22 縣市分區對照） -->
+<script id="city-zones" type="application/json">{"cities": [{"city": "臺北市", "zone": 1, "is_remote": false, "note": "全區皆為第一類", "source": "衛福部城鄉分類", "districts": [{"district": "中正區", "zone": 1}, {"district": "大同區", "zone": 1}, {"district": "中山區", "zone": 1}, {"district": "松山區", "zone": 1}, {"district": "大安區", "zone": 1}, {"district": "萬華區", "zone": 1}, {"district": "信義區", "zone": 1}, {"district": "士林區", "zone": 1}, {"district": "北投區", "zone": 1}, {"district": "內湖區", "zone": 1}, {"district": "南港區", "zone": 1}, {"district": "文山區", "zone": 1}]}, {"city": "基隆市", "zone": 1, "is_remote": false, "note": "全區皆為第一類", "source": "衛福部城鄉分類", "districts": [{"district": "仁愛區", "zone": 1}, {"district": "信義區", "zone": 1}, {"district": "中正區", "zone": 1}, {"district": "中山區", "zone": 1}, {"district": "安樂區", "zone": 1}, {"district": "暖暖區", "zone": 1}, {"district": "七堵區", "zone": 1}]}, {"city": "新竹市", "zone": 1, "is_remote": false, "note": "全區皆為第一類", "source": "衛福部城鄉分類", "districts": [{"district": "東　區", "zone": 1}, {"district": "北　區", "zone": 1}, {"district": "香山區", "zone": 1}]}, {"city": "嘉義市", "zone": 1, "is_remote": false, "note": "全區皆為第一類", "source": "衛福部城鄉分類", "districts": [{"district": "東　區", "zone": 1}, {"district": "西　區", "zone": 1}]}, {"city": "新北市", "zone": 2, "is_remote": false, "note": "主要為第二類，山區為第三/第四類", "has_remote_districts": true, "remote_districts": [{"district": "烏來區", "zone": 4, "source": "衛福部城鄉分類"}, {"district": "平溪區", "zone": 3, "source": "衛福部城鄉分類"}, {"district": "雙溪區", "zone": 3, "source": "衛福部城鄉分類"}, {"district": "坪林區", "zone": 3, "source": "衛福部城鄉分類"}], "source": "衛福部城鄉分類", "districts": [{"district": "萬里區", "zone": 2}, {"district": "金山區", "zone": 2}, {"district": "板橋區", "zone": 2}, {"district": "汐止區", "zone": 2}, {"district": "深坑區", "zone": 2}, {"district": "石碇區", "zone": 2}, {"district": "瑞芳區", "zone": 2}, {"district": "平溪區", "zone": 3}, {"district": "雙溪區", "zone": 3}, {"district": "貢寮區", "zone": 2}, {"district": "新店區", "zone": 2}, {"district": "坪林區", "zone": 3}, {"district": "烏來區", "zone": 4}, {"district": "永和區", "zone": 2}, {"district": "中和區", "zone": 2}, {"district": "土城區", "zone": 2}, {"district": "三峽區", "zone": 2}, {"district": "樹林區", "zone": 2}, {"district": "鶯歌區", "zone": 2}, {"district": "三重區", "zone": 2}, {"district": "新莊區", "zone": 2}, {"district": "泰山區", "zone": 2}, {"district": "林口區", "zone": 2}, {"district": "蘆洲區", "zone": 2}, {"district": "五股區", "zone": 2}, {"district": "八里區", "zone": 2}, {"district": "淡水區", "zone": 2}, {"district": "三芝區", "zone": 2}, {"district": "石門區", "zone": 2}]}, {"city": "桃園市", "zone": 2, "is_remote": false, "note": "主要為第二類，復興區為高度偏遠", "has_remote_districts": true, "remote_districts": [{"district": "復興區", "zone": 4, "source": "衛福部城鄉分類"}], "source": "衛福部城鄉分類", "districts": [{"district": "中壢區", "zone": 2}, {"district": "平鎮區", "zone": 2}, {"district": "龍潭區", "zone": 2}, {"district": "楊梅區", "zone": 2}, {"district": "新屋區", "zone": 2}, {"district": "觀音區", "zone": 2}, {"district": "桃園區", "zone": 2}, {"district": "龜山區", "zone": 2}, {"district": "八德區", "zone": 2}, {"district": "大溪區", "zone": 2}, {"district": "復興區", "zone": 4}, {"district": "大園區", "zone": 2}, {"district": "蘆竹區", "zone": 2}]}, {"city": "新竹縣", "zone": 2, "is_remote": false, "note": "主要為第二類，尖石鄉、五峰鄉為高度偏遠", "has_remote_districts": true, "remote_districts": [{"district": "尖石鄉", "zone": 4, "source": "衛福部城鄉分類"}, {"district": "五峰鄉", "zone": 4, "source": "衛福部城鄉分類"}], "source": "衛福部城鄉分類", "districts": [{"district": "竹北市", "zone": 2}, {"district": "湖口鄉", "zone": 2}, {"district": "新豐鄉", "zone": 2}, {"district": "新埔鎮", "zone": 2}, {"district": "關西鎮", "zone": 2}, {"district": "芎林鄉", "zone": 2}, {"district": "寶山鄉", "zone": 2}, {"district": "竹東鎮", "zone": 2}, {"district": "五峰鄉", "zone": 4}, {"district": "橫山鄉", "zone": 2}, {"district": "尖石鄉", "zone": 4}, {"district": "北埔鄉", "zone": 2}, {"district": "峨眉鄉", "zone": 2}]}, {"city": "臺中市", "zone": 2, "is_remote": false, "note": "主要為第二類，和平區為高度偏遠", "has_remote_districts": true, "remote_districts": [{"district": "和平區", "zone": 4, "source": "衛福部城鄉分類"}], "source": "衛福部城鄉分類", "districts": [{"district": "中　區", "zone": 2}, {"district": "東　區", "zone": 2}, {"district": "南　區", "zone": 2}, {"district": "西　區", "zone": 2}, {"district": "北　區", "zone": 2}, {"district": "北屯區", "zone": 2}, {"district": "西屯區", "zone": 2}, {"district": "南屯區", "zone": 2}, {"district": "太平區", "zone": 2}, {"district": "大里區", "zone": 2}, {"district": "霧峰區", "zone": 2}, {"district": "烏日區", "zone": 2}, {"district": "豐原區", "zone": 2}, {"district": "后里區", "zone": 2}, {"district": "石岡區", "zone": 2}, {"district": "東勢區", "zone": 2}, {"district": "和平區", "zone": 4}, {"district": "新社區", "zone": 2}, {"district": "潭子區", "zone": 2}, {"district": "大雅區", "zone": 2}, {"district": "神岡區", "zone": 2}, {"district": "大肚區", "zone": 2}, {"district": "沙鹿區", "zone": 2}, {"district": "龍井區", "zone": 2}, {"district": "梧棲區", "zone": 2}, {"district": "清水區", "zone": 2}, {"district": "大甲區", "zone": 2}, {"district": "外埔區", "zone": 2}, {"district": "大安區", "zone": 2}]}, {"city": "彰化縣", "zone": 2, "is_remote": false, "note": "全縣皆為第二類", "source": "衛福部城鄉分類", "districts": [{"district": "彰化市", "zone": 2}, {"district": "芬園鄉", "zone": 2}, {"district": "花壇鄉", "zone": 2}, {"district": "秀水鄉", "zone": 2}, {"district": "鹿港鎮", "zone": 2}, {"district": "福興鄉", "zone": 2}, {"district": "線西鄉", "zone": 2}, {"district": "和美鎮", "zone": 2}, {"district": "伸港鄉", "zone": 2}, {"district": "員林鎮", "zone": 2}, {"district": "社頭鄉", "zone": 2}, {"district": "永靖鄉", "zone": 2}, {"district": "埔心鄉", "zone": 2}, {"district": "溪湖鎮", "zone": 2}, {"district": "大村鄉", "zone": 2}, {"district": "埔鹽鄉", "zone": 2}, {"district": "田中鎮", "zone": 2}, {"district": "北斗鎮", "zone": 2}, {"district": "田尾鄉", "zone": 2}, {"district": "埤頭鄉", "zone": 2}, {"district": "溪州鄉", "zone": 2}, {"district": "竹塘鄉", "zone": 2}, {"district": "二林鎮", "zone": 2}, {"district": "大城鄉", "zone": 2}, {"district": "芳苑鄉", "zone": 2}, {"district": "二水鄉", "zone": 2}]}, {"city": "臺南市", "zone": 2, "is_remote": false, "note": "主要為第二類，部分山區鄉鎮為第三類", "has_remote_districts": true, "remote_districts": [{"district": "左鎮區", "zone": 3, "source": "衛福部城鄉分類"}, {"district": "南化區", "zone": 3, "source": "衛福部城鄉分類"}, {"district": "楠西區", "zone": 3, "source": "衛福部城鄉分類"}], "source": "衛福部城鄉分類", "districts": [{"district": "中西區", "zone": 2}, {"district": "東　區", "zone": 2}, {"district": "南　區", "zone": 2}, {"district": "北　區", "zone": 2}, {"district": "安平區", "zone": 2}, {"district": "安南區", "zone": 2}, {"district": "永康區", "zone": 2}, {"district": "歸仁區", "zone": 2}, {"district": "新化區", "zone": 2}, {"district": "左鎮區", "zone": 3}, {"district": "玉井區", "zone": 2}, {"district": "楠西區", "zone": 3}, {"district": "南化區", "zone": 3}, {"district": "仁德區", "zone": 2}, {"district": "關廟區", "zone": 2}, {"district": "龍崎區", "zone": 2}, {"district": "官田區", "zone": 2}, {"district": "麻豆區", "zone": 2}, {"district": "佳里區", "zone": 2}, {"district": "西港區", "zone": 2}, {"district": "七股區", "zone": 2}, {"district": "將軍區", "zone": 2}, {"district": "學甲區", "zone": 2}, {"district": "北門區", "zone": 2}, {"district": "新營區", "zone": 2}, {"district": "後壁區", "zone": 2}, {"district": "白河區", "zone": 2}, {"district": "東山區", "zone": 2}, {"district": "六甲區", "zone": 2}, {"district": "下營區", "zone": 2}, {"district": "柳營區", "zone": 2}, {"district": "鹽水區", "zone": 2}, {"district": "善化區", "zone": 2}, {"district": "大內區", "zone": 2}, {"district": "山上區", "zone": 2}, {"district": "新市區", "zone": 2}, {"district": "安定區", "zone": 2}]}, {"city": "高雄市", "zone": 2, "is_remote": false, "note": "主要為第二類，山區（桃源/那瑪夏/茂林區）為高度偏遠", "has_remote_districts": true, "remote_districts": [{"district": "桃源區", "zone": 4, "source": "衛福部城鄉分類"}, {"district": "那瑪夏區", "zone": 4, "source": "衛福部城鄉分類"}, {"district": "茂林區", "zone": 4, "source": "衛福部城鄉分類"}, {"district": "甲仙區", "zone": 3, "source": "衛福部城鄉分類"}], "source": "衛福部城鄉分類", "districts": [{"district": "新興區", "zone": 2}, {"district": "前金區", "zone": 2}, {"district": "苓雅區", "zone": 2}, {"district": "鹽埕區", "zone": 2}, {"district": "鼓山區", "zone": 2}, {"district": "旗津區", "zone": 2}, {"district": "前鎮區", "zone": 2}, {"district": "三民區", "zone": 2}, {"district": "楠梓區", "zone": 2}, {"district": "小港區", "zone": 2}, {"district": "左營區", "zone": 2}, {"district": "仁武區", "zone": 2}, {"district": "大社區", "zone": 2}, {"district": "岡山區", "zone": 2}, {"district": "路竹區", "zone": 2}, {"district": "阿蓮區", "zone": 2}, {"district": "田寮區", "zone": 2}, {"district": "燕巢區", "zone": 2}, {"district": "橋頭區", "zone": 2}, {"district": "梓官區", "zone": 2}, {"district": "彌陀區", "zone": 2}, {"district": "永安區", "zone": 2}, {"district": "湖內區", "zone": 2}, {"district": "鳳山區", "zone": 2}, {"district": "大寮區", "zone": 2}, {"district": "林園區", "zone": 2}, {"district": "鳥松區", "zone": 2}, {"district": "大樹區", "zone": 2}, {"district": "旗山區", "zone": 2}, {"district": "美濃區", "zone": 2}, {"district": "六龜區", "zone": 2}, {"district": "內門區", "zone": 2}, {"district": "杉林區", "zone": 2}, {"district": "甲仙區", "zone": 3}, {"district": "桃源區", "zone": 4}, {"district": "那瑪夏", "zone": 2}, {"district": "茂林區", "zone": 4}, {"district": "茄萣區", "zone": 2}]}, {"city": "苗栗縣", "zone": 3, "is_remote": true, "note": "主要為第三類，泰安鄉為高度偏遠", "has_remote_districts": true, "remote_districts": [{"district": "泰安鄉", "zone": 4, "source": "衛福部城鄉分類"}], "source": "衛福部城鄉分類", "districts": [{"district": "竹南鎮", "zone": 3}, {"district": "頭份市", "zone": 3}, {"district": "三灣鄉", "zone": 3}, {"district": "南庄鄉", "zone": 3}, {"district": "獅潭鄉", "zone": 3}, {"district": "後龍鎮", "zone": 3}, {"district": "通霄鎮", "zone": 3}, {"district": "苑裡鎮", "zone": 3}, {"district": "苗栗市", "zone": 3}, {"district": "造橋鄉", "zone": 3}, {"district": "頭屋鄉", "zone": 3}, {"district": "公館鄉", "zone": 3}, {"district": "大湖鄉", "zone": 3}, {"district": "泰安鄉", "zone": 4}, {"district": "銅鑼鄉", "zone": 3}, {"district": "三義鄉", "zone": 3}, {"district": "西湖鄉", "zone": 3}, {"district": "卓蘭鎮", "zone": 3}]}, {"city": "南投縣", "zone": 3, "is_remote": true, "note": "主要為第三類，仁愛鄉、信義鄉為高度偏遠", "has_remote_districts": true, "remote_districts": [{"district": "仁愛鄉", "zone": 4, "source": "衛福部城鄉分類"}, {"district": "信義鄉", "zone": 4, "source": "衛福部城鄉分類"}], "source": "衛福部城鄉分類", "districts": [{"district": "南投市", "zone": 3}, {"district": "中寮鄉", "zone": 3}, {"district": "草屯鎮", "zone": 3}, {"district": "國姓鄉", "zone": 3}, {"district": "埔里鎮", "zone": 3}, {"district": "仁愛鄉", "zone": 4}, {"district": "名間鄉", "zone": 3}, {"district": "集集鎮", "zone": 3}, {"district": "水里鄉", "zone": 3}, {"district": "魚池鄉", "zone": 3}, {"district": "信義鄉", "zone": 4}, {"district": "竹山鎮", "zone": 3}, {"district": "鹿谷鄉", "zone": 3}]}, {"city": "雲林縣", "zone": 3, "is_remote": true, "note": "全縣皆為第三類", "source": "衛福部城鄉分類", "districts": [{"district": "斗南鎮", "zone": 3}, {"district": "大埤鄉", "zone": 3}, {"district": "虎尾鎮", "zone": 3}, {"district": "土庫鎮", "zone": 3}, {"district": "褒忠鄉", "zone": 3}, {"district": "東勢鄉", "zone": 3}, {"district": "台西鄉", "zone": 3}, {"district": "崙背鄉", "zone": 3}, {"district": "麥寮鄉", "zone": 3}, {"district": "斗六市", "zone": 3}, {"district": "林內鄉", "zone": 3}, {"district": "古坑鄉", "zone": 3}, {"district": "莿桐鄉", "zone": 3}, {"district": "西螺鎮", "zone": 3}, {"district": "二崙鄉", "zone": 3}, {"district": "北港鎮", "zone": 3}, {"district": "水林鄉", "zone": 3}, {"district": "口湖鄉", "zone": 3}, {"district": "四湖鄉", "zone": 3}, {"district": "元長鄉", "zone": 3}]}, {"city": "嘉義縣", "zone": 3, "is_remote": true, "note": "主要為第三類，阿里山鄉為高度偏遠", "has_remote_districts": true, "remote_districts": [{"district": "阿里山鄉", "zone": 4, "source": "衛福部城鄉分類"}], "source": "衛福部城鄉分類", "districts": [{"district": "番路鄉", "zone": 3}, {"district": "梅山鄉", "zone": 3}, {"district": "竹崎鄉", "zone": 3}, {"district": "阿里山", "zone": 3}, {"district": "中埔鄉", "zone": 3}, {"district": "大埔鄉", "zone": 3}, {"district": "水上鄉", "zone": 3}, {"district": "鹿草鄉", "zone": 3}, {"district": "太保市", "zone": 3}, {"district": "朴子市", "zone": 3}, {"district": "東石鄉", "zone": 3}, {"district": "六腳鄉", "zone": 3}, {"district": "新港鄉", "zone": 3}, {"district": "民雄鄉", "zone": 3}, {"district": "大林鎮", "zone": 3}, {"district": "溪口鄉", "zone": 3}, {"district": "義竹鄉", "zone": 3}, {"district": "布袋鎮", "zone": 3}]}, {"city": "屏東縣", "zone": 3, "is_remote": true, "note": "主要為第三類，原住民鄉鎮為高度偏遠", "has_remote_districts": true, "remote_districts": [{"district": "霧臺鄉", "zone": 4, "source": "衛福部城鄉分類"}, {"district": "瑪家鄉", "zone": 4, "source": "衛福部城鄉分類"}, {"district": "泰武鄉", "zone": 4, "source": "衛福部城鄉分類"}, {"district": "來義鄉", "zone": 4, "source": "衛福部城鄉分類"}, {"district": "春日鄉", "zone": 4, "source": "衛福部城鄉分類"}, {"district": "獅子鄉", "zone": 4, "source": "衛福部城鄉分類"}, {"district": "牡丹鄉", "zone": 4, "source": "衛福部城鄉分類"}, {"district": "三地門鄉", "zone": 4, "source": "衛福部城鄉分類"}, {"district": "琉球鄉", "zone": 4, "source": "衛福部城鄉分類"}, {"district": "滿州鄉", "zone": 3, "source": "衛福部城鄉分類"}], "source": "衛福部城鄉分類", "districts": [{"district": "屏東市", "zone": 3}, {"district": "三地門", "zone": 3}, {"district": "霧台鄉", "zone": 3}, {"district": "瑪家鄉", "zone": 4}, {"district": "九如鄉", "zone": 3}, {"district": "里港鄉", "zone": 3}, {"district": "高樹鄉", "zone": 3}, {"district": "鹽埔鄉", "zone": 3}, {"district": "長治鄉", "zone": 3}, {"district": "麟洛鄉", "zone": 3}, {"district": "竹田鄉", "zone": 3}, {"district": "內埔鄉", "zone": 3}, {"district": "萬丹鄉", "zone": 3}, {"district": "潮州鎮", "zone": 3}, {"district": "泰武鄉", "zone": 4}, {"district": "來義鄉", "zone": 4}, {"district": "萬巒鄉", "zone": 3}, {"district": "崁頂鄉", "zone": 3}, {"district": "新埤鄉", "zone": 3}, {"district": "南州鄉", "zone": 3}, {"district": "林邊鄉", "zone": 3}, {"district": "東港鎮", "zone": 3}, {"district": "琉球鄉", "zone": 4}, {"district": "佳冬鄉", "zone": 3}, {"district": "新園鄉", "zone": 3}, {"district": "枋寮鄉", "zone": 3}, {"district": "枋山鄉", "zone": 3}, {"district": "春日鄉", "zone": 4}, {"district": "獅子鄉", "zone": 4}, {"district": "車城鄉", "zone": 3}, {"district": "牡丹鄉", "zone": 4}, {"district": "恆春鎮", "zone": 3}, {"district": "滿州鄉", "zone": 3}]}, {"city": "宜蘭縣", "zone": 3, "is_remote": true, "note": "主要為第三類，大同鄉、南澳鄉為高度偏遠", "has_remote_districts": true, "remote_districts": [{"district": "大同鄉", "zone": 4, "source": "衛福部城鄉分類"}, {"district": "南澳鄉", "zone": 4, "source": "衛福部城鄉分類"}], "source": "衛福部城鄉分類", "districts": [{"district": "宜蘭市", "zone": 3}, {"district": "頭城鎮", "zone": 3}, {"district": "礁溪鄉", "zone": 3}, {"district": "壯圍鄉", "zone": 3}, {"district": "員山鄉", "zone": 3}, {"district": "羅東鎮", "zone": 3}, {"district": "三星鄉", "zone": 3}, {"district": "大同鄉", "zone": 4}, {"district": "五結鄉", "zone": 3}, {"district": "冬山鄉", "zone": 3}, {"district": "蘇澳鎮", "zone": 3}, {"district": "南澳鄉", "zone": 4}]}, {"city": "花蓮縣", "zone": 4, "is_remote": true, "note": "全縣皆為第四類（高度偏遠）", "source": "衛福部城鄉分類", "districts": [{"district": "花蓮市", "zone": 4}, {"district": "新城鄉", "zone": 4}, {"district": "秀林鄉", "zone": 4}, {"district": "吉安鄉", "zone": 4}, {"district": "壽豐鄉", "zone": 4}, {"district": "鳳林鎮", "zone": 4}, {"district": "光復鄉", "zone": 4}, {"district": "豐濱鄉", "zone": 4}, {"district": "瑞穗鄉", "zone": 4}, {"district": "萬榮鄉", "zone": 4}, {"district": "玉里鎮", "zone": 4}, {"district": "卓溪鄉", "zone": 4}, {"district": "富里鄉", "zone": 4}]}, {"city": "臺東縣", "zone": 4, "is_remote": true, "note": "全縣皆為第四類（高度偏遠）", "source": "衛福部城鄉分類", "districts": [{"district": "台東市", "zone": 4}, {"district": "綠島鄉", "zone": 4}, {"district": "蘭嶼鄉", "zone": 4}, {"district": "延平鄉", "zone": 4}, {"district": "卑南鄉", "zone": 4}, {"district": "鹿野鄉", "zone": 4}, {"district": "關山鎮", "zone": 4}, {"district": "海端鄉", "zone": 4}, {"district": "池上鄉", "zone": 4}, {"district": "東河鄉", "zone": 4}, {"district": "成功鎮", "zone": 4}, {"district": "長濱鄉", "zone": 4}, {"district": "太麻里", "zone": 4}, {"district": "金峰鄉", "zone": 4}, {"district": "大武鄉", "zone": 4}, {"district": "達仁鄉", "zone": 4}]}, {"city": "澎湖縣", "zone": 4, "is_remote": true, "note": "離島，全縣皆為第四類", "source": "衛福部城鄉分類", "districts": [{"district": "馬公市", "zone": 4}, {"district": "西嶼鄉", "zone": 4}, {"district": "望安鄉", "zone": 4}, {"district": "七美鄉", "zone": 4}, {"district": "白沙鄉", "zone": 4}, {"district": "湖西鄉", "zone": 4}]}, {"city": "金門縣", "zone": 4, "is_remote": true, "note": "離島，全縣皆為第四類", "source": "衛福部城鄉分類", "districts": [{"district": "金沙鎮", "zone": 4}, {"district": "金湖鎮", "zone": 4}, {"district": "金寧鄉", "zone": 4}, {"district": "金城鎮", "zone": 4}, {"district": "烈嶼鄉", "zone": 4}, {"district": "烏坵鄉", "zone": 4}]}, {"city": "連江縣", "zone": 4, "is_remote": true, "note": "離島（馬祖），全縣皆為第四類", "source": "衛福部城鄉分類", "districts": [{"district": "南竿鄉", "zone": 4}, {"district": "北竿鄉", "zone": 4}, {"district": "莒光鄉", "zone": 4}, {"district": "東引鄉", "zone": 4}]}], "zone_summary": {"1": {"label": "第一類", "description": "都會核心區（面積 < 500 km²）", "b2_amount": 1680}, "2": {"label": "第二類", "description": "一般地區（面積 500-1,500 km²）", "b2_amount": 1840}, "3": {"label": "第三類", "description": "偏遠地區（面積 > 1,500 km²）", "b2_amount": 2000}, "4": {"label": "第四類", "description": "高度偏遠（離島/原鄉/山地）", "b2_amount": 2400}}}</script>
+<script>
+// CARD-054 + CARD-058b：14 區命名統一「<emoji> <中文>(<XX碼/項>)」；D 改由 renderer 注入（service_codes_d.json + DA01 user_input pricing），不再 hardcode 空 entry
+const CATS=[
+{id:"EA",name:"🚿 如廁及沐浴輔具(EA碼)",items:[
+{c:"EA01-1",n:"馬桶增高器"},{c:"EA01-2",n:"便盆椅"},{c:"EA01-3",n:"沐浴椅"}]},
+{id:"EB",name:"🚶 行動輔具(EB碼)",items:[
+{c:"EB01",n:"單支枴杖-不銹鋼製"},{c:"EB02",n:"單支枴杖-鋁製"},
+{c:"EB03",n:"助行器"},{c:"EB04",n:"帶輪型助步車(助行椅)"}]},
+{id:"EC",name:"♿ 輪椅及配件(EC碼)",items:[
+{c:"EC01",n:"輪椅-A款(非輕量化量產型)"},{c:"EC02",n:"輪椅-B款(輕量化量產型)"},
+{c:"EC03",n:"輪椅-C款(量身訂製型)"},
+{c:"EC04",n:"輪椅附加功能-A款(利於移位)"},{c:"EC05",n:"輪椅附加功能-B款(仰躺)"},
+{c:"EC06",n:"輪椅附加功能-C款(空中傾倒)"},
+{c:"EC07",n:"擺位系統-A款(平面型背靠)"},{c:"EC08",n:"擺位系統-B款(曲面適形背靠)"},
+{c:"EC09",n:"擺位系統-C款(軀幹側支撐架)"},{c:"EC10",n:"擺位系統-D款(頭靠系統)"},
+{c:"EC11",n:"電動輪椅"},{c:"EC12",n:"電動代步車"}]},
+{id:"ED",name:"🏋️ 移位輔具(ED碼)",items:[
+{c:"ED01",n:"移位腰帶"},{c:"ED02",n:"移位板"},{c:"ED03",n:"人力移位吊帶"},
+{c:"ED04",n:"移位滑墊-A款"},{c:"ED05",n:"移位滑墊-B款"},
+{c:"ED06",n:"移位轉盤"},{c:"ED07",n:"移位機"},{c:"ED08",n:"移位機吊帶"}]},
+{id:"EE",name:"📢 溝通及訊號輔具(EE碼)",items:[
+{c:"EE01",n:"電話擴音器"},{c:"EE02",n:"電話閃光震動器"},
+{c:"EE03",n:"火警閃光警示器"},{c:"EE04",n:"門鈴閃光器"},{c:"EE05",n:"無線震動警示器"}]},
+{id:"EF",name:"🏠 生活輔具(EF碼)",items:[
+{c:"EF01",n:"衣著用輔具"},{c:"EF02",n:"居家用生活輔具"},{c:"EF03",n:"飲食用輔具"}]},
+{id:"EG",name:"🛏️ 壓瘡預防輔具(EG碼)",items:[
+{c:"EG01",n:"氣墊床-A款"},{c:"EG02",n:"氣墊床-B款"},
+{c:"EG03",n:"輪椅座墊-A款(塑膠氣囊)"},{c:"EG04",n:"輪椅座墊-B款(橡膠氣囊)"},
+{c:"EG05",n:"輪椅座墊-C款(液態凝膠)"},{c:"EG06",n:"輪椅座墊-D款(固態凝膠)"},
+{c:"EG07",n:"輪椅座墊-E款(填充氣囊)"},{c:"EG08",n:"輪椅座墊-F款(交替充氣)"},
+{c:"EG09",n:"輪椅座墊-G款(量製型)"}]},
+{id:"EH",name:"🛌 居家照顧床及爬梯機(EH碼)",items:[
+{c:"EH01",n:"居家用照顧床"},{c:"EH02",n:"照顧床附加-A款(床面升降)"},
+{c:"EH03",n:"照顧床附加-B款(電動升降)"},
+{c:"EH04",n:"爬梯機(單趟)"},{c:"EH05",n:"爬梯機(月)"}]},
+{id:"FA",name:"🏗️ 居家無障礙設施(FA碼)",items:[
+{c:"FA01",n:"扶手"},{c:"FA02",n:"可動式扶手"},
+{c:"FA03",n:"非固定式斜坡板A款"},{c:"FA04",n:"非固定式斜坡板B款"},
+{c:"FA05",n:"非固定式斜坡板C款"},{c:"FA06",n:"固定式斜坡道"},
+{c:"FA07",n:"架高式和式地板拆除"},{c:"FA08",n:"反光貼條或消光"},
+{c:"FA09",n:"隔間"},{c:"FA10",n:"防滑措施"},
+{c:"FA11",n:"門A款"},{c:"FA12",n:"門B款"},
+{c:"FA13",n:"水龍頭"},{c:"FA14",n:"改善浴缸"},
+{c:"FA15",n:"改善洗臉台"},{c:"FA16",n:"改善馬桶"},
+{c:"FA17",n:"壁掛式淋浴椅(床)"},{c:"FA18",n:"改善流理台"},
+{c:"FA19",n:"改善抽油煙機"},{c:"FA20",n:"特殊簡易洗槽"},
+{c:"FA21",n:"特殊簡易浴槽"}]}
+];
+
+// CARD-053a：state 改 Map（code → qty；qty>0 計入，0 自動 delete）
+const state=new Map();// code -> qty (>0 計入)
+const rentChoice=new Map();// code → "buy"|"rent"（僅 type=both 用；buy 預設）
+// CARD-058b：DA01 user_input pricing 用獨立 Map（state Map 結構不破壞）— code → 個案輸入金額（整數元）
+const inputAmountMap=new Map();
+// CARD-058b：D 區獨立縣市/行政區（不污染 P.city / P.zone — 058f 案主條件 city 與本卡 D 區 city 語意分離）
+let dCity="";
+let dDistrict="";
+let CITY_ZONES={cities:[],zone_summary:{}};
+let P={};
+let ITEM_META={};
+
+try {
+  const metaEl=document.getElementById("item-meta");
+  if(metaEl) ITEM_META=JSON.parse(metaEl.textContent||"{}")||{};
+}catch(e){ITEM_META={};}
+
+// CARD-058b：載入 city_zones.json（D 區下拉用）
+try {
+  const czEl=document.getElementById("city-zones");
+  if(czEl){
+    const raw=czEl.textContent||"{}";
+    const data=JSON.parse(raw);
+    if(data&&typeof data==="object"){
+      CITY_ZONES={cities:Array.isArray(data.cities)?data.cities:[],zone_summary:data.zone_summary||{}};
+    }
+  }
+}catch(e){CITY_ZONES={cities:[],zone_summary:{}};}
+
+/* CARD-044 + CARD-054：BB/BC/BD/C 維持 prepend；G 改 push（移到末端，修正 CARD-044 把 G 卡在 EA 前的 bug）。
+   注入失敗 / 空陣列 → 不報錯，CATS 保持原樣。 */
+try {
+  const extraEl=document.getElementById("extra-sections");
+  if(extraEl){
+    const raw=extraEl.textContent||"[]";
+    const extras=JSON.parse(raw);
+    if(Array.isArray(extras)&&extras.length){
+      // 正規化 entry 形狀（兼容 {id,name,items:[{c,n}]}）
+      const normalized=extras.filter(s=>s&&s.id&&Array.isArray(s.items)).map(s=>({
+        id:s.id, name:s.name||s.id,
+        items:s.items.filter(i=>i&&i.c&&i.n).map(i=>({c:i.c,n:i.n}))
+      }));
+      // CARD-054 + CARD-056：G/S/OT push 到末端，其餘（BA/BB/BC/BD/C）prepend 到最前
+      const APPEND_IDS=new Set(["G","S","OT"]);
+      const appendExtras=normalized.filter(s=>APPEND_IDS.has(s.id));
+      const otherExtras=normalized.filter(s=>!APPEND_IDS.has(s.id));
+      if(otherExtras.length)CATS.splice(0,0,...otherExtras);// BA/BB/BC/BD/C → 最前
+      if(appendExtras.length)CATS.push(...appendExtras);// G/S/OT → 末端（依 _EXTRA_SECTIONS_META 順序：G, S, OT）
+    }
+  }
+}catch(e){/* swallow：CARD-044 注入失敗不影響 9 族 */}
+// CARD-056：S / OT 改由 renderer 從 service_codes_{s,ot}.json 注入（CARD-054 hardcode 空 entry 已移除避免 duplicate detector warn）；
+// D 區仍由 hardcode 空 entry 佔位（DA01 屬 user_input pricing，CARD-058 處理）。
+
+function parseParams(){
+  const u=new URLSearchParams(location.search);
+  P={
+    user_id:u.get("user_id")||"",
+    session:u.get("session")||"",
+    channel:u.get("channel")||"",
+    guild:u.get("guild")||"",
+    // CARD-035：webhook（Web B fetch 目標）+ issued_at（session TTL）
+    webhook:u.get("webhook")||"",
+    issued_at:u.get("issued_at")||"",
+    // CARD-042：URL query 帶橫幅 + 進度條資料
+    cms:u.get("cms")||"",
+    income:u.get("income")||"",
+    city:u.get("city")||"",
+    zone:u.get("zone")||"",
+    foreign_care:u.get("foreign_care")||"",
+    // CARD-058：identity canonical flags（comma-list：foreign_caregiver,indigenous,...）
+    identity:u.get("identity")||"",
+    b1_quota:u.get("b1_quota")||"",b1_used:u.get("b1_used")||"",b1_remaining:u.get("b1_remaining")||"",
+    b2_quota:u.get("b2_quota")||"",b2_used:u.get("b2_used")||"",b2_remaining:u.get("b2_remaining")||"",
+    b3_quota:u.get("b3_quota")||"",b3_used:u.get("b3_used")||"",b3_remaining:u.get("b3_remaining")||"",
+    b4_quota:u.get("b4_quota")||"",b4_used:u.get("b4_used")||"",b4_remaining:u.get("b4_remaining")||"",
+    // CARD-058e：S 包 quota（URL 沒帶 → 走 SUBSIDY.S.default_quota=87780 fallback）
+    s_quota:u.get("s_quota")||""
+  };
+  // CARD-058：URLSearchParams.has() 區分 undefined / 0（未帶入額度 vs 已用完）
+  // CARD-058f-fix：改為查 P 物件本身（delete P.b*_quota 後即時生效，不依賴 init 時的 URLSearchParams）
+  P._has=function(k){return Object.prototype.hasOwnProperty.call(P,k)&&P[k]!=null&&P[k]!=="";};
+}
+
+/* CARD-042：status banner（URL query → tag 列） */
+function renderStatusBanner(){
+  const box=document.getElementById("status-banner");
+  if(!box)return;
+  const entries=[];
+  if(P.cms)entries.push({label:"CMS",val:"第 "+P.cms+" 級"});
+  if(P.income){
+    const map={low:"低收入戶",mid_low:"中低收入戶",general:"一般戶"};
+    entries.push({label:"收入別",val:map[P.income]||P.income});
+  }
+  if(P.city)entries.push({label:"縣市",val:P.city});
+  if(P.zone)entries.push({label:"分區",val:"第 "+P.zone+" 類"});
+  if(P.foreign_care){
+    const fc=P.foreign_care==="true"||P.foreign_care==="1";
+    entries.push({label:"外看",val:fc?"有":"無",warn:fc});
+  }
+  if(!entries.length){box.style.display="none";return;}
+  box.style.display="flex";
+  box.innerHTML="";
+  entries.forEach(e=>{
+    const tag=document.createElement("span");
+    tag.className="sb-tag"+(e.warn?" warn":"");
+    tag.innerHTML='<span class="sb-label">'+e.label+'</span>'+e.val;
+    box.appendChild(tag);
+  });
+}
+
+/* CARD-058g：sticky quota-bars 改 epizy 表格樣式（4 欄 × 6 row + 即時刷 spent/coshare/remaining） */
+const _QUOTA_TABLE_ROWS=[
+  {bucket:"B1",label:"照顧及專業服務(BC項)"},
+  {bucket:"B2",label:"交通接送(D項)"},// label 會依 city/zone 補
+  {bucket:"B3",label:"輔具及無障礙環境改善服務(EF項)"},
+  {bucket:"B4",label:"喘息服務(G項)"},
+  {bucket:"S", label:"短期替代照顧服務(S項)"},
+  {bucket:"OT",label:"營養餐飲服務(OT項)"}
+];
+// CARD-058b：依 dCity/dDistrict 對 city_zones 查詢 zone（優先）；fallback P.zone（058f 案主條件 URL 帶值）
+// CARD-058b-fix2：districts 欄位（全 22 縣市 × 368 區）優先；remote_districts（既有偏遠對照）fallback
+function _resolveDZone(){
+  if(dCity){
+    const cityRec=(CITY_ZONES.cities||[]).find(c=>c.city===dCity);
+    if(cityRec){
+      if(dDistrict){
+        // CARD-058b-fix2：優先讀 districts（全 22 縣市補齊）
+        if(Array.isArray(cityRec.districts)){
+          const dr=cityRec.districts.find(rd=>rd.district===dDistrict);
+          if(dr&&typeof dr.zone==="number")return dr.zone;
+        }
+        // 既有 058b：remote_districts fallback
+        if(Array.isArray(cityRec.remote_districts)){
+          const dr=cityRec.remote_districts.find(rd=>rd.district===dDistrict);
+          if(dr&&typeof dr.zone==="number")return dr.zone;
+        }
+      }
+      if(typeof cityRec.zone==="number")return cityRec.zone;
+    }
+  }
+  // fallback 058f 案主條件 URL 帶值
+  const z=parseInt(P.zone,10);
+  if(!isNaN(z))return z;
+  return null;
+}
+function _quotaRowLabel(row){
+  if(row.bucket==="B2"){
+    // CARD-058g + CARD-058b：D 區「服務項目」帶 city/district 優先級（dCity 優先 / P.city fallback）
+    const city=(dCity||P.city||"").trim();
+    const district=(dDistrict||"").trim();
+    if(city&&district)return row.label+"─"+city+" "+district;
+    if(city){
+      const z=_resolveDZone();
+      if(z!=null)return row.label+"─"+city+" 第"+z+"類";
+      return row.label+"─"+city;
+    }
+  }
+  return row.label;
+}
+function renderQuotaBars(){
+  const box=document.getElementById("quota-bars");
+  const body=document.getElementById("quota-bars-body");
+  if(!box||!body)return;
+  body.innerHTML="";
+  _QUOTA_TABLE_ROWS.forEach(row=>{
+    const tr=document.createElement("tr");
+    tr.setAttribute("data-bucket",row.bucket);
+    // 服務項目
+    const td0=document.createElement("td");td0.textContent=_quotaRowLabel(row);
+    // 自付額（updateQuotaTable 即時填）
+    const td1=document.createElement("td");td1.className="qt-coshare";td1.textContent="$0";
+    td1.setAttribute("data-col","coshare");
+    // 已使用額
+    const td2=document.createElement("td");td2.className="qt-used";td2.textContent="$0";
+    td2.setAttribute("data-col","used");
+    // 餘額
+    const td3=document.createElement("td");td3.className="qt-remaining";td3.textContent="$0";
+    td3.setAttribute("data-col","remaining");
+    tr.appendChild(td0);tr.appendChild(td1);tr.appendChild(td2);tr.appendChild(td3);
+    body.appendChild(tr);
+  });
+  box.style.display="block";
+  updateQuotaTable();
+}
+function _fmtQuotaMoney(v){
+  if(v==null||(typeof v==="number"&&isNaN(v)))return "—";
+  return "$"+Number(v).toLocaleString();
+}
+function updateQuotaTable(){
+  const body=document.getElementById("quota-bars-body");
+  if(!body)return;
+  _QUOTA_TABLE_ROWS.forEach(row=>{
+    const tr=body.querySelector('tr[data-bucket="'+row.bucket+'"]');
+    if(!tr)return;
+    const spent=_bucketSpent(row.bucket);
+    const quota=_bucketQuota(row.bucket);
+    const rate=_bucketCopayRate(row.bucket);
+    const tdCo=tr.querySelector('td[data-col="coshare"]');
+    const tdUsed=tr.querySelector('td[data-col="used"]');
+    const tdRem=tr.querySelector('td[data-col="remaining"]');
+    // 自付額：rate=null（B2 缺 city/zone）→ 顯「—」
+    if(rate==null){tdCo.textContent="—";tdCo.classList.add("qt-muted");}
+    else{tdCo.textContent=_fmtQuotaMoney(Math.round(spent*rate));tdCo.classList.remove("qt-muted");}
+    // 已使用額
+    tdUsed.textContent=_fmtQuotaMoney(spent);
+    // 餘額：quota=null（B2 缺 quota / OT 永無 quota）→ 顯「—」
+    tdRem.classList.remove("qt-zero","qt-muted");
+    if(quota==null){tdRem.textContent="—";tdRem.classList.add("qt-muted");}
+    else{
+      const rem=quota-spent;
+      tdRem.textContent=_fmtQuotaMoney(Math.max(0,rem));
+      if(rem<=0)tdRem.classList.add("qt-zero");
+    }
+  });
+}
+
+/* CARD-042：對每個 item 建單價 chip + （type=both 時）租賃 radio
+   CARD-052：移除 service 型早 return；改為「price 缺/0 才不顯示」。
+             service 型（BA/BB/BC/BD/C/G）顯示「$260/次」；buy 型保留「購 $1,200」；rent/both 既有邏輯不動。 */
+function buildPriceRow(code){
+  const m=ITEM_META[code];
+  if(!m)return null;
+  const row=document.createElement("div");
+  row.className="price-row";
+  const chip=document.createElement("span");
+  chip.className="price-chip "+(m.type||"buy");
+  chip.dataset.code=code;
+  function chipText(mode){
+    if(mode==="rent"&&m.rent_price!=null)return "租 $"+m.rent_price.toLocaleString()+"/月";
+    if(m.price!=null)return "購 $"+m.price.toLocaleString();
+    return "—";
+  }
+  if(m.type==="rent"){
+    chip.textContent=(m.rent_price!=null)?"租 $"+m.rent_price.toLocaleString()+"/月":"租賃";
+  }else if(m.type==="both"){
+    chip.textContent=chipText("buy");
+    rentChoice.set(code,"buy");
+    const sw=document.createElement("span");
+    sw.className="rent-switch";
+    ["buy","rent"].forEach(mode=>{
+      const lbl=document.createElement("label");
+      const rd=document.createElement("input");
+      rd.type="radio";rd.name="rent-"+code;rd.value=mode;
+      if(mode==="buy")rd.checked=true;
+      rd.addEventListener("change",()=>{
+        if(rd.checked){
+          rentChoice.set(code,mode);
+          chip.textContent=chipText(mode);
+        }
+      });
+      lbl.appendChild(rd);
+      lbl.appendChild(document.createTextNode(mode==="buy"?"購":"租"));
+      sw.appendChild(lbl);
+    });
+    row.appendChild(chip);
+    row.appendChild(sw);
+    return row;
+  }else if(m.type==="service"){
+    // CARD-052：service 型（BA/BB/BC/BD/C/G）顯示「$260/次」；price 缺/0 → 不顯示（graceful）
+    if(!(m.price&&m.price>0))return null;
+    chip.textContent="$"+m.price.toLocaleString()+(m.unit?"/"+m.unit:"");
+  }else{
+    // type=buy（or fallback）：CARD-052 加 price>0 守門避免顯示「購 $0」
+    if(!(m.price&&m.price>0))return null;
+    chip.textContent="購 $"+m.price.toLocaleString();
+  }
+  row.appendChild(chip);
+  return row;
+}
+
+function getQueryBaseUrl(){
+  try {
+    var el = document.getElementById("query-base-url");
+    if (!el) return "";
+    return JSON.parse(el.textContent || '""');
+  } catch(e) { return ""; }
+}
+
+function render(){
+  // CARD-053a-fix：duplicate code detector — 14 區 EXTRA_SECTIONS 與 hardcode CATS 重複會 state 覆蓋 / 雙重 stepper
+  const _seen=new Set(),_dupes=[];
+  CATS.forEach(c=>c.items.forEach(it=>{if(_seen.has(it.c))_dupes.push(it.c);else _seen.add(it.c);}));
+  if(_dupes.length)console.warn("[CARD-053a-fix] duplicate codes detected:",_dupes);
+  const root=document.getElementById("sections");
+  // CARD-058g：6 包預設摺疊 — <details class="bucket-wrapper"> 包 summary + content；點 summary native toggle
+  const bucketContent=new Map();// bucket → .bucket-content DOM
+  CATS.forEach(cat=>{
+    const bucket=BUCKET_OF[cat.id]||"NOTE";
+    // 該包 wrapper 不存在 → 新建 details + summary + content
+    if(!bucketContent.has(bucket)){
+      const wrapper=document.createElement("details");
+      wrapper.className="bucket-wrapper";
+      wrapper.setAttribute("data-bucket",bucket);
+      // 預設不加 open（全摺疊）
+      const summary=document.createElement("summary");
+      summary.className="bucket-summary";
+      summary.setAttribute("data-bucket",bucket);
+      const content=document.createElement("div");
+      content.className="bucket-content";
+      wrapper.appendChild(summary);
+      wrapper.appendChild(content);
+      root.appendChild(wrapper);
+      bucketContent.set(bucket,content);
+    }
+    const sec=document.createElement("div");sec.className="sec";sec.setAttribute("data-fam",cat.id);
+    sec.setAttribute("data-bucket",bucket);// CARD-058c：S/OT 鎖樣式 hook
+    const secHdr=document.createElement("div");secHdr.className="sec-header";
+    const h2=document.createElement("h2");h2.textContent=cat.name;
+    const secActions=document.createElement("div");secActions.className="sec-actions";
+    const btnAll=document.createElement("button");btnAll.type="button";btnAll.textContent="全選";
+    const btnNone=document.createElement("button");btnNone.type="button";btnNone.textContent="清除";
+    // CARD-058e：S/OT 解鎖（058c NOTE disabled 已移除）— 全選/清除按鈕對所有 bucket 啟用
+    secActions.appendChild(btnAll);secActions.appendChild(btnNone);
+    const secCount=document.createElement("span");secCount.className="sec-count";secCount.textContent="0 / "+cat.items.length;
+    secHdr.appendChild(h2);secHdr.appendChild(secActions);secHdr.appendChild(secCount);
+    sec.appendChild(secHdr);
+    // CARD-058b：D 區加「縣市/行政區」下拉（只影響 D 包 B2 per_trip 計算，不 cascade）
+    if(cat.id==="D"){
+      const dz=_buildDZonePicker();
+      sec.appendChild(dz);
+    }
+    const items=document.createElement("div");items.className="items";
+    cat.items.forEach(it=>{
+      // CARD-053a：label → div（不再用 label[for=cb] 行為，stepper 自有 click 事件）
+      const row=document.createElement("div");row.className="itm";row.setAttribute("data-code",it.c);
+      const body=document.createElement("div");body.className="i-body";
+      const name=document.createElement("div");name.className="i-name";name.textContent=it.n;
+      const code=document.createElement("div");code.className="i-code";code.textContent=it.c;
+      // CARD-058-modal：點 i-code 跳 modal 顯該 code 官方說明
+      code.style.cursor="pointer";
+      code.style.textDecoration="underline";
+      code.setAttribute("role","button");
+      code.setAttribute("tabindex","0");
+      code.setAttribute("aria-label","查看 "+it.c+" "+it.n+" 官方說明");
+      code.dataset.code=it.c;
+      code.dataset.name=it.n;
+      body.appendChild(name);body.appendChild(code);
+      /* CARD-042：租賃 / 單價 chip（僅在 ITEM_META 有資料時顯示）*/
+      const pr=buildPriceRow(it.c);
+      if(pr)body.appendChild(pr);
+      row.appendChild(body);
+      // CARD-053a：epizy 風格 stepper —[$小計] [-] [text] [+]
+      const stp=buildStepper(it.c,it.n);
+      // CARD-058e：S/OT 解鎖（058c stepper input disabled 已移除）
+      row.appendChild(stp);
+      items.appendChild(row);
+    });
+    sec.appendChild(items);
+    // CARD-053a：btnAll → state.set(code, 1) for all；btnNone → state.delete + qv=0
+    btnAll.addEventListener("click",ev=>{
+      // CARD-058g：避免 click 冒泡到 details summary（如 btnAll 在 sec-header 內，sec 在 bucket-content 內，不在 summary 內，原則安全；保險起見 stop）
+      ev.stopPropagation();
+      // CARD-058e：S/OT 解鎖（058c NOTE return guard 已移除）
+      cat.items.forEach(it=>{
+        const cur=state.get(it.c)||0;
+        if(cur===0){applyQty(it.c,1);}
+      });
+    });
+    btnNone.addEventListener("click",ev=>{
+      ev.stopPropagation();
+      cat.items.forEach(it=>{
+        if(state.has(it.c)){applyQty(it.c,0);}
+      });
+    });
+    // CARD-058g：細項區 sec append 到該包的 .bucket-content（grid 3 欄並排），非 sections root
+    bucketContent.get(bucket).appendChild(sec);
+  });
+}
+
+// CARD-058b：建 D 區「縣市/行政區」下拉 — 只影響 D 包 B2 per_trip 計算（不 cascade 到 B1/B3/B4）
+function _buildDZonePicker(){
+  const wrap=document.createElement("div");
+  wrap.className="d-zone-picker";
+  wrap.id="d-zone-picker";
+  // 縣市 select
+  const lblCity=document.createElement("label");lblCity.htmlFor="d-city";lblCity.textContent="所在縣市";
+  const selCity=document.createElement("select");selCity.id="d-city";selCity.setAttribute("aria-label","D 區所在縣市");
+  const optEmptyC=document.createElement("option");optEmptyC.value="";optEmptyC.textContent="-- 請選縣市 --";selCity.appendChild(optEmptyC);
+  (CITY_ZONES.cities||[]).forEach(c=>{
+    const opt=document.createElement("option");opt.value=c.city;opt.textContent=c.city;
+    selCity.appendChild(opt);
+  });
+  // 行政區 select（依 city cascade）
+  const lblDist=document.createElement("label");lblDist.htmlFor="d-district";lblDist.textContent="行政區";
+  const selDist=document.createElement("select");selDist.id="d-district";selDist.setAttribute("aria-label","D 區行政區");
+  const optEmptyD=document.createElement("option");optEmptyD.value="";optEmptyD.textContent="（依縣市預設分區）";selDist.appendChild(optEmptyD);
+  // 提示文字
+  const hint=document.createElement("span");hint.className="dz-hint";hint.id="d-zone-hint";hint.textContent="";
+  // change handlers
+  selCity.addEventListener("change",ev=>{
+    ev.stopPropagation();
+    dCity=selCity.value||"";
+    // 縣市改變 → 重設行政區（避免殘留錯 zone）
+    dDistrict="";
+    selDist.innerHTML="";
+    selDist.appendChild(optEmptyD);
+    if(dCity){
+      const cityRec=(CITY_ZONES.cities||[]).find(c=>c.city===dCity);
+      const hasAll=!!(cityRec&&Array.isArray(cityRec.districts)&&cityRec.districts.length);
+      const hasRemote=!!(cityRec&&Array.isArray(cityRec.remote_districts)&&cityRec.remote_districts.length);
+      if(hasAll){
+        // CARD-058b-fix2：22 縣市全 districts 補齊 → 顯該縣市全 368 區（不只偏遠）；偏遠 zone 異於縣市預設時加標籤
+        optEmptyD.textContent="（依縣市預設分區）";
+        selDist.disabled=false;
+        selDist.title="";
+        selDist.removeAttribute("aria-describedby");
+        const cityZone=cityRec.zone;
+        cityRec.districts.forEach(rd=>{
+          const opt=document.createElement("option");opt.value=rd.district;
+          opt.textContent=(typeof rd.zone==="number"&&rd.zone!==cityZone)?(rd.district+"（第"+rd.zone+"類）"):rd.district;
+          selDist.appendChild(opt);
+        });
+      }else if(hasRemote){
+        // CARD-058b-fix（fallback）：只有 remote_districts 沒 districts → 顯偏遠區
+        optEmptyD.textContent="（依縣市預設分區）";
+        selDist.disabled=false;
+        selDist.title="";
+        selDist.removeAttribute("aria-describedby");
+        cityRec.remote_districts.forEach(rd=>{
+          const opt=document.createElement("option");opt.value=rd.district;opt.textContent=rd.district+"（第"+rd.zone+"類）";
+          selDist.appendChild(opt);
+        });
+      }else{
+        // CARD-058b-fix：沒 remote_districts 縣市（如彰化縣）→ disabled + 提示「整縣市同分區」+ a11y
+        const zoneText=cityRec?("第 "+cityRec.zone+" 類"):"";
+        optEmptyD.textContent="（"+dCity+"全縣市同 "+zoneText+"，無需選行政區）";
+        selDist.disabled=true;
+        selDist.title=dCity+"全縣市為 "+zoneText+"，行政區下拉停用（衛福部 city_zones 資料只記偏遠區）";
+        selDist.setAttribute("aria-describedby","d-zone-hint");
+      }
+    }else{
+      // dCity 清空 → 還原 enable + 預設提示
+      optEmptyD.textContent="（依縣市預設分區）";
+      selDist.disabled=false;
+      selDist.title="";
+      selDist.removeAttribute("aria-describedby");
+    }
+    // CARD-058f-fix：使用者改 D 區縣市 → invalidate P.b2_quota（讓 _resolveDZone 重新算）+ URL 同步刪
+    delete P.b2_quota;
+    try{const u=new URL(location.href);u.searchParams.delete("b2_quota");history.replaceState(null,"",u.toString());}catch(e){}
+    _refreshDZoneHint();
+    // 只重算 B2（不 cascade 到其他包）
+    updateBucketSummary("B2");
+    updateQuotaTable();
+  });
+  selDist.addEventListener("change",ev=>{
+    ev.stopPropagation();
+    dDistrict=selDist.value||"";
+    // CARD-058f-fix：使用者改 D 區行政區 → invalidate P.b2_quota
+    delete P.b2_quota;
+    try{const u=new URL(location.href);u.searchParams.delete("b2_quota");history.replaceState(null,"",u.toString());}catch(e){}
+    _refreshDZoneHint();
+    updateBucketSummary("B2");
+    updateQuotaTable();
+  });
+  wrap.appendChild(lblCity);wrap.appendChild(selCity);
+  wrap.appendChild(lblDist);wrap.appendChild(selDist);
+  wrap.appendChild(hint);
+  // 初始套 URL P.city / P.zone（058f 案主條件）— 但 D 區獨立變數預設空
+  // 不 sync P.city → dCity（語意隔離；058b 採 dCity 優先 / P.city fallback）
+  return wrap;
+}
+function _refreshDZoneHint(){
+  const hint=document.getElementById("d-zone-hint");
+  if(!hint)return;
+  const z=_resolveDZone();
+  if(z!=null){
+    const zs=(CITY_ZONES.zone_summary||{})[String(z)];
+    hint.textContent=zs?("→ "+zs.label+" "+(zs.b2_amount?"額度 $"+zs.b2_amount.toLocaleString()+"/月":"")):"→ 第"+z+"類";
+  }else{
+    hint.textContent="（dCity 缺 → 套 058f URL P.zone fallback；皆缺 → B2 自付額顯需選縣市）";
+  }
+}
+
+// CARD-053a：build epizy 風格 stepper（class 與 epizy DOM 對齊；oninput/onclick attr 對齊）
+// CARD-058b：DA01 user_input 例外 — 中央改 type=number 直接輸金額；+/- 步長 100
+function buildStepper(code,nm){
+  const wrap=document.createElement("div");
+  wrap.className="div_price_count";
+  wrap.id="prct_"+code;
+  wrap.setAttribute("data-code",code);
+  wrap.setAttribute("role","group");
+  wrap.setAttribute("aria-label",nm+" 數量選擇");
+  const m=ITEM_META[code];
+  const isUserInput=!!(m&&m.pricing_type==="user_input");
+  if(isUserInput)wrap.classList.add("user-input");
+  // 該項小計
+  const priceBox=document.createElement("div");priceBox.className="div_CI_price";
+  const priceSpan=document.createElement("span");priceSpan.className="span_CI_price";priceSpan.textContent="$0";
+  priceBox.appendChild(priceSpan);
+  // 三節點容器
+  const counter=document.createElement("div");counter.className="div_counter";
+  const minus=document.createElement("input");
+  minus.className="btn_minus btn";minus.type="button";minus.value="-";
+  minus.setAttribute("onclick","DecreaseCount(this)");
+  minus.setAttribute("aria-label",isUserInput?("減少 "+nm+" 金額（步長 100）"):("減少 "+nm+" 數量"));
+  const txt=document.createElement("input");
+  txt.className="txt_CI_qty";
+  if(isUserInput){
+    // CARD-058b：DA01 user_input — 金額輸入框（type=number，0-99999）
+    txt.type="number";
+    txt.setAttribute("min","0");txt.setAttribute("max","99999");txt.setAttribute("step","1");
+    txt.setAttribute("placeholder","車資");
+    txt.setAttribute("aria-label",nm+" 金額（請輸入車資）");
+    txt.style.width="80px";
+  }else{
+    txt.type="text";
+    txt.setAttribute("inputmode","numeric");
+    txt.setAttribute("maxlength","2");
+    txt.setAttribute("aria-label",nm+" 目前數量");
+  }
+  txt.value="";
+  txt.setAttribute("oninput","onTextInput(this)");
+  const plus=document.createElement("input");
+  plus.className="btn_plus btn";plus.type="button";plus.value="+";
+  plus.setAttribute("onclick","IncreaseCount(this)");
+  plus.setAttribute("aria-label",isUserInput?("增加 "+nm+" 金額（步長 100）"):("增加 "+nm+" 數量"));
+  counter.appendChild(minus);counter.appendChild(txt);counter.appendChild(plus);
+  wrap.appendChild(priceBox);wrap.appendChild(counter);
+  if(isUserInput){
+    const note=document.createElement("span");
+    note.className="user-input-note";
+    note.textContent="※ 請直接輸入車資金額（單趟元）";
+    note.style.fontSize=".7em";note.style.color="var(--muted)";note.style.marginLeft="6px";
+    wrap.appendChild(note);
+  }
+  // price=None / 0 時，加小字提示（CARD-058b：m 已在前面宣告，不重複 const）
+  const t=(m&&m.type)||"buy";
+  const hasPrice=
+    (t==="rent")?(m&&m.rent_price&&m.rent_price>0):
+    (t==="both")?((m&&m.price&&m.price>0)||(m&&m.rent_price&&m.rent_price>0)):
+    (m&&m.price&&m.price>0);
+  if(!hasPrice){
+    wrap.classList.add("no-price");
+    const note=document.createElement("span");
+    note.className="no-price-note";
+    note.textContent="✱ 無單價";
+    wrap.appendChild(note);
+  }
+  return wrap;
+}
+
+function updateCounter(){
+  const n=state.size;
+  document.getElementById("counter").textContent=String(n);
+  document.getElementById("counter-bottom").textContent=String(n);
+  document.getElementById("next-btn").disabled=(n===0);
+}
+
+function updateSectionCounts(){
+  CATS.forEach(cat=>{
+    const sec=document.querySelector('.sec[data-fam="'+cat.id+'"]');
+    if(!sec)return;
+    const count=cat.items.filter(it=>state.has(it.c)).length;
+    const el=sec.querySelector(".sec-count");
+    el.textContent=count+" / "+cat.items.length;
+    el.classList.toggle("has",count>0);
+  });
+}
+
+function buildQueryUrl(){
+  const base=getQueryBaseUrl();
+  if(!base)return "";
+  // CARD-053a：state 改 Map 後內部改 keys filter；對外輸出 codes=A,B,C 形狀不變
+  const codes=Array.from(state.keys()).filter(c=>state.get(c)>0).join(",");
+  const qs=new URLSearchParams();
+  qs.set("codes",codes);
+  // CARD-055a-1：qty pass-through 給 Web B（form `code:N,code:N`，N 為 state Map 數量；user_input DA01 也帶 N=1 啟用旗標）
+  const qty=Array.from(state.entries()).filter(([_,n])=>n>0).map(([c,n])=>c+":"+n).join(",");
+  if(qty)qs.set("qty",qty);
+  if(P.user_id)qs.set("user_id",P.user_id);
+  if(P.session)qs.set("session",P.session);
+  if(P.channel)qs.set("channel",P.channel);
+  if(P.guild)qs.set("guild",P.guild);
+  // CARD-035：把 webhook / issued_at 帶給 Web B
+  if(P.webhook)qs.set("webhook",P.webhook);
+  if(P.issued_at)qs.set("issued_at",P.issued_at);
+  // CARD-063：補助試算 5 欄 pass-through（cms/income/city/zone/foreign_care）讓 Web B → submit_handler 可重算 calc_summary
+  if(P.cms)qs.set("cms",P.cms);
+  if(P.income)qs.set("income",P.income);
+  if(P.city)qs.set("city",P.city);
+  if(P.zone)qs.set("zone",P.zone);
+  if(P.foreign_care)qs.set("foreign_care",P.foreign_care);
+  const sep=base.indexOf("?")>=0?"&":"?";
+  return base+sep+qs.toString();
+}
+
+// CARD-053a：epizy 全域 stepper handlers（onclick / oninput attr 對齊 epizy DOM）
+function _stepperCode(elem){
+  const wrap=elem&&elem.closest?elem.closest(".div_price_count"):null;
+  return wrap?wrap.getAttribute("data-code"):null;
+}
+// CARD-058b：判斷 code 是否走 user_input pricing
+function _isUserInput(code){
+  const m=ITEM_META[code];
+  return !!(m&&m.pricing_type==="user_input");
+}
+window.IncreaseCount=function(btn){
+  const code=_stepperCode(btn);if(!code)return;
+  if(_isUserInput(code)){
+    // CARD-058b：DA01 +/- 步長 100，金額寫 inputAmountMap，state.set("DA01", amt>0 ? 1 : 0)
+    const cur=inputAmountMap.get(code)||0;
+    applyAmount(code,Math.max(0,Math.min(99999,cur+100)));
+    return;
+  }
+  const cur=state.get(code)||0;
+  applyQty(code,Math.max(0,Math.min(99,cur+1)));
+};
+window.DecreaseCount=function(btn){
+  const code=_stepperCode(btn);if(!code)return;
+  if(_isUserInput(code)){
+    const cur=inputAmountMap.get(code)||0;
+    applyAmount(code,Math.max(0,Math.min(99999,cur-100)));
+    return;
+  }
+  const cur=state.get(code)||0;
+  applyQty(code,Math.max(0,Math.min(99,cur-1)));
+};
+window.onTextInput=function(input){
+  const code=_stepperCode(input);if(!code)return;
+  if(_isUserInput(code)){
+    // CARD-058b：DA01 type=number — 直接寫 inputAmountMap，state.set 為啟用旗標
+    let raw=(input.value||"").replace(/[^\d]/g,"");
+    let amt=raw===""?0:parseInt(raw,10);
+    if(isNaN(amt))amt=0;
+    amt=Math.max(0,Math.min(99999,amt));
+    input.value=amt===0?"":String(amt);
+    applyAmount(code,amt,/*fromText=*/true);
+    return;
+  }
+  let raw=(input.value||"").replace(/[^\d]/g,"");
+  if(raw.length>2)raw=raw.slice(0,2);
+  let nv=raw===""?0:parseInt(raw,10);
+  if(isNaN(nv))nv=0;
+  nv=Math.max(0,Math.min(99,nv));
+  // 立刻把 input.value clamp 顯示（避免使用者打 999 還留著）
+  input.value=nv===0?"":String(nv);
+  applyQty(code,nv,/*fromText=*/true);
+};
+// CARD-058b：user_input 商品的 state 寫入入口（與 applyQty 平行）
+function applyAmount(code,amt,fromText){
+  amt=Math.max(0,Math.min(99999,amt|0));
+  if(amt===0){inputAmountMap.delete(code);state.delete(code);}
+  else{inputAmountMap.set(code,amt);state.set(code,1);}
+  const wrap=document.getElementById("prct_"+CSSEsc(code));
+  if(wrap){
+    const txt=wrap.querySelector(".txt_CI_qty");
+    if(txt&&!fromText){txt.value=amt===0?"":String(amt);}
+  }
+  refreshItemRow(code);
+  updateCounter();updateSectionCounts();
+  const owningCat=CATS.find(c=>c.items.some(it=>it.c===code));
+  if(owningCat){
+    const bucket=BUCKET_OF[owningCat.id]||"NOTE";
+    updateBucketSummary(bucket);
+  }
+  updateQuotaTable();
+}
+
+// CARD-053a + CARD-058b：依 type 與 rentChoice 決定本次估算用 price 還是 rent_price；
+// pricing_type=user_input → adapter 走 inputAmountMap（DA01 個案直接輸入車資）
+function effectivePrice(code){
+  const m=ITEM_META[code];if(!m)return null;
+  // CARD-058b：user_input adapter — 不走 N×price，N 只是啟用旗標（>0 計入），金額用 inputAmountMap
+  if(m.pricing_type==="user_input"){
+    const amt=inputAmountMap.get(code);
+    return (typeof amt==="number"&&amt>0)?amt:null;
+  }
+  const t=m.type||"buy";
+  if(t==="rent"){return (m.rent_price&&m.rent_price>0)?m.rent_price:null;}
+  if(t==="both"){
+    const mode=rentChoice.get(code)||"buy";
+    if(mode==="rent")return (m.rent_price&&m.rent_price>0)?m.rent_price:null;
+    return (m.price&&m.price>0)?m.price:null;
+  }
+  // buy / service / unknown
+  return (m.price&&m.price>0)?m.price:null;
+}
+function estimateBucket(code){
+  const m=ITEM_META[code]||{};
+  const t=m.type||"buy";
+  if(t==="rent")return "rent";
+  if(t==="both")return (rentChoice.get(code)||"buy")==="rent"?"rent":"buy";
+  return "buy";// buy / service 都歸購置桶
+}
+
+// CARD-053a：刷新單列 stepper 對應的小計 span（不動 input.value，由呼叫端控制）
+function refreshItemRow(code){
+  const wrap=document.getElementById("prct_"+CSSEsc(code));
+  if(!wrap)return;
+  const nv=state.get(code)||0;
+  const sub=wrap.querySelector(".span_CI_price");
+  if(sub){
+    // CARD-058b：user_input 商品 — 該項小計 = inputAmountMap 金額（不乘 N）
+    if(_isUserInput(code)){
+      const amt=inputAmountMap.get(code)||0;
+      sub.textContent=amt>0?("$"+amt.toLocaleString()):"$0";
+    }else{
+      const eff=effectivePrice(code);
+      if(eff==null){sub.textContent=nv>0?"—":"$0";}
+      else{sub.textContent="$"+(eff*nv).toLocaleString();}
+    }
+  }
+  // itm 高亮：N>=1 才 .checked
+  const itm=document.querySelector('.itm[data-code="'+CSSEsc(code)+'"]');
+  if(itm)itm.classList.toggle("checked",nv>0);
+}
+
+// 簡化版 CSS.escape fallback（OB 既有 polyfill 與否未知，避免依賴）
+function CSSEsc(s){return String(s).replace(/(["\\])/g,"\\$1");}
+
+// CARD-058c：CARD-053a updateEstimate() 已移除（footer 雙行估算與 per-bucket summary 資訊重複）
+
+// CARD-058：補助比規則常數（本地化自 data/calculator-114/subsidy_rates.json；資料來源動更新時請同步）
+// 注意：subsidy_rates.json 真實定義 B1=照顧/B2=交通/B3=輔具/B4=喘息（依 _DATA_DIR/subsidy_rates.json）；
+// URL b1_quota..b4_quota 對應到此真實 B1-B4，而非卡片 §3 表格（卡片把 B3/B4 寫反，本實作以資料層為準）。
+const SUBSIDY={
+  copay_rates:{general:0.16,normal:0.16,mid_low:0.05,low:0.0},
+  B1:{name:"照顧及專業服務",limits_by_cms:{2:10020,3:15460,4:18580,5:24100,6:28070,7:32090,8:36180},foreign_cg_ratio:0.3},
+  B2:{name:"交通接送",zones:{
+    "1":{copay:{general:0.30,normal:0.30,mid_low:0.10,low:0.0}},
+    "2":{copay:{general:0.27,normal:0.27,mid_low:0.09,low:0.0}},
+    "3":{copay:{general:0.25,normal:0.25,mid_low:0.08,low:0.0}},
+    "4":{copay:{general:0.21,normal:0.21,mid_low:0.07,low:0.0}}
+  }},
+  B3:{name:"輔具",total_limit:40000,copay:{general:0.30,normal:0.30,mid_low:0.10,low:0.0}},
+  B4:{name:"喘息",limits_by_cms:{2:32340,3:32340,4:32340,5:32340,6:32340,7:48510,8:48510}},
+  // CARD-058e：S / OT 規則（epizy 計算邏輯估算；CARD-059 待校正衛福部 PDF）
+  S:{name:"短期替代照顧服務",default_quota:87780,// epizy 截圖推算 fallback；URL s_quota 帶才覆蓋
+     copay:{general:0.16,normal:0.16,mid_low:0.05,low:0.0}},// 暫用 B1/B4 同率，待 CARD-059 核
+  OT:{name:"營養餐飲服務",
+     copay:{general:0.16,normal:0.16,mid_low:0.05,low:0.0}}// 暫用 待核；OT 無 default_quota（不放進度條）
+};
+// CARD-058 + CARD-058e：大區 → 補助包對應；S / OT 改獨立 bucket（058c NOTE 鎖回退）
+const BUCKET_OF={
+  BA:"B1",BB:"B1",BC:"B1",BD:"B1",C:"B1",
+  D:"B2",
+  EA:"B3",EB:"B3",EC:"B3",ED:"B3",EE:"B3",EF:"B3",EG:"B3",EH:"B3",FA:"B3",
+  G:"B4",
+  S:"S",   // CARD-058e：解鎖 → 獨立 bucket（含進度條）
+  OT:"OT"  // CARD-058e：解鎖 → 獨立 bucket（無進度條）
+};
+// CARD-058：URL identity canonical flags 解析
+function _identityHas(flag){
+  const raw=String(P.identity||"").toLowerCase();
+  if(!raw)return false;
+  return raw.split(",").map(s=>s.trim()).indexOf(flag)>=0;
+}
+function _income(){
+  const v=String(P.income||"").trim();
+  if(v==="")return "general";// 預設一般戶
+  if(v==="normal")return "general";// 容忍別名
+  return v;
+}
+// CARD-058c + CARD-058b：本包 spent；fixed price 走 N × effectivePrice，user_input 走 inputAmountMap 直加（不乘 N，避免 N>1 重複計）
+function _bucketSpent(bucket){
+  let spent=0;
+  CATS.forEach(cat=>{
+    if((BUCKET_OF[cat.id]||"NOTE")!==bucket)return;
+    cat.items.forEach(it=>{
+      const qty=state.get(it.c)||0;
+      if(!(qty>0))return;
+      const m=ITEM_META[it.c];
+      if(m&&m.pricing_type==="user_input"){
+        // CARD-058b：user_input — N 只表啟用，金額用 inputAmountMap 直接累加
+        const amt=inputAmountMap.get(it.c);
+        if(typeof amt==="number"&&amt>0)spent+=amt;
+        return;
+      }
+      const eff=effectivePrice(it.c);
+      if(eff==null)return;
+      spent+=eff*qty;
+    });
+  });
+  return spent;
+}
+// CARD-058：本區 quota（補助上限）— B1/B4 依 cms 表、B3 total_limit、B2 依 zone monthly_limit；URL 帶 b*_quota 優先
+function _bucketQuota(bucket){
+  const cms=parseInt(P.cms,10);
+  const incomeKey=_income();
+  if(bucket==="B1"){
+    if(P._has&&P._has("b1_quota"))return parseInt(P.b1_quota||"0",10);
+    if(!isNaN(cms)&&SUBSIDY.B1.limits_by_cms[cms]!=null){
+      let lim=SUBSIDY.B1.limits_by_cms[cms];
+      if(_identityHas("foreign_caregiver"))lim=Math.round(lim*SUBSIDY.B1.foreign_cg_ratio);
+      return lim;
+    }
+    return null;
+  }
+  if(bucket==="B2"){
+    if(P._has&&P._has("b2_quota"))return parseInt(P.b2_quota||"0",10);
+    // CARD-058b：dCity/dDistrict（D 區獨立）優先；推 zone → SUBSIDY.B2.zones[zone].monthly_limit
+    const z=_resolveDZone();
+    if(z!=null){
+      const zoneSummary=(CITY_ZONES.zone_summary||{})[String(z)];
+      if(zoneSummary&&typeof zoneSummary.b2_amount==="number")return zoneSummary.b2_amount;
+    }
+    return null;
+  }
+  if(bucket==="B3"){
+    if(P._has&&P._has("b3_quota"))return parseInt(P.b3_quota||"0",10);
+    return SUBSIDY.B3.total_limit;
+  }
+  if(bucket==="B4"){
+    if(P._has&&P._has("b4_quota"))return parseInt(P.b4_quota||"0",10);
+    if(!isNaN(cms)&&SUBSIDY.B4.limits_by_cms[cms]!=null)return SUBSIDY.B4.limits_by_cms[cms];
+    return null;
+  }
+  // CARD-058e：S 包 — URL s_quota 優先，沒帶用 SUBSIDY.S.default_quota fallback（epizy 推算）
+  if(bucket==="S"){
+    if(P._has&&P._has("s_quota"))return parseInt(P.s_quota||"0",10);
+    return SUBSIDY.S.default_quota;
+  }
+  // CARD-058e：OT 包不放進度條 → quota 永遠 null（updateBucketSummary 跳過 progress）
+  if(bucket==="OT")return null;
+  return null;
+}
+// CARD-058：本區 copay 比 — B1/B4 用 copay_rates、B3 用 B3.copay、B2 zone 缺值（city/zone 任一缺 → null）
+function _bucketCopayRate(bucket){
+  const incomeKey=_income();
+  if(bucket==="B1"||bucket==="B4")return SUBSIDY.copay_rates[incomeKey];
+  if(bucket==="B3")return SUBSIDY.B3.copay[incomeKey];
+  if(bucket==="B2"){
+    // CARD-058b：dCity/dDistrict 獨立優先；fallback P.city/P.zone（058f 案主條件）；皆缺 → null
+    const z=_resolveDZone();
+    if(z==null)return null;
+    const zoneRule=SUBSIDY.B2.zones[String(z)];
+    if(!zoneRule||!zoneRule.copay)return null;
+    return zoneRule.copay[incomeKey];
+  }
+  // CARD-058e：S / OT 暫用 epizy 估算 copay（CARD-059 待校正衛福部）
+  if(bucket==="S")return SUBSIDY.S.copay[incomeKey];
+  if(bucket==="OT")return SUBSIDY.OT.copay[incomeKey];
+  return null;
+}
+// CARD-058：fmt $ + 千分位（null/undefined → 「—」）
+function _fmtMoney(v){
+  if(v==null||(typeof v==="number"&&isNaN(v)))return "—";
+  return "$"+Number(v).toLocaleString();
+}
+// CARD-058c：bucket label（標頭顯示）
+const BUCKET_LABEL={
+  // CARD-058d：加包別碼（BC/D/EF/G 包）對齊 epizy 視覺
+  B1:'<span class="bs-tag">B1</span><span class="bs-pkg">(BC包)</span>照顧及專業服務',
+  B2:'<span class="bs-tag">B2</span><span class="bs-pkg">(D包)</span>交通接送',
+  B3:'<span class="bs-tag">B3</span><span class="bs-pkg">(EF包)</span>輔具購買租借及居家無障礙',
+  B4:'<span class="bs-tag">B4</span><span class="bs-pkg">(G包)</span>喘息服務',
+  // CARD-058e：S / OT 改獨立 label
+  S:'<span class="bs-tag" style="background:#0891b2">S</span><span class="bs-pkg">(S包)</span>短期替代照顧服務',
+  OT:'<span class="bs-tag" style="background:#f59e0b">OT</span><span class="bs-pkg">(OT包)</span>營養餐飲服務'
+};
+// CARD-058c：刷單一包 .bucket-summary（依 bucket 屬性，非依 catId）
+// CARD-058d：加 progress bar（4 包各色 + 百分比；quota=null 灰底顯「—」；over 紅）
+function _bucketProgressHTML(bucket){
+  // NOTE 不放 progress；其餘 4 包共用 .bucket-progress 結構，由 updateBucketSummary 設 width / pct / over
+  const cls="bp-fill bp-"+String(bucket).toLowerCase();
+  return '<div class="bucket-progress"><div class="'+cls+'"></div><span class="bp-pct">—</span></div>';
+}
+function _setBucketProgress(box,bucket,spent,quota){
+  const fill=box.querySelector(".bp-fill");
+  const pctEl=box.querySelector(".bp-pct");
+  if(!fill||!pctEl)return;
+  if(quota==null){
+    // 未帶 quota：灰底 / width=0 / pct 顯「—」+ tooltip
+    fill.style.width="0%";
+    fill.classList.remove("over");
+    pctEl.textContent="—";
+    pctEl.setAttribute("title","未帶 quota（URL 沒帶 b"+bucket.charAt(1)+"_quota）");
+    return;
+  }
+  // quota 有值：共用 sticky quota-bars 同邏輯（renderQuotaBars 用 Math.round((used/quota)*100)）
+  const pctRaw=quota>0?(spent/quota)*100:0;
+  const pct=Math.max(0,Math.min(100,Math.round(pctRaw)));
+  const over=spent>quota;
+  fill.style.width=(over?100:pct)+"%";
+  fill.classList.toggle("over",over);
+  pctEl.textContent=pct+"%";
+  pctEl.removeAttribute("title");
+}
+function updateBucketSummary(bucket){
+  const box=document.querySelector('.bucket-summary[data-bucket="'+bucket+'"]');
+  if(!box)return;
+  const titleHTML='<div class="bs-title">'+(BUCKET_LABEL[bucket]||bucket)+'</div>';
+  // CARD-058e：S/OT 警示橫幅（縣市政策 / epizy 估算 / 待 CARD-059 校正）
+  const warnHTML='<span class="bs-warn">⚠️ 縣市政策補助，本系統使用 epizy 計算邏輯估算，<b>不可作為正式核銷依據</b>，CARD-059 將對衛福部規則校正</span>';
+  // CARD-058d：B1-B4 都有 progress bar
+  const progressHTML=_bucketProgressHTML(bucket);
+  // CARD-058b：B2 placeholder 早 return 已移除 — DA01 改 user_input 後 B2 走標準 spent/quota/copay path
+  box.classList.remove("note-only","placeholder");
+  // 計算 spent / quota / copay rate（B1/B3/B4/S/OT 共用）
+  const spent=_bucketSpent(bucket);
+  const quota=_bucketQuota(bucket);
+  const rate=_bucketCopayRate(bucket);
+  let coshareTxt;
+  if(rate==null){
+    coshareTxt='<span class="ss-val muted" title="需選縣市/區域後估算">需選縣市/區域</span>';
+  }else{
+    const co=Math.round(spent*rate);
+    coshareTxt='<span class="ss-val">'+_fmtMoney(co)+'</span>';
+  }
+  let remTxt;
+  if(quota==null){
+    remTxt='<span class="ss-val muted" title="—=未帶入額度">—</span>';
+  }else{
+    const rem=quota-spent;
+    if(rem<=0)remTxt='<span class="ss-val zero" title="$0=已無餘額">'+_fmtMoney(Math.max(0,rem))+'</span>';
+    else remTxt='<span class="ss-val">'+_fmtMoney(rem)+'</span>';
+  }
+  // CARD-058e：S 包完整顯（已用/餘額/自付額/進度條）+ 警示橫幅 + [暫估] 前綴
+  if(bucket==="S"){
+    box.classList.add("warn-estimate");
+    box.innerHTML=titleHTML+
+      '<span class="ss-cell used"><span class="ss-label">已使用額:</span><span class="ss-val">'+_fmtMoney(spent)+'</span></span>'+
+      '<span class="ss-cell remaining"><span class="ss-label">餘額:</span>'+remTxt+'</span>'+
+      '<span class="ss-cell coshare"><span class="ss-label">自付額:</span>'+coshareTxt+'</span>'+
+      progressHTML+warnHTML;
+    _setBucketProgress(box,bucket,spent,quota);
+    return;
+  }
+  // CARD-058e：OT 包只顯（已用/自付額）— 不顯餘額、不放進度條 + 警示橫幅 + [暫估] 前綴
+  if(bucket==="OT"){
+    box.classList.add("warn-estimate");
+    box.innerHTML=titleHTML+
+      '<span class="ss-cell used"><span class="ss-label">已使用額:</span><span class="ss-val">'+_fmtMoney(spent)+'</span></span>'+
+      '<span class="ss-cell coshare"><span class="ss-label">自付額:</span>'+coshareTxt+'</span>'+
+      warnHTML;
+    return;
+  }
+  box.classList.remove("warn-estimate");
+  // B1 / B3 / B4：合併計算包內所有 codes 的 spent / 自付 / 餘額
+  box.innerHTML=titleHTML+
+    '<span class="ss-cell used"><span class="ss-label">已使用額:</span><span class="ss-val">'+_fmtMoney(spent)+'</span></span>'+
+    '<span class="ss-cell remaining"><span class="ss-label">餘額:</span>'+remTxt+'</span>'+
+    '<span class="ss-cell coshare"><span class="ss-label">自付額:</span>'+coshareTxt+'</span>'+
+    progressHTML;
+  _setBucketProgress(box,bucket,spent,quota);
+}
+// CARD-058c + CARD-058e：刷全部 6 個包（B1/B2/B3/B4/S/OT；058c NOTE 拆 S/OT）
+function updateAllBucketSummary(){
+  ["B1","B2","B3","B4","S","OT"].forEach(b=>updateBucketSummary(b));
+}
+// CARD-058e：058c 的 _purgeNoteBucketState 已移除（S/OT 解鎖後不再需要清 state）
+
+// CARD-053a：核心 state 寫入 + DOM 同步入口（從 stepper / btnAll / btnNone 全經由此）
+function applyQty(code,nv,fromText){
+  // CARD-058e：058c 的 NOTE bucket guard 已移除（S/OT 解鎖後 applyQty 正常寫入 state）
+  const owningCat=CATS.find(c=>c.items.some(it=>it.c===code));
+  nv=Math.max(0,Math.min(99,nv|0));
+  if(nv===0)state.delete(code);
+  else state.set(code,nv);
+  const wrap=document.getElementById("prct_"+CSSEsc(code));
+  if(wrap){
+    const txt=wrap.querySelector(".txt_CI_qty");
+    // fromText=true 時呼叫端已自行設過 input.value（避免游標跳）
+    if(txt&&!fromText){txt.value=nv===0?"":String(nv);}
+  }
+  refreshItemRow(code);
+  updateCounter();updateSectionCounts();
+  // CARD-058c：找 code 屬於哪個 bucket → 刷該包 summary（per-bucket 合併計算）
+  if(owningCat){
+    const bucket=BUCKET_OF[owningCat.id]||"NOTE";
+    updateBucketSummary(bucket);
+  }
+  // CARD-058g：sticky 表格也即時刷（6 row）
+  updateQuotaTable();
+}
+
+// expose for unit test hook（test 環境無 window 仍可 import）
+window.__CARD034_buildQueryUrl=buildQueryUrl;
+window.__CARD034_state=state;
+window.__CARD034_CATS=CATS;
+// CARD-053a：stepper 用 test hook
+window.__CARD053_qty=function(code){return state.get(code)||0;};
+window.__CARD053_applyQty=applyQty;
+// CARD-058c：footer 雙行估算移除，__CARD053_estimate test hook 一併下線
+
+// CARD-058g：拿掉 btn-expand-all / btn-collapse-all listener（按鈕已從 HTML 移除）；details 自帶 toggle 取代功能
+document.getElementById("btn-clear-all").addEventListener("click",()=>{
+  // CARD-053a：state.clear + 全 stepper qv 歸零；CARD-058c：刷所有 bucket summary；CARD-058g：刷 sticky 表格；CARD-058b：清 inputAmountMap
+  const codes=Array.from(state.keys());
+  state.clear();
+  inputAmountMap.clear();// CARD-058b
+  codes.forEach(c=>{
+    const wrap=document.getElementById("prct_"+CSSEsc(c));
+    if(wrap){
+      const txt=wrap.querySelector(".txt_CI_qty");if(txt)txt.value="";
+      const sub=wrap.querySelector(".span_CI_price");
+      if(sub)sub.textContent="$0";
+      const itm=document.querySelector('.itm[data-code="'+CSSEsc(c)+'"]');
+      if(itm)itm.classList.remove("checked");
+    }
+  });
+  updateCounter();updateSectionCounts();
+  updateAllBucketSummary();
+  updateQuotaTable();
+});
+document.getElementById("next-btn").addEventListener("click",()=>{
+  const url=buildQueryUrl();
+  if(!url){alert("尚未設定 Web B 目標 URL");return;}
+  window.location.href=url;
+});
+
+// CARD-058f：案主條件 3 下拉初始化 + change handler（rAF + dirty flag 合併連續 change）
+function initCaseConditions(){
+  const cms=document.getElementById("cc-cms");
+  const income=document.getElementById("cc-income");
+  const identity=document.getElementById("cc-identity");
+  if(!cms||!income||!identity)return;
+  // URL 預設值套用（CARD-046 注入 cms/income/identity）
+  if(P.cms){const v=String(P.cms);if(cms.querySelector('option[value="'+v+'"]'))cms.value=v;}
+  if(P.income){
+    let v=String(P.income).trim();
+    if(v==="normal")v="general";// 容忍別名
+    if(income.querySelector('option[value="'+v+'"]'))income.value=v;
+  }
+  if(P.identity){
+    // canonical flags comma list（單選對齊 epizy）；多值取第一個 + console.warn + 視覺警示
+    const all=String(P.identity).split(",").map(s=>s.trim()).filter(Boolean);
+    const first=all[0]||"";
+    if(identity.querySelector('option[value="'+first+'"]'))identity.value=first;
+    if(all.length>1){
+      console.warn("[CARD-058f] URL identity 含多值，本介面僅顯第一個："+first+"（其餘忽略：["+all.slice(1).join(",")+"]）");
+      const box=document.getElementById("case-conditions");
+      if(box)box.classList.add("has-multi-identity");
+    }
+  }
+  // 初次同步 P 物件（避免 select 預設與 P 不一致）
+  P.cms=cms.value;
+  P.income=income.value;
+  P.identity=identity.value;
+  // 綁 change handlers
+  cms.addEventListener("change",()=>onCaseConditionChange("cms",cms.value));
+  income.addEventListener("change",()=>onCaseConditionChange("income",income.value));
+  identity.addEventListener("change",()=>onCaseConditionChange("identity",identity.value));
+}
+let _ccDirty=false;
+function _ccFlush(){
+  _ccDirty=false;
+  // 重算 6 包 summary + sticky 表格
+  updateAllBucketSummary();
+  updateQuotaTable();
+}
+function onCaseConditionChange(field,value){
+  P[field]=value;
+  // CARD-058f-fix：人類拍板「Web 為準」— 使用者改下拉 → invalidate URL b*_quota（讓 cms/identity 真的 ripple）；
+  // 不保留 Discord 原算值，_bucketQuota 退回 cms × SUBSIDY 算
+  if(field==="cms"){delete P.b1_quota;delete P.b4_quota;}
+  if(field==="identity"){delete P.b1_quota;}
+  // income 只影響 copay rate，不需 invalidate quota
+  // 同步 status-banner（既有 CARD-042 顯示）
+  renderStatusBanner();
+  // CARD-058f：URL replaceState（不 pushState 避免歷史污染）+ CARD-058f-fix：同步 delete URL b*_quota param 避免 reload 後拿回 stale 值
+  try{
+    const u=new URL(location.href);
+    if(field==="cms"){u.searchParams.delete("b1_quota");u.searchParams.delete("b4_quota");}
+    if(field==="identity"){u.searchParams.delete("b1_quota");}
+    if(value===""||value==null)u.searchParams.delete(field);
+    else u.searchParams.set(field,String(value));
+    history.replaceState(null,"",u.toString());
+  }catch(e){/* swallow */}
+  // CARD-058f：rAF + dirty flag 合併連續 change（避免 6 包重複 render lag）
+  if(!_ccDirty){
+    _ccDirty=true;
+    requestAnimationFrame(_ccFlush);
+  }
+}
+
+parseParams();renderStatusBanner();renderQuotaBars();render();
+// CARD-058f：案主條件 3 下拉初始化（必須在 parseParams 之後，render 之後）
+initCaseConditions();
+// CARD-058f：init 後刷一次（_initCaseConditions 內 P 物件可能改變 income normal→general）
+updateAllBucketSummary();updateQuotaTable();
+// CARD-058e：058c 的 _purgeNoteBucketState 呼叫已移除（S/OT 解鎖後 SC/OT codes 應正常進 buildQueryUrl）
+updateCounter();updateSectionCounts();
+// CARD-058c：5 個 bucket summary 初始化（B1/B2/B3/B4/NOTE）
+updateAllBucketSummary();
+// CARD-053a-fix：rent radio change 由 document-level delegate 一次註冊（取代 buildPriceRow 內的 inline callback；只註冊一次避免重複綁定）
+document.addEventListener("change",function(ev){
+  const t=ev.target;
+  if(t&&t.matches&&t.matches('input[type="radio"][name^="rent-"]')){
+    const code=String(t.name||"").replace(/^rent-/,"");
+    if(code){
+      refreshItemRow(code);
+      // CARD-058c：rent radio 切換 type=both 影響 effectivePrice，連帶刷該 bucket summary
+      const owningCat=CATS.find(c=>c.items.some(it=>it.c===code));
+      if(owningCat){
+        const bucket=BUCKET_OF[owningCat.id]||"NOTE";
+        updateBucketSummary(bucket);
+      }
+      updateQuotaTable();// CARD-058g：sticky 表格也刷
+    }
+  }
+});
+
+// CARD-058-modal：點 code 跳 modal 顯官方說明 + focus trap modal-scoped
+function _modalEscapeHTML(s){
+  return String(s||"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"})[ch]);
+}
+let _modalOpener=null;// 記住開啟前的 activeElement，close 後 restore focus
+function openCodeModal(code,name){
+  const m=ITEM_META[code]||{};
+  const modal=document.getElementById("code-modal");
+  if(!modal)return;
+  document.getElementById("code-modal-title").textContent=code+"［"+name+"］";
+  const body=document.getElementById("code-modal-body");
+  let html="";
+  if(m.description){html+='<section><h3>內容說明</h3><p>'+_modalEscapeHTML(m.description)+'</p></section>';}
+  if(m.unit_detail){html+='<section><h3>計算單位</h3><p>'+_modalEscapeHTML(m.unit_detail)+(m.unit?'（單位：'+_modalEscapeHTML(m.unit)+'）':'')+'</p></section>';}
+  if(m.note){html+='<section><h3>備註</h3><p>'+_modalEscapeHTML(m.note)+'</p></section>';}
+  if(Array.isArray(m.restrictions)&&m.restrictions.length){
+    html+='<section><h3>限制條件</h3><ul>'+m.restrictions.map(r=>'<li>'+_modalEscapeHTML(r)+'</li>').join("")+'</ul></section>';
+  }
+  // 價格資訊
+  if(m.price!=null||m.rent_price!=null){
+    let p="";
+    if(m.price!=null)p+="購置 / 服務費：$"+m.price.toLocaleString()+(m.unit?" / "+m.unit:"");
+    if(m.rent_price!=null)p+=(p?"\n":"")+"租賃費：$"+m.rent_price.toLocaleString()+"/月";
+    if(p)html='<section><h3>單價資訊</h3><p>'+_modalEscapeHTML(p)+'</p></section>'+html;
+  }
+  if(!html)html='<div class="muted">本 code 暫無官方說明（CARD-059 待補）</div>';
+  body.innerHTML=html;
+  const src=document.getElementById("code-modal-source");
+  src.textContent=m.description_source?("📋 來源："+m.description_source):(m.price_source?("💰 價格來源："+m.price_source):"");
+  // 記 opener + 顯 modal
+  _modalOpener=document.activeElement;
+  modal.hidden=false;
+  document.body.style.overflow="hidden";
+  // focus 第一個可聚焦元素（close button）
+  const closeBtn=modal.querySelector(".modal-close");
+  if(closeBtn)closeBtn.focus();
+}
+function closeCodeModal(){
+  const modal=document.getElementById("code-modal");
+  if(!modal||modal.hidden)return;
+  modal.hidden=true;
+  document.body.style.overflow="";
+  // restore opener focus
+  if(_modalOpener&&typeof _modalOpener.focus==="function"){
+    try{_modalOpener.focus();}catch(e){}
+  }
+  _modalOpener=null;
+}
+// CARD-058-modal：event delegation — 點 .i-code 開 modal（限定 closest + stopPropagation 隔離 stepper）
+document.addEventListener("click",function(ev){
+  const t=ev.target;
+  if(!t)return;
+  // 關 modal（背景 / 關閉鈕）
+  if(t.matches&&t.matches("[data-modal-close]")){
+    ev.stopPropagation();
+    closeCodeModal();
+    return;
+  }
+  // 點 .i-code → 開 modal
+  const codeEl=t.closest&&t.closest(".i-code");
+  if(codeEl&&codeEl.dataset&&codeEl.dataset.code){
+    ev.stopPropagation();
+    openCodeModal(codeEl.dataset.code,codeEl.dataset.name||"");
+  }
+});
+// keyboard: Enter/Space 在 .i-code 上也開 modal（a11y）
+document.addEventListener("keydown",function(ev){
+  const t=ev.target;
+  if(!t)return;
+  if((ev.key==="Enter"||ev.key===" ")&&t.classList&&t.classList.contains("i-code")&&t.dataset&&t.dataset.code){
+    ev.preventDefault();
+    openCodeModal(t.dataset.code,t.dataset.name||"");
+  }
+});
+// CARD-058-modal：focus trap modal-scoped（全域 keydown 第一行 if(modal.hidden)return；只攔 Escape/Tab）
+document.addEventListener("keydown",function(ev){
+  const modal=document.getElementById("code-modal");
+  if(!modal||modal.hidden)return;
+  if(ev.key==="Escape"){ev.preventDefault();closeCodeModal();return;}
+  if(ev.key==="Tab"){
+    // Tab 首尾循環（focus trap）
+    const focusables=modal.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])');
+    if(!focusables.length)return;
+    const first=focusables[0],last=focusables[focusables.length-1];
+    if(ev.shiftKey&&document.activeElement===first){ev.preventDefault();last.focus();}
+    else if(!ev.shiftKey&&document.activeElement===last){ev.preventDefault();first.focus();}
+  }
+});
+
+// CARD-058c：test hook（per-bucket）
+window.__CARD058_bucket=function(bucket){
+  const box=document.querySelector('.bucket-summary[data-bucket="'+bucket+'"]');
+  if(!box)return null;
+  return {raw:box.textContent, classes:box.className};
+};
+window.__CARD058_quota=_bucketQuota;
+window.__CARD058_copay=_bucketCopayRate;
+window.__CARD058_spent=_bucketSpent;
+</script>
+</body>
+</html>
