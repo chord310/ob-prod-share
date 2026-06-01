@@ -1,0 +1,229 @@
+{
+  "share_id": "28X6HlcdIrEQR43nBFtLiQ",
+  "address": "新北市永和區竹林路200號",
+  "home": {
+    "lat": 25.0097,
+    "lng": 121.5147,
+    "geocode_provider": "district_centroid",
+    "geocode_precision": "district"
+  },
+  "vendors": [
+    {
+      "vendor_id": "ntpc-057bed87d09c8ddb",
+      "name": "弘光藥局",
+      "district": "永和區",
+      "address": "新北市永和區竹林路66巷19號",
+      "phone": "02-29282000",
+      "service_types": [
+        "購置"
+      ],
+      "vendor_category": "藥局",
+      "source_url": "https://atrc.aihsin.ntpc.gov.tw/NewsInfo/24",
+      "lat": 25.0130317,
+      "lng": 121.5176893,
+      "geocode_provider": "google",
+      "distance_km": 0.477,
+      "route_distance_meters": null,
+      "route_duration_seconds": null,
+      "route_status": "",
+      "route_source": "",
+      "directions_url": "https://www.google.com/maps/dir/?api=1&destination=25.0130317%2C121.5176893&travelmode=driving&origin=%E6%96%B0%E5%8C%97%E5%B8%82%E6%B0%B8%E5%92%8C%E5%8D%80%E7%AB%B9%E6%9E%97%E8%B7%AF200%E8%99%9F"
+    },
+    {
+      "vendor_id": "ntpc-c0ebaa3979341ca7",
+      "name": "柏愛藥局",
+      "district": "永和區",
+      "address": "新北市永和區竹林路57號1樓",
+      "phone": "02-89285609",
+      "service_types": [
+        "購置"
+      ],
+      "vendor_category": "藥局",
+      "source_url": "https://atrc.aihsin.ntpc.gov.tw/NewsInfo/24",
+      "lat": 25.0138706,
+      "lng": 121.5182358,
+      "geocode_provider": "google",
+      "distance_km": 0.585,
+      "route_distance_meters": null,
+      "route_duration_seconds": null,
+      "route_status": "",
+      "route_source": "",
+      "directions_url": "https://www.google.com/maps/dir/?api=1&destination=25.0138706%2C121.5182358&travelmode=driving&origin=%E6%96%B0%E5%8C%97%E5%B8%82%E6%B0%B8%E5%92%8C%E5%8D%80%E7%AB%B9%E6%9E%97%E8%B7%AF200%E8%99%9F"
+    },
+    {
+      "vendor_id": "ntpc-059f97f756e0baf0",
+      "name": "安安藥局",
+      "district": "永和區",
+      "address": "新北市永和區竹林路203號1樓",
+      "phone": "02-89263651",
+      "service_types": [
+        "購置"
+      ],
+      "vendor_category": "藥局",
+      "source_url": "https://atrc.aihsin.ntpc.gov.tw/NewsInfo/24",
+      "lat": 25.0090888,
+      "lng": 121.5207549,
+      "geocode_provider": "google",
+      "distance_km": 0.614,
+      "route_distance_meters": null,
+      "route_duration_seconds": null,
+      "route_status": "",
+      "route_source": "",
+      "directions_url": "https://www.google.com/maps/dir/?api=1&destination=25.0090888%2C121.5207549&travelmode=driving&origin=%E6%96%B0%E5%8C%97%E5%B8%82%E6%B0%B8%E5%92%8C%E5%8D%80%E7%AB%B9%E6%9E%97%E8%B7%AF200%E8%99%9F"
+    },
+    {
+      "vendor_id": "ntpc-ceac7036d05c5ee1",
+      "name": "虹韻國際貿易股份有限公司永和分公司",
+      "district": "永和區",
+      "address": "新北市永和區竹林路17號1樓",
+      "phone": "02-29267730",
+      "service_types": [
+        "購置"
+      ],
+      "vendor_category": "個人用品/連鎖門市",
+      "source_url": "https://atrc.aihsin.ntpc.gov.tw/NewsInfo/24",
+      "lat": 25.0149936,
+      "lng": 121.5169255,
+      "geocode_provider": "google",
+      "distance_km": 0.63,
+      "route_distance_meters": null,
+      "route_duration_seconds": null,
+      "route_status": "",
+      "route_source": "",
+      "directions_url": "https://www.google.com/maps/dir/?api=1&destination=25.0149936%2C121.5169255&travelmode=driving&origin=%E6%96%B0%E5%8C%97%E5%B8%82%E6%B0%B8%E5%92%8C%E5%8D%80%E7%AB%B9%E6%9E%97%E8%B7%AF200%E8%99%9F"
+    },
+    {
+      "vendor_id": "ntpc-b866458be0703f23",
+      "name": "懿禾醫療用品商行",
+      "district": "永和區",
+      "address": "新北市永和區信義路18之2號1樓",
+      "phone": "02-82317077",
+      "service_types": [
+        "購置"
+      ],
+      "vendor_category": "醫材/輔具行",
+      "source_url": "https://atrc.aihsin.ntpc.gov.tw/NewsInfo/24",
+      "lat": 25.0123126,
+      "lng": 121.5141438,
+      "geocode_provider": "google",
+      "distance_km": 0.296,
+      "route_distance_meters": null,
+      "route_duration_seconds": null,
+      "route_status": "",
+      "route_source": "",
+      "directions_url": "https://www.google.com/maps/dir/?api=1&destination=25.0123126%2C121.5141438&travelmode=driving&origin=%E6%96%B0%E5%8C%97%E5%B8%82%E6%B0%B8%E5%92%8C%E5%8D%80%E7%AB%B9%E6%9E%97%E8%B7%AF200%E8%99%9F"
+    },
+    {
+      "vendor_id": "ntpc-047770128a9d9654",
+      "name": "杏一醫療用品股份有限公司永和耕莘住院門市部",
+      "district": "永和區",
+      "address": "新北市永和區國光路123號1樓",
+      "phone": "02-29263167",
+      "service_types": [
+        "購置"
+      ],
+      "vendor_category": "醫材/輔具行",
+      "source_url": "https://atrc.aihsin.ntpc.gov.tw/NewsInfo/24",
+      "lat": 25.0111755,
+      "lng": 121.5175093,
+      "geocode_provider": "google",
+      "distance_km": 0.327,
+      "route_distance_meters": null,
+      "route_duration_seconds": null,
+      "route_status": "",
+      "route_source": "",
+      "directions_url": "https://www.google.com/maps/dir/?api=1&destination=25.0111755%2C121.5175093&travelmode=driving&origin=%E6%96%B0%E5%8C%97%E5%B8%82%E6%B0%B8%E5%92%8C%E5%8D%80%E7%AB%B9%E6%9E%97%E8%B7%AF200%E8%99%9F"
+    },
+    {
+      "vendor_id": "ntpc-60bfca7d660986fa",
+      "name": "誠豐居家無障礙有限公司永和分公司",
+      "district": "永和區",
+      "address": "新北市永和區永和路二段147號4樓之1",
+      "phone": "02-29920307，0917-608905",
+      "service_types": [
+        "購置"
+      ],
+      "vendor_category": "個人用品/連鎖門市",
+      "source_url": "https://atrc.aihsin.ntpc.gov.tw/NewsInfo/24",
+      "lat": 25.0127019,
+      "lng": 121.5150827,
+      "geocode_provider": "google",
+      "distance_km": 0.336,
+      "route_distance_meters": null,
+      "route_duration_seconds": null,
+      "route_status": "",
+      "route_source": "",
+      "directions_url": "https://www.google.com/maps/dir/?api=1&destination=25.0127019%2C121.5150827&travelmode=driving&origin=%E6%96%B0%E5%8C%97%E5%B8%82%E6%B0%B8%E5%92%8C%E5%8D%80%E7%AB%B9%E6%9E%97%E8%B7%AF200%E8%99%9F"
+    },
+    {
+      "vendor_id": "ntpc-2142e572876f3c57",
+      "name": "杏一醫療用品股份有限公司永和耕莘院外門市部",
+      "district": "永和區",
+      "address": "新北市永和區中興街87號1樓",
+      "phone": "02-29223256",
+      "service_types": [
+        "購置"
+      ],
+      "vendor_category": "醫材/輔具行",
+      "source_url": "https://atrc.aihsin.ntpc.gov.tw/NewsInfo/24",
+      "lat": 25.0119265,
+      "lng": 121.5173228,
+      "geocode_provider": "google",
+      "distance_km": 0.362,
+      "route_distance_meters": null,
+      "route_duration_seconds": null,
+      "route_status": "",
+      "route_source": "",
+      "directions_url": "https://www.google.com/maps/dir/?api=1&destination=25.0119265%2C121.5173228&travelmode=driving&origin=%E6%96%B0%E5%8C%97%E5%B8%82%E6%B0%B8%E5%92%8C%E5%8D%80%E7%AB%B9%E6%9E%97%E8%B7%AF200%E8%99%9F"
+    },
+    {
+      "vendor_id": "ntpc-19e4fa34c6dc6006",
+      "name": "名品生技開發有限公司",
+      "district": "永和區",
+      "address": "新北市永和區勵行街119號",
+      "phone": "02-22318585",
+      "service_types": [
+        "購置"
+      ],
+      "vendor_category": "照護/協會/其他單位",
+      "source_url": "https://atrc.aihsin.ntpc.gov.tw/NewsInfo/24",
+      "lat": 25.0120409,
+      "lng": 121.517529,
+      "geocode_provider": "google",
+      "distance_km": 0.386,
+      "route_distance_meters": null,
+      "route_duration_seconds": null,
+      "route_status": "",
+      "route_source": "",
+      "directions_url": "https://www.google.com/maps/dir/?api=1&destination=25.0120409%2C121.5175290&travelmode=driving&origin=%E6%96%B0%E5%8C%97%E5%B8%82%E6%B0%B8%E5%92%8C%E5%8D%80%E7%AB%B9%E6%9E%97%E8%B7%AF200%E8%99%9F"
+    },
+    {
+      "vendor_id": "ntpc-e6242fd7aa81602a",
+      "name": "杏一醫療用品股份有限公司永和耕莘門市部",
+      "district": "永和區",
+      "address": "新北市永和區中興街80號",
+      "phone": "02-89214200",
+      "service_types": [
+        "購置"
+      ],
+      "vendor_category": "醫材/輔具行",
+      "source_url": "https://atrc.aihsin.ntpc.gov.tw/NewsInfo/24",
+      "lat": 25.0118281,
+      "lng": 121.5179183,
+      "geocode_provider": "google",
+      "distance_km": 0.401,
+      "route_distance_meters": null,
+      "route_duration_seconds": null,
+      "route_status": "",
+      "route_source": "",
+      "directions_url": "https://www.google.com/maps/dir/?api=1&destination=25.0118281%2C121.5179183&travelmode=driving&origin=%E6%96%B0%E5%8C%97%E5%B8%82%E6%B0%B8%E5%92%8C%E5%8D%80%E7%AB%B9%E6%9E%97%E8%B7%AF200%E8%99%9F"
+    }
+  ],
+  "map_url": "https://www.google.com/maps/dir/?api=1&destination=25.0118281%2C121.5179183&travelmode=driving&origin=%E6%96%B0%E5%8C%97%E5%B8%82%E6%B0%B8%E5%92%8C%E5%8D%80%E7%AB%B9%E6%9E%97%E8%B7%AF200%E8%99%9F&waypoints=25.0130317%2C121.5176893%7C25.0138706%2C121.5182358%7C25.0090888%2C121.5207549%7C25.0149936%2C121.5169255%7C25.0123126%2C121.5141438%7C25.0111755%2C121.5175093%7C25.0127019%2C121.5150827%7C25.0119265%2C121.5173228%7C25.0120409%2C121.5175290",
+  "created_at": 1780303118.242499,
+  "expires_at": 1780907918.242499,
+  "google_maps_browser_key": "",
+  "ok": true,
+  "static_share": true,
+  "static_data_path": "vendor-shares/28X6HlcdIrEQR43nBFtLiQ.json"
+}
