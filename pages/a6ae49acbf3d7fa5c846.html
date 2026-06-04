@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>未指定地區 / 照顧及專業 / 2026-06-02｜長照資源包結果</title>
+  <style>
+    :root { color-scheme: light; --ink:#172033; --muted:#66758a; --line:#d9e2ef; --brand:#0b66c3; --soft:#f4f7fb; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink); background: #eef3f8; }
+    a { color: var(--brand); }
+    .topbar { display:flex; justify-content:space-between; align-items:center; gap:16px; padding:18px 24px; background:#fff; border-bottom:1px solid var(--line); position:sticky; top:0; z-index:10; }
+    .topbar h1 { margin:0; font-size:24px; }
+    .eyebrow { margin:0 0 6px; color:#087f7a; font-size:12px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; }
+    .button, button { border:1px solid #aac4df; background:#fff; color:#17324f; border-radius:8px; padding:10px 14px; font-weight:700; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; justify-content:center; }
+    .button.primary, button.primary { background:var(--brand); border-color:var(--brand); color:#fff; }
+    .button-green { background:#0f8f5f; border-color:#0f8f5f; color:#fff; }
+    .button-red { background:#cf3f3f; border-color:#cf3f3f; color:#fff; }
+    .button-print { background:#f4f8fd; border-color:#9ab8d8; color:#17324f; }
+    .button-print:hover { background:#e8f2fc; transform:translateY(-1px); }
+    main { width:min(1180px, 100%); margin:0 auto; padding:20px; }
+    .hero, .panel, .resource-detail { background:#fff; border:1px solid var(--line); border-radius:10px; padding:18px; box-shadow:0 8px 28px rgba(20,42,70,.06); }
+    .hero { display:grid; grid-template-columns: 1.3fr .7fr; gap:16px; margin-bottom:18px; }
+    .hero h2 { margin:0 0 8px; font-size:28px; }
+    .muted { color:var(--muted); line-height:1.7; }
+    .actions { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+    .top-actions { display:flex; flex-wrap:wrap; gap:10px; justify-content:flex-end; }
+    .panel-actions { margin-top:14px; display:flex; flex-wrap:wrap; gap:10px; }
+    .item-note { margin-top:4px; color:var(--muted); line-height:1.6; }
+    .result-output-switcher { display:flex; justify-content:space-between; gap:16px; align-items:center; border:1px solid var(--line); border-radius:10px; padding:16px 18px; margin-bottom:18px; background:#fff; box-shadow:0 8px 28px rgba(20,42,70,.05); }
+    .result-output-switcher h3 { margin:0 0 4px; font-size:18px; }
+    .result-mode-tabs { display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end; }
+    .result-mode-tabs button { min-height:38px; border-radius:999px; padding:8px 13px; background:#fff; color:var(--ink); transition:transform .12s ease, background .12s ease, border-color .12s ease, box-shadow .12s ease; }
+    .result-mode-tabs button:hover { transform:translateY(-1px); box-shadow:0 8px 18px rgba(24,39,75,.1); }
+    .result-mode-tabs button:active { transform:translateY(1px); }
+    .result-mode-tabs button.is-active { border-color:var(--brand); background:var(--brand); color:#fff; }
+    [data-output-section][hidden] { display:none !important; }
+    .grid { display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap:14px; margin-bottom:18px; }
+    .panel h3, .resource-detail h3 { margin:0 0 10px; }
+    .panel ol, .panel ul { margin:0; padding-left:22px; line-height:1.8; }
+    pre { white-space:pre-wrap; word-break:break-word; background:var(--soft); border:1px solid var(--line); border-radius:8px; padding:12px; line-height:1.7; }
+    .resource-list { display:grid; gap:14px; }
+    .resource-detail dl { display:grid; gap:10px; margin:0; }
+    .resource-detail dl div { padding-top:10px; border-top:1px solid #edf1f6; }
+    dt { font-weight:800; color:#233d58; margin-bottom:4px; }
+    dd { margin:0; color:#26374d; line-height:1.7; }
+    .share-panel { display:grid; gap:12px; margin-top:18px; background:#fff; border:1px solid var(--line); border-radius:10px; padding:18px; box-shadow:0 8px 28px rgba(20,42,70,.06); }
+    .share-body { display:flex; flex-wrap:wrap; align-items:center; gap:12px; }
+    .share-qr { width:min(240px, 100%); border:1px solid var(--line); border-radius:10px; background:#fff; padding:10px; }
+    .share-link { flex:1 1 280px; overflow-wrap:anywhere; }
+    @media print {
+      @page { margin: 14mm; }
+      body { background:#fff; color:#111827; font-size:12pt; }
+      .topbar { position:static; border-bottom:1px solid #d1d5db; padding:0 0 10px; }
+      .top-actions, .result-output-switcher, .panel-actions, .share-body button, #copyScratch { display:none !important; }
+      main { width:100%; max-width:none; padding:0; }
+      .hero, .panel, .resource-detail, .share-panel { box-shadow:none; border-color:#cbd5e1; break-inside:avoid; page-break-inside:avoid; }
+      .hero, .grid { grid-template-columns:1fr; }
+      .grid { gap:10px; }
+      .resource-list { display:block; }
+      .resource-detail { margin:0 0 10px; }
+      pre { background:#fff; border-color:#cbd5e1; }
+      a[href^="http"]::after { content:" (" attr(href) ")"; color:#475569; font-size:9pt; }
+      .share-link::after { content:""; }
+    }
+    @media (max-width: 760px) {
+      .topbar { align-items:flex-start; flex-direction:column; }
+      main { padding:12px; }
+      .hero, .grid { grid-template-columns: 1fr; }
+      .result-output-switcher { align-items:stretch; flex-direction:column; }
+      .result-mode-tabs { justify-content:stretch; }
+      .result-mode-tabs button { flex:1 1 130px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">Resource Package Result</p>
+      <h1>資源包結果</h1>
+    </div>
+    <div class="top-actions">
+      <a class="button button-green" data-return-main href="https://chord310.github.io/ob-prod-share/resource-nav.html?category=care_professional&amp;source=resource_package_result&amp;district=%E6%96%B0%E8%8E%8A%E5%8D%80&amp;guild=1509223295164354630">返回長照資源導航站主頁</a>
+      
+      <button type="button" class="button button-print" data-print-result>列印 / 另存 PDF</button>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <div>
+        <p class="eyebrow">案家資源包</p>
+        <h2>未指定地區 / 照顧及專業 / 2026-06-02</h2>
+        <p class="muted">建立者身份來自 Discord session。此頁包含所選資源、電話確認、行政文件與交接摘要；請勿在對外分享時附上內部註記。</p>
+        <p class="muted">更新時間：2026-06-04 16:00｜資源數：1 筆</p>
+        
+      </div>
+    </section>
+
+    <section class="result-output-switcher" aria-label="輸出格式切換">
+      <div>
+        <p class="eyebrow">輸出格式</p>
+        <h3>選擇這份結果要怎麼使用</h3>
+        <p class="muted" id="resultModeHelp">完整資料會顯示全部區塊；其他模式只聚焦在當下要複製或處理的內容。</p>
+        <p class="muted print-help">列印會使用目前選取的輸出格式；若要存檔，請在瀏覽器列印視窗選擇「另存為 PDF」。</p>
+      </div>
+      <div class="result-mode-tabs" role="tablist" aria-label="資源包輸出格式">
+        <button type="button" data-result-mode="family" role="tab">家屬版</button>
+        <button type="button" data-result-mode="phone" role="tab">電話確認</button>
+        <button type="button" data-result-mode="admin" role="tab">行政清單</button>
+        <button type="button" data-result-mode="handoff" role="tab">交接摘要</button>
+        <button type="button" data-result-mode="full" role="tab">完整資料</button>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="panel" data-output-section="full handoff">
+        <h3>建議優先順序</h3>
+        <ol><li><a href="#resource-xinzhuang_ltc_contract_units_directory">新莊區長照特約服務單位清冊</a></li></ol>
+      </article>
+      <article class="panel" data-output-section="full phone">
+        <h3>先打哪幾通電話</h3>
+        <ol><li><a href="#resource-xinzhuang_ltc_contract_units_directory">新莊區長照特約服務單位清冊</a><div class="item-note"><strong>聯絡/申請：</strong>長照申請可撥 1966；新北市政府總機 1999 或 02-2960-3456 可轉接長照相關窗口。個別服務單位電話、地址與承作項目，以新北市衛生局長照特約服務清冊逐一電話複核。</div><div class="item-note"><strong>電話確認：</strong>單位是否仍承作新莊區，服務範圍是否包含案家地址；目前是否可接案，是否有等待或時段限制；承作服務是居家服務、日照、小規機、營養餐飲、機構或專業服務哪一類；是否需要先由 1966、照管中心或照專完成評估與照顧計畫；轉介、試服務、費用、請假與暫停服務規則如何處理</div></li></ol>
+        <div class="panel-actions"><button data-copy="phone">複製電話確認</button></div>
+      </article>
+      <article class="panel" data-output-section="full family">
+        <h3>可傳給家屬的短訊</h3>
+        <pre>家屬版資源包：未指定地區 / 照顧及專業 / 2026-06-02
+
+新莊區長照特約服務單位清冊
+新莊區長照特約服務單位清冊用來協助照顧服務團隊在新莊區案家需要長照服務時，先查找可能承作的居家服務、日照、小規機、營養餐飲、機構或專業服務單位。這張卡是單位查找工具，不等於長照申請核定或已完成派案。
+下一步：先確認案家行政區、長照評估狀態與需要的服務類型，再依新北市長照特約服務清冊找單位名稱、電話與服務類別；正式連結前仍要洽 1966、照管中心或特約單位電話複核承作狀態。
+聯絡/申請：長照申請可撥 1966；新北市政府總機 1999 或 02-2960-3456 可轉接長照相關窗口。個別服務單位電話、地址與承作項目，以新北市衛生局長照特約服務清冊逐一電話複核。
+可先準備：案家行政區與完整服務地址、長照評估或照顧計畫資料、需要的服務類型：居家服務、日照、小規機、營養餐飲、機構或專業服務、失能、失智、照顧負荷與特殊照顧需求摘要、主要照顧者聯絡方式與可配合服務時段</pre>
+        <div class="panel-actions"><button class="primary" data-copy="family">複製家屬版</button></div>
+      </article>
+      <article class="panel" data-output-section="full admin">
+        <h3>需要先準備的文件</h3>
+        <ul><li>案家行政區與完整服務地址</li><li>長照評估或照顧計畫資料</li><li>需要的服務類型：居家服務、日照、小規機、營養餐飲、機構或專業服務</li><li>失能、失智、照顧負荷與特殊照顧需求摘要</li><li>主要照顧者聯絡方式與可配合服務時段</li></ul>
+        <div class="panel-actions"><button data-copy="admin">複製行政清單</button></div>
+      </article>
+      <article class="panel" data-output-section="full handoff">
+        <h3>風險提醒</h3>
+        <ul><li>清冊是找單位，不是派案核定</li><li>服務單位可能只承作部分服務類型</li><li>可接案狀態與服務時段需電話複核</li><li>正式服務仍需長照評估與照顧計畫</li></ul>
+      </article>
+      <article class="panel" data-output-section="full handoff">
+        <h3>交接摘要</h3>
+        <pre>交接摘要：未指定地區 / 照顧及專業 / 2026-06-02
+行政區：新莊區
+主題：照顧及專業
+線索：新莊區、長照特約清冊、居家服務、日照/小規機、機構或專業服務、一般、需電話複核
+已選資源：1 筆</pre>
+        <div class="panel-actions"><button data-copy="handoff">複製交接摘要</button></div>
+      </article>
+    </section>
+
+    <section class="resource-list" aria-label="完整資料集合" data-output-section="full">
+      <p class="eyebrow">完整資料集合</p>
+      
+    <article class="resource-detail" id="resource-xinzhuang_ltc_contract_units_directory">
+      <div class="resource-detail-head">
+        <p class="eyebrow">care_professional</p>
+        <h3>1. <a href="https://www.careyou.ntpc.gov.tw/w/agecare/unit" target="_blank" rel="noopener noreferrer">新莊區長照特約服務單位清冊</a></h3>
+      </div>
+      <p>新莊區長照特約服務單位清冊用來協助照顧服務團隊在新莊區案家需要長照服務時，先查找可能承作的居家服務、日照、小規機、營養餐飲、機構或專業服務單位。這張卡是單位查找工具，不等於長照申請核定或已完成派案。</p>
+      <dl>
+        <div><dt>下一步</dt><dd>先確認案家行政區、長照評估狀態與需要的服務類型，再依新北市長照特約服務清冊找單位名稱、電話與服務類別；正式連結前仍要洽 1966、照管中心或特約單位電話複核承作狀態。</dd></div>
+        <div><dt>聯絡/申請</dt><dd>長照申請可撥 1966；新北市政府總機 1999 或 02-2960-3456 可轉接長照相關窗口。個別服務單位電話、地址與承作項目，以新北市衛生局長照特約服務清冊逐一電話複核。</dd></div>
+        <div><dt>常備文件</dt><dd>案家行政區與完整服務地址、長照評估或照顧計畫資料、需要的服務類型：居家服務、日照、小規機、營養餐飲、機構或專業服務、失能、失智、照顧負荷與特殊照顧需求摘要、主要照顧者聯絡方式與可配合服務時段</dd></div>
+        <div><dt>電話確認</dt><dd>單位是否仍承作新莊區，服務範圍是否包含案家地址；目前是否可接案，是否有等待或時段限制；承作服務是居家服務、日照、小規機、營養餐飲、機構或專業服務哪一類；是否需要先由 1966、照管中心或照專完成評估與照顧計畫；轉介、試服務、費用、請假與暫停服務規則如何處理</dd></div>
+        <div><dt>內部註記</dt><dd>2026-05-30 深修：此卡定位為新莊區長照單位查找與電話複核工具。個管師應把清冊、長照評估、照顧計畫與服務單位承作狀態分開說明，避免家屬以為清冊有名字就一定能收案。</dd></div>
+        <div><dt>風險提醒</dt><dd>清冊是找單位，不是派案核定、服務單位可能只承作部分服務類型、可接案狀態與服務時段需電話複核、正式服務仍需長照評估與照顧計畫</dd></div>
+        <div><dt>來源/確認</dt><dd>official_directory｜最後確認：2026-05-30</dd></div>
+      </dl>
+    </article>
+    
+    </section>
+    
+    <section class="share-panel">
+      <div>
+        <p class="eyebrow">分享此資源包結果</p>
+        <h3>QR CODE 與正式連結</h3>
+        <p class="muted">這是正式 Web B 結果連結，可複製給需要查看的人；對外分享前請確認內容不含內部註記。</p>
+      </div>
+      <div class="share-body">
+        <img class="share-qr" src="data:image/png;base64,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" alt="資源包結果 QR Code">
+        <a class="share-link" href="https://chord310.github.io/ob-prod-share/viewer.html?id=a6ae49acbf3d7fa5c846" target="_blank" rel="noopener noreferrer">https://chord310.github.io/ob-prod-share/viewer.html?id=a6ae49acbf3d7fa5c846</a>
+        <button type="button" data-copy-link>複製連結</button>
+      </div>
+    </section>
+        
+  </main>
+  <textarea id="copyScratch" hidden></textarea>
+  <script type="application/json" id="resourcePackManifest">{"content_hash":"b73f12e5f1f63f66d74ac39c725000ea6b1079cc38d17945277ed5c53244b637","export_id":"rpex-a2763abe0c236b520498","exported_at":1780560020.3159811,"output_history":[{"created_at":1780560020.289213,"output_id":"a6ae49acbf3d7fa5c846","output_mode":"family","qr_status":"pending","share_page_id":"a6ae49acbf3d7fa5c846","share_url":"","status":"pending","updated_at":1780560020.289213}],"package_metadata":{"category":"care_professional","created_at":1780390654.280724,"created_by":{"discord_user_id":"1088409939241865278","discord_user_name":"chord410"},"district":"新莊區","name":"未指定地區 / 照顧及專業 / 2026-06-02","note":"","original_package_id":"pkg-mpwemgri-7eqy1","output_mode":"family","resource_ids":["xinzhuang_ltc_contract_units_directory"],"selected_topic_keys":[],"smart_query_text":"","status":"result_pending","updated_at":1780560020.287091,"urgency":""},"resource_snapshots":[{"body":"## 個管師使用重點\n\n這張卡適合在新莊區案家已經有居家服務、日照、小規機、營養餐飲、機構或專業服務需求時使用。先把需求拆成服務類型，再用清冊找可能承作單位，最後回到 1966、照管中心或特約單位完成正式複核。\n\n## 可給家屬\n\n可以先依新莊區查找新北市長照特約服務單位。是否能正式提供服務，仍要看長照評估、照顧計畫、單位承作項目與當時可服務狀態。\n\n## 電話複核\n\n- 單位是否仍承作新莊區，服務範圍是否包含案家地址\n- 目前是否可接案，是否有等待或時段限制\n- 承作服務是居家服務、日照、小規機、營養餐飲、機構或專業服務哪一類\n- 是否需要先由 1966、照管中心或照專完成評估與照顧計畫\n- 轉介、試服務、費用、請假與暫停服務規則如何處理\n\n## 內部提醒\n\n清冊不是派案結果。若家屬急著找服務，先用這張卡整理可電話複核的單位清單，再依服務類型與案家地址逐一確認；不要只因為清冊列名就承諾一定可收案。","category":"care_professional","confidence":"A級官方清冊深修","contact":"長照申請可撥 1966；新北市政府總機 1999 或 02-2960-3456 可轉接長照相關窗口。個別服務單位電話、地址與承作項目，以新北市衛生局長照特約服務清冊逐一電話複核。","content_hash":"fd8b593f97cb8686b37d335ee527df0d73682cb8519c37e083f78b4fde5185bc","coverage_scope":"district","districts":["新莊區"],"eligibility_tags":["新莊區","長照特約清冊","居家服務","日照/小規機","機構或專業服務"],"embedding_text":"新莊區長照特約服務單位清冊 care_professional home_care day_care transport_da01 professional_service meal_service district 新莊區行政區長照特約服務單位查找卡；實際承作服務仍要依服務類型、案家地址與單位當日回覆電話複核。 新莊區 新莊區長照特約服務單位清冊用來協助照顧服務團隊在新莊區案家需要長照服務時，先查找可能承作的居家服務、日照、小規機、營養餐飲、機構或專業服務單位。這張卡是單位查找工具，不等於長照申請核定或已完成派案。 先確認案家行政區、長照評估狀態與需要的服務類型，再依新北市長照特約服務清冊找單位名稱、電話與服務類別；正式連結前仍要洽 1966、照管中心或特約單位電話複核承作狀態。 案家行政區與完整服務地址 長照評估或照顧計畫資料 需要的服務類型：居家服務、日照、小規機、營養餐飲、機構或專業服務 失能、失智、照顧負荷與特殊照顧需求摘要 主要照顧者聯絡方式與可配合服務時段 單位是否仍承作新莊區，服務範圍是否包含案家地址 目前是否可接案，是否有等待或時段限制 承作服務是居家服務、日照、小規機、營養餐飲、機構或專業服務哪一類 是否需要先由 1966、照管中心或照專完成評估與照顧計畫 轉介、試服務、費用、請假與暫停服務規則如何處理 2026-05-30 深修：此卡定位為新莊區長照單位查找與電話複核工具。個管師應把清冊、長照評估、照顧計畫與服務單位承作狀態分開說明，避免家屬以為清冊有名字就一定能收案。","id":"xinzhuang_ltc_contract_units_directory","internal_notes":"2026-05-30 深修：此卡定位為新莊區長照單位查找與電話複核工具。個管師應把清冊、長照評估、照顧計畫與服務單位承作狀態分開說明，避免家屬以為清冊有名字就一定能收案。","last_checked_at":"2026-05-30","name":"新莊區長照特約服務單位清冊","next_review_at":"2026-08-30","next_step":"先確認案家行政區、長照評估狀態與需要的服務類型，再依新北市長照特約服務清冊找單位名稱、電話與服務類別；正式連結前仍要洽 1966、照管中心或特約單位電話複核承作狀態。","phone_check_questions":["單位是否仍承作新莊區，服務範圍是否包含案家地址","目前是否可接案，是否有等待或時段限制","承作服務是居家服務、日照、小規機、營養餐飲、機構或專業服務哪一類","是否需要先由 1966、照管中心或照專完成評估與照顧計畫","轉介、試服務、費用、請假與暫停服務規則如何處理"],"public_allowed":true,"public_contact":"長照申請可撥 1966；新北市政府總機 1999 或 02-2960-3456 可轉接長照相關窗口。個別服務單位電話、地址與承作項目，以新北市衛生局長照特約服務清冊逐一電話複核。","public_next_step":"先確認案家行政區、長照評估狀態與需要的服務類型，再依新北市長照特約服務清冊找單位名稱、電話與服務類別；正式連結前仍要洽 1966、照管中心或特約單位電話複核承作狀態。","public_required_documents":["案家行政區與完整服務地址","長照評估或照顧計畫資料","需要的服務類型：居家服務、日照、小規機、營養餐飲、機構或專業服務","失能、失智、照顧負荷與特殊照顧需求摘要","主要照顧者聯絡方式與可配合服務時段"],"public_summary":"新莊區長照特約服務單位清冊用來協助照顧服務團隊在新莊區案家需要長照服務時，先查找可能承作的居家服務、日照、小規機、營養餐飲、機構或專業服務單位。這張卡是單位查找工具，不等於長照申請核定或已完成派案。","region":"新北市","resource_id":"xinzhuang_ltc_contract_units_directory","resource_version":"3","risk_flags":["清冊是找單位，不是派案核定","服務單位可能只承作部分服務類型","可接案狀態與服務時段需電話複核","正式服務仍需長照評估與照顧計畫"],"service_area_note":"新莊區行政區長照特約服務單位查找卡；實際承作服務仍要依服務類型、案家地址與單位當日回覆電話複核。","source_type":"official_directory","source_url":"https://www.careyou.ntpc.gov.tw/w/agecare/unit","status":"active","summary":"新莊區長照特約服務單位清冊用來協助照顧服務團隊在新莊區案家需要長照服務時，先查找可能承作的居家服務、日照、小規機、營養餐飲、機構或專業服務單位。這張卡是單位查找工具，不等於長照申請核定或已完成派案。","title":"新莊區長照特約服務單位清冊","topics":["home_care","day_care","transport_da01","professional_service","meal_service"],"urgency_tags":["一般","需電話複核"]}],"schema_version":"resourcepack.v1","signature_status":"unsigned","source_app_version":"resource-nav-20260524-resourcepack-exchange"}</script>
+  <script>
+    const COPY_TEXTS = {'family': '家屬版資源包：未指定地區 / 照顧及專業 / 2026-06-02\n\n新莊區長照特約服務單位清冊\n新莊區長照特約服務單位清冊用來協助照顧服務團隊在新莊區案家需要長照服務時，先查找可能承作的居家服務、日照、小規機、營養餐飲、機構或專業服務單位。這張卡是單位查找工具，不等於長照申請核定或已完成派案。\n下一步：先確認案家行政區、長照評估狀態與需要的服務類型，再依新北市長照特約服務清冊找單位名稱、電話與服務類別；正式連結前仍要洽 1966、照管中心或特約單位電話複核承作狀態。\n聯絡/申請：長照申請可撥 1966；新北市政府總機 1999 或 02-2960-3456 可轉接長照相關窗口。個別服務單位電話、地址與承作項目，以新北市衛生局長照特約服務清冊逐一電話複核。\n可先準備：案家行政區與完整服務地址、長照評估或照顧計畫資料、需要的服務類型：居家服務、日照、小規機、營養餐飲、機構或專業服務、失能、失智、照顧負荷與特殊照顧需求摘要、主要照顧者聯絡方式與可配合服務時段', 'phone': '個管師電話確認清單：未指定地區 / 照顧及專業 / 2026-06-02\n\n新莊區長照特約服務單位清冊\n聯絡/申請：長照申請可撥 1966；新北市政府總機 1999 或 02-2960-3456 可轉接長照相關窗口。個別服務單位電話、地址與承作項目，以新北市衛生局長照特約服務清冊逐一電話複核。\n電話確認：單位是否仍承作新莊區，服務範圍是否包含案家地址；目前是否可接案，是否有等待或時段限制；承作服務是居家服務、日照、小規機、營養餐飲、機構或專業服務哪一類；是否需要先由 1966、照管中心或照專完成評估與照顧計畫；轉介、試服務、費用、請假與暫停服務規則如何處理\n內部提醒：2026-05-30 深修：此卡定位為新莊區長照單位查找與電話複核工具。個管師應把清冊、長照評估、照顧計畫與服務單位承作狀態分開說明，避免家屬以為清冊有名字就一定能收案。', 'admin': '行政申請清單：未指定地區 / 照顧及專業 / 2026-06-02\n\n新莊區長照特約服務單位清冊\n狀態：active\n資料來源：https://www.careyou.ntpc.gov.tw/w/agecare/unit\n最後確認：2026-05-30\n文件：案家行政區與完整服務地址、長照評估或照顧計畫資料、需要的服務類型：居家服務、日照、小規機、營養餐飲、機構或專業服務、失能、失智、照顧負荷與特殊照顧需求摘要、主要照顧者聯絡方式與可配合服務時段\n注意：清冊是找單位，不是派案核定、服務單位可能只承作部分服務類型、可接案狀態與服務時段需電話複核、正式服務仍需長照評估與照顧計畫', 'handoff': '交接摘要：未指定地區 / 照顧及專業 / 2026-06-02\n行政區：新莊區\n主題：照顧及專業\n線索：新莊區、長照特約清冊、居家服務、日照/小規機、機構或專業服務、一般、需電話複核\n已選資源：1 筆'};
+    const SHARE_URL = 'https://chord310.github.io/ob-prod-share/viewer.html?id=a6ae49acbf3d7fa5c846';
+    async function copyText(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        return;
+      }
+      const area = document.getElementById("copyScratch");
+      area.hidden = false;
+      area.value = text;
+      area.select();
+      document.execCommand("copy");
+      area.hidden = true;
+    }
+    const OUTPUT_HELP = {
+      family: "家屬版適合貼 LINE 或訊息，會排除內部註記與不適合外流的提醒。",
+      phone: "電話確認適合個管師打電話前使用，聚焦聯絡方式與要問的問題。",
+      admin: "行政清單整理文件、來源與最後確認日，方便補件或填報。",
+      handoff: "交接摘要給同事或主管接手，聚焦優先順序、風險與下一步。",
+      full: "完整資料顯示所有區塊與內部提醒，適合個管師自己檢查整包內容。",
+    };
+    function setOutputMode(mode) {
+      const safeMode = OUTPUT_HELP[mode] ? mode : "full";
+      try { localStorage.setItem("resource_package_result_mode_v1", safeMode); } catch (e) {}
+      document.querySelectorAll("[data-result-mode]").forEach((button) => {
+        const active = button.dataset.resultMode === safeMode;
+        button.classList.toggle("is-active", active);
+        button.setAttribute("aria-selected", active ? "true" : "false");
+      });
+      document.querySelectorAll("[data-output-section]").forEach((section) => {
+        const modes = String(section.dataset.outputSection || "full").split(/\s+/);
+        section.hidden = !modes.includes(safeMode);
+      });
+      const help = document.getElementById("resultModeHelp");
+      if (help) help.textContent = OUTPUT_HELP[safeMode];
+    }
+    document.querySelectorAll("[data-result-mode]").forEach((button) => {
+      button.addEventListener("click", () => setOutputMode(button.dataset.resultMode || "full"));
+    });
+    document.querySelectorAll("[data-copy]").forEach((button) => {
+      button.addEventListener("click", async () => {
+        await copyText(COPY_TEXTS[button.dataset.copy] || "");
+        button.textContent = "已複製";
+        setTimeout(() => { button.textContent = button.dataset.copy === "family" ? "複製家屬版" : button.dataset.copy === "phone" ? "複製電話確認" : button.dataset.copy === "admin" ? "複製行政清單" : "複製交接摘要"; }, 1200);
+      });
+    });
+    document.querySelectorAll("[data-copy-link]").forEach((button) => {
+      button.addEventListener("click", async () => {
+        await copyText(SHARE_URL);
+        button.textContent = "已複製";
+        setTimeout(() => { button.textContent = "複製連結"; }, 1200);
+      });
+    });
+    const URL_PARAMS = new URLSearchParams(window.location.search);
+    const AUTO_PRINT_QUERY_VALUE = "print=1";
+    const AUTO_PRINT_KEY = 'resource_nav_auto_print_v1:a6ae49acbf3d7fa5c846';
+    function shouldAutoPrint() {
+      return URL_PARAMS.get("print") === "1";
+    }
+    function triggerPrint() {
+      setTimeout(() => {
+        try { window.focus(); } catch (e) {}
+        window.print();
+      }, 160);
+    }
+    document.querySelectorAll("[data-print-result]").forEach((button) => {
+      button.addEventListener("click", triggerPrint);
+    });
+    if (shouldAutoPrint()) {
+      let alreadyPrinted = false;
+      try { alreadyPrinted = sessionStorage.getItem(AUTO_PRINT_KEY) === "1"; } catch (e) {}
+      if (!alreadyPrinted) {
+        try { sessionStorage.setItem(AUTO_PRINT_KEY, "1"); } catch (e) {}
+        window.addEventListener("load", triggerPrint, { once: true });
+      }
+    }
+    
+    const LAST_SESSION_ENTRY_KEY = "resource_nav_last_session_entry_v1";
+    function readRememberedEntryUrl() {
+      try {
+        const value = sessionStorage.getItem(LAST_SESSION_ENTRY_KEY) || localStorage.getItem(LAST_SESSION_ENTRY_KEY) || "";
+        if (!value || !value.includes("resource-nav.html") || !value.includes("session=")) return "";
+        return value;
+      } catch (e) {
+        return "";
+      }
+    }
+    const rememberedEntry = readRememberedEntryUrl();
+    if (rememberedEntry) {
+      document.querySelectorAll("[data-return-main]").forEach((link) => { link.href = rememberedEntry; });
+    }
+    
+    let savedMode = "full";
+    try { savedMode = localStorage.getItem("resource_package_result_mode_v1") || "full"; } catch (e) {}
+    setOutputMode(savedMode);
+  </script>
+</body>
+</html>
