@@ -1,0 +1,230 @@
+{
+  "share_id": "2OAGiX9tMv7YtPjFAz_tjw",
+  "address": "235台灣新北市中和區瓦磘里中山路二段49號",
+  "home": {
+    "lat": 25.00484,
+    "lng": 121.5044538,
+    "geocode_provider": "google",
+    "geocode_precision": "rooftop"
+  },
+  "vendors": [
+    {
+      "vendor_id": "ntpc-a0dbfe3920e7c6db",
+      "name": "藥安藥局",
+      "district": "中和區",
+      "address": "新北市中和區廣福路16號",
+      "phone": "02-22447066",
+      "service_types": [
+        "購置"
+      ],
+      "vendor_category": "藥局",
+      "source_url": "https://atrc.aihsin.ntpc.gov.tw/NewsInfo/24",
+      "lat": 25.0027908,
+      "lng": 121.5051318,
+      "geocode_provider": "google",
+      "distance_km": 0.238,
+      "route_distance_meters": null,
+      "route_duration_seconds": null,
+      "route_status": "",
+      "route_source": "",
+      "directions_url": "https://www.google.com/maps/dir/?api=1&destination=25.0027908%2C121.5051318&travelmode=driving&origin=25.0048400%2C121.5044538"
+    },
+    {
+      "vendor_id": "ntpc-20b02150adbf7c02",
+      "name": "杏一中和中山藥局",
+      "district": "中和區",
+      "address": "新北市中和區中山路二段135號1樓",
+      "phone": "02-22471992",
+      "service_types": [
+        "購置"
+      ],
+      "vendor_category": "藥局",
+      "source_url": "https://atrc.aihsin.ntpc.gov.tw/NewsInfo/24",
+      "lat": 25.002974,
+      "lng": 121.502212,
+      "geocode_provider": "google",
+      "distance_km": 0.307,
+      "route_distance_meters": null,
+      "route_duration_seconds": null,
+      "route_status": "",
+      "route_source": "",
+      "directions_url": "https://www.google.com/maps/dir/?api=1&destination=25.0029740%2C121.5022120&travelmode=driving&origin=25.0048400%2C121.5044538"
+    },
+    {
+      "vendor_id": "ntpc-e1cf2a05424faad4",
+      "name": "伍品藥局",
+      "district": "中和區",
+      "address": "新北市中和區莊敬路35號1樓",
+      "phone": "02-82456789",
+      "service_types": [
+        "購置",
+        "租賃"
+      ],
+      "vendor_category": "藥局",
+      "source_url": "https://atrc.aihsin.ntpc.gov.tw/NewsInfo/24",
+      "lat": 25.0050329,
+      "lng": 121.50077,
+      "geocode_provider": "google",
+      "distance_km": 0.372,
+      "route_distance_meters": null,
+      "route_duration_seconds": null,
+      "route_status": "",
+      "route_source": "",
+      "directions_url": "https://www.google.com/maps/dir/?api=1&destination=25.0050329%2C121.5007700&travelmode=driving&origin=25.0048400%2C121.5044538"
+    },
+    {
+      "vendor_id": "ntpc-bedd4d5060b886ca",
+      "name": "壹品藥局",
+      "district": "中和區",
+      "address": "新北市中和區福祥路55號1樓",
+      "phone": "02-22481818",
+      "service_types": [
+        "購置"
+      ],
+      "vendor_category": "藥局",
+      "source_url": "https://atrc.aihsin.ntpc.gov.tw/NewsInfo/24",
+      "lat": 25.0047219,
+      "lng": 121.4991476,
+      "geocode_provider": "google",
+      "distance_km": 0.535,
+      "route_distance_meters": null,
+      "route_duration_seconds": null,
+      "route_status": "",
+      "route_source": "",
+      "directions_url": "https://www.google.com/maps/dir/?api=1&destination=25.0047219%2C121.4991476&travelmode=driving&origin=25.0048400%2C121.5044538"
+    },
+    {
+      "vendor_id": "ntpc-d3c0719d92e59b91",
+      "name": "力賀藥局",
+      "district": "中和區",
+      "address": "新北市中和區連城路7號1、2樓",
+      "phone": "02-22473247",
+      "service_types": [
+        "購置"
+      ],
+      "vendor_category": "藥局",
+      "source_url": "https://atrc.aihsin.ntpc.gov.tw/NewsInfo/24",
+      "lat": 25.0021378,
+      "lng": 121.4992837,
+      "geocode_provider": "google",
+      "distance_km": 0.601,
+      "route_distance_meters": null,
+      "route_duration_seconds": null,
+      "route_status": "",
+      "route_source": "",
+      "directions_url": "https://www.google.com/maps/dir/?api=1&destination=25.0021378%2C121.4992837&travelmode=driving&origin=25.0048400%2C121.5044538"
+    },
+    {
+      "vendor_id": "ntpc-c349de86d2fc4c2f",
+      "name": "景安大澤藥局",
+      "district": "中和區",
+      "address": "新北市中和區景安路65號1樓",
+      "phone": "02-29432265",
+      "service_types": [
+        "購置"
+      ],
+      "vendor_category": "藥局",
+      "source_url": "https://atrc.aihsin.ntpc.gov.tw/NewsInfo/24",
+      "lat": 24.9979211,
+      "lng": 121.5071362,
+      "geocode_provider": "google",
+      "distance_km": 0.815,
+      "route_distance_meters": null,
+      "route_duration_seconds": null,
+      "route_status": "",
+      "route_source": "",
+      "directions_url": "https://www.google.com/maps/dir/?api=1&destination=24.9979211%2C121.5071362&travelmode=driving&origin=25.0048400%2C121.5044538"
+    },
+    {
+      "vendor_id": "ntpc-5db79908169465c7",
+      "name": "宜安藥局(大樹)",
+      "district": "中和區",
+      "address": "新北市中和區宜安路146號",
+      "phone": "02-22331300",
+      "service_types": [
+        "購置"
+      ],
+      "vendor_category": "藥局",
+      "source_url": "https://atrc.aihsin.ntpc.gov.tw/NewsInfo/24",
+      "lat": 24.9986257,
+      "lng": 121.509616,
+      "geocode_provider": "google",
+      "distance_km": 0.865,
+      "route_distance_meters": null,
+      "route_duration_seconds": null,
+      "route_status": "",
+      "route_source": "",
+      "directions_url": "https://www.google.com/maps/dir/?api=1&destination=24.9986257%2C121.5096160&travelmode=driving&origin=25.0048400%2C121.5044538"
+    },
+    {
+      "vendor_id": "ntpc-70762e06acea4017",
+      "name": "禾昌藥局",
+      "district": "中和區",
+      "address": "新北市中和區中安街178巷2號1樓",
+      "phone": "02-29267330",
+      "service_types": [
+        "購置"
+      ],
+      "vendor_category": "藥局",
+      "source_url": "https://atrc.aihsin.ntpc.gov.tw/NewsInfo/24",
+      "lat": 24.9995846,
+      "lng": 121.5109081,
+      "geocode_provider": "google",
+      "distance_km": 0.874,
+      "route_distance_meters": null,
+      "route_duration_seconds": null,
+      "route_status": "",
+      "route_source": "",
+      "directions_url": "https://www.google.com/maps/dir/?api=1&destination=24.9995846%2C121.5109081&travelmode=driving&origin=25.0048400%2C121.5044538"
+    },
+    {
+      "vendor_id": "ntpc-86ad0f6bb57787b0",
+      "name": "諾貝兒寶貝股份有限公司中和分公司",
+      "district": "中和區",
+      "address": "新北市中和區中山路2段293號地下3樓",
+      "phone": "02-82454159",
+      "service_types": [
+        "購置"
+      ],
+      "vendor_category": "個人用品/連鎖門市",
+      "source_url": "https://atrc.aihsin.ntpc.gov.tw/NewsInfo/24",
+      "lat": 25.0018428,
+      "lng": 121.495843,
+      "geocode_provider": "google",
+      "distance_km": 0.93,
+      "route_distance_meters": null,
+      "route_duration_seconds": null,
+      "route_status": "",
+      "route_source": "",
+      "directions_url": "https://www.google.com/maps/dir/?api=1&destination=25.0018428%2C121.4958430&travelmode=driving&origin=25.0048400%2C121.5044538"
+    },
+    {
+      "vendor_id": "ntpc-27daaae4c9eee968",
+      "name": "藥安連勝藥局",
+      "district": "中和區",
+      "address": "新北市中和區連勝街37號",
+      "phone": "02-22425266",
+      "service_types": [
+        "購置"
+      ],
+      "vendor_category": "藥局",
+      "source_url": "https://atrc.aihsin.ntpc.gov.tw/NewsInfo/24",
+      "lat": 24.9975761,
+      "lng": 121.4983178,
+      "geocode_provider": "google",
+      "distance_km": 1.017,
+      "route_distance_meters": null,
+      "route_duration_seconds": null,
+      "route_status": "",
+      "route_source": "",
+      "directions_url": "https://www.google.com/maps/dir/?api=1&destination=24.9975761%2C121.4983178&travelmode=driving&origin=25.0048400%2C121.5044538"
+    }
+  ],
+  "map_url": "https://www.google.com/maps/dir/?api=1&destination=24.9975761%2C121.4983178&travelmode=driving&origin=25.0048400%2C121.5044538&waypoints=25.0027908%2C121.5051318%7C25.0029740%2C121.5022120%7C25.0050329%2C121.5007700%7C25.0047219%2C121.4991476%7C25.0021378%2C121.4992837%7C24.9979211%2C121.5071362%7C24.9986257%2C121.5096160%7C24.9995846%2C121.5109081%7C25.0018428%2C121.4958430",
+  "created_at": 1781097546.934397,
+  "expires_at": 1781702346.934397,
+  "google_maps_browser_key": "",
+  "ok": true,
+  "static_share": true,
+  "static_data_path": "vendor-shares/2OAGiX9tMv7YtPjFAz_tjw.json"
+}
