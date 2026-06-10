@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>未指定地區 / 照顧及專業 / 2026-06-10｜長照資源包結果</title>
+  <style>
+    :root { color-scheme: light; --ink:#172033; --muted:#66758a; --line:#d9e2ef; --brand:#0b66c3; --soft:#f4f7fb; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink); background: #eef3f8; }
+    a { color: var(--brand); }
+    .topbar { display:flex; justify-content:space-between; align-items:center; gap:16px; padding:18px 24px; background:#fff; border-bottom:1px solid var(--line); position:sticky; top:0; z-index:10; }
+    .topbar h1 { margin:0; font-size:24px; }
+    .eyebrow { margin:0 0 6px; color:#087f7a; font-size:12px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; }
+    .button, button { border:1px solid #aac4df; background:#fff; color:#17324f; border-radius:8px; padding:10px 14px; font-weight:700; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; justify-content:center; }
+    .button.primary, button.primary { background:var(--brand); border-color:var(--brand); color:#fff; }
+    .button-green { background:#0f8f5f; border-color:#0f8f5f; color:#fff; }
+    .button-red { background:#cf3f3f; border-color:#cf3f3f; color:#fff; }
+    .button-print { background:#f4f8fd; border-color:#9ab8d8; color:#17324f; }
+    .button-print:hover { background:#e8f2fc; transform:translateY(-1px); }
+    main { width:min(1180px, 100%); margin:0 auto; padding:20px; }
+    .hero, .panel, .resource-detail { background:#fff; border:1px solid var(--line); border-radius:10px; padding:18px; box-shadow:0 8px 28px rgba(20,42,70,.06); }
+    .hero { display:grid; grid-template-columns: 1.3fr .7fr; gap:16px; margin-bottom:18px; }
+    .hero h2 { margin:0 0 8px; font-size:28px; }
+    .muted { color:var(--muted); line-height:1.7; }
+    .actions { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+    .top-actions { display:flex; flex-wrap:wrap; gap:10px; justify-content:flex-end; }
+    .panel-actions { margin-top:14px; display:flex; flex-wrap:wrap; gap:10px; }
+    .item-note { margin-top:4px; color:var(--muted); line-height:1.6; }
+    .result-output-switcher { display:flex; justify-content:space-between; gap:16px; align-items:center; border:1px solid var(--line); border-radius:10px; padding:16px 18px; margin-bottom:18px; background:#fff; box-shadow:0 8px 28px rgba(20,42,70,.05); }
+    .result-output-switcher h3 { margin:0 0 4px; font-size:18px; }
+    .result-mode-tabs { display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end; }
+    .result-mode-tabs button { min-height:38px; border-radius:999px; padding:8px 13px; background:#fff; color:var(--ink); transition:transform .12s ease, background .12s ease, border-color .12s ease, box-shadow .12s ease; }
+    .result-mode-tabs button:hover { transform:translateY(-1px); box-shadow:0 8px 18px rgba(24,39,75,.1); }
+    .result-mode-tabs button:active { transform:translateY(1px); }
+    .result-mode-tabs button.is-active { border-color:var(--brand); background:var(--brand); color:#fff; }
+    [data-output-section][hidden] { display:none !important; }
+    .grid { display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap:14px; margin-bottom:18px; }
+    .panel h3, .resource-detail h3 { margin:0 0 10px; }
+    .panel ol, .panel ul { margin:0; padding-left:22px; line-height:1.8; }
+    pre { white-space:pre-wrap; word-break:break-word; background:var(--soft); border:1px solid var(--line); border-radius:8px; padding:12px; line-height:1.7; }
+    .resource-list { display:grid; gap:14px; }
+    .resource-detail dl { display:grid; gap:10px; margin:0; }
+    .resource-detail dl div { padding-top:10px; border-top:1px solid #edf1f6; }
+    dt { font-weight:800; color:#233d58; margin-bottom:4px; }
+    dd { margin:0; color:#26374d; line-height:1.7; }
+    .share-panel { display:grid; gap:12px; margin-top:18px; background:#fff; border:1px solid var(--line); border-radius:10px; padding:18px; box-shadow:0 8px 28px rgba(20,42,70,.06); }
+    .share-body { display:flex; flex-wrap:wrap; align-items:center; gap:12px; }
+    .share-qr { width:min(240px, 100%); border:1px solid var(--line); border-radius:10px; background:#fff; padding:10px; }
+    .share-link { flex:1 1 280px; overflow-wrap:anywhere; }
+    @media print {
+      @page { margin: 14mm; }
+      body { background:#fff; color:#111827; font-size:12pt; }
+      .topbar { position:static; border-bottom:1px solid #d1d5db; padding:0 0 10px; }
+      .top-actions, .result-output-switcher, .panel-actions, .share-body button, #copyScratch { display:none !important; }
+      main { width:100%; max-width:none; padding:0; }
+      .hero, .panel, .resource-detail, .share-panel { box-shadow:none; border-color:#cbd5e1; break-inside:avoid; page-break-inside:avoid; }
+      .hero, .grid { grid-template-columns:1fr; }
+      .grid { gap:10px; }
+      .resource-list { display:block; }
+      .resource-detail { margin:0 0 10px; }
+      pre { background:#fff; border-color:#cbd5e1; }
+      a[href^="http"]::after { content:" (" attr(href) ")"; color:#475569; font-size:9pt; }
+      .share-link::after { content:""; }
+    }
+    @media (max-width: 760px) {
+      .topbar { align-items:flex-start; flex-direction:column; }
+      main { padding:12px; }
+      .hero, .grid { grid-template-columns: 1fr; }
+      .result-output-switcher { align-items:stretch; flex-direction:column; }
+      .result-mode-tabs { justify-content:stretch; }
+      .result-mode-tabs button { flex:1 1 130px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">Resource Package Result</p>
+      <h1>資源包結果</h1>
+    </div>
+    <div class="top-actions">
+      <a class="button button-green" data-return-main href="https://chord310.github.io/ob-prod-share/resource-nav.html?category=care_professional&amp;source=resource_package_result&amp;guild=1509223295164354630">返回長照資源導航站主頁</a>
+      
+      <button type="button" class="button button-print" data-print-result>列印 / 另存 PDF</button>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <div>
+        <p class="eyebrow">案家資源包</p>
+        <h2>未指定地區 / 照顧及專業 / 2026-06-10</h2>
+        <p class="muted">建立者身份來自 Discord session。此頁包含所選資源、電話確認、行政文件與交接摘要；請勿在對外分享時附上內部註記。</p>
+        <p class="muted">更新時間：2026-06-10 15:35｜資源數：5 筆</p>
+        
+      </div>
+    </section>
+
+    <section class="result-output-switcher" aria-label="輸出格式切換">
+      <div>
+        <p class="eyebrow">輸出格式</p>
+        <h3>選擇這份結果要怎麼使用</h3>
+        <p class="muted" id="resultModeHelp">完整資料會顯示全部區塊；其他模式只聚焦在當下要複製或處理的內容。</p>
+        <p class="muted print-help">列印會使用目前選取的輸出格式；若要存檔，請在瀏覽器列印視窗選擇「另存為 PDF」。</p>
+      </div>
+      <div class="result-mode-tabs" role="tablist" aria-label="資源包輸出格式">
+        <button type="button" data-result-mode="family" role="tab">家屬版</button>
+        <button type="button" data-result-mode="phone" role="tab">電話確認</button>
+        <button type="button" data-result-mode="admin" role="tab">行政清單</button>
+        <button type="button" data-result-mode="handoff" role="tab">交接摘要</button>
+        <button type="button" data-result-mode="full" role="tab">完整資料</button>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="panel" data-output-section="full handoff">
+        <h3>建議優先順序</h3>
+        <ol><li><a href="#resource-bali_health_ltc_resources">八里區衛生所長照服務與社區資源窗口</a></li><li><a href="#resource-sanzhi_ltc_contract_units_directory">三芝區長照特約服務單位清冊</a></li><li><a href="#resource-sanchong_zhude_community_care_point">三重助德社區照顧關懷據點</a></li><li><a href="#resource-tucheng_community_care_point_directory">土城區社區照顧關懷據點服務資訊</a></li><li><a href="#resource-sanxia_ltc_contract_units_directory">三峽區長照特約服務單位清冊</a></li></ol>
+      </article>
+      <article class="panel" data-output-section="full phone">
+        <h3>先打哪幾通電話</h3>
+        <ol><li><a href="#resource-bali_health_ltc_resources">八里區衛生所長照服務與社區資源窗口</a><div class="item-note"><strong>聯絡/申請：</strong>八里區衛生所電話 02-2610-2137、02-2610-1902；地址新北市八里區舊城路16號；長照服務可另撥 1966。</div><div class="item-note"><strong>電話確認：</strong>衛生所目前能協助哪一類長照或社區資源分流；若案家未申請長照，應由 1966 還是衛生所協助轉介；八里區目前較常用的居服、日照或社區據點如何查詢；若家屬有福利補助或急難需求，應轉哪個窗口；是否需要先預約或準備文件</div></li><li><a href="#resource-sanzhi_ltc_contract_units_directory">三芝區長照特約服務單位清冊</a><div class="item-note"><strong>聯絡/申請：</strong>長照申請可撥 1966；新北市政府總機 1999 或 02-2960-3456 可轉接長照相關窗口。個別服務單位電話、地址與承作項目，以新北市衛生局長照特約服務清冊逐一電話複核。</div><div class="item-note"><strong>電話確認：</strong>單位是否仍承作三芝區，服務範圍是否包含案家地址；目前是否可接案，是否有等待或時段限制；承作服務是居家服務、日照、小規機、營養餐飲、機構或專業服務哪一類；是否需要先由 1966、照管中心或照專完成評估與照顧計畫；轉介、試服務、費用、請假與暫停服務規則如何處理</div></li><li><a href="#resource-sanchong_zhude_community_care_point">三重助德社區照顧關懷據點</a><div class="item-note"><strong>聯絡/申請：</strong>助德據點電話 02-2971-1266；地址：新北市三重區過田里過圳街7巷5號1樓。台灣多元社會福利協會總會電話 02-2892-7001，Email：tapdsw@gmail.com。</div><div class="item-note"><strong>電話確認：</strong>目前服務時段與活動內容；是否有共餐、健康促進、電話問安或關懷訪視；是否限過田里或特定里別長者；報名方式、費用與名額；行動不便者是否適合參與或需家屬陪同</div></li><li><a href="#resource-tucheng_community_care_point_directory">土城區社區照顧關懷據點服務資訊</a><div class="item-note"><strong>聯絡/申請：</strong>新北市政府社會局老人福利科：新北市境內市話直撥1999，或洽02-2960-3456轉3801-3808、3810-3818、3891、3892；實際據點電話與地址以平台篩選後列出的據點資料為準。</div><div class="item-note"><strong>電話確認：</strong>目前是否服務土城區或案家所在里別；有無關懷訪視、電話問安、餐飲服務、健康促進或社會參與活動；服務時間、活動頻率與是否需事前報名；是否限特定里別、年齡或福利身分；是否可接新案，若不可接案有無鄰近據點可詢問；是否需里辦、公所、個管師或家屬先行聯絡</div></li><li><a href="#resource-sanxia_ltc_contract_units_directory">三峽區長照特約服務單位清冊</a><div class="item-note"><strong>聯絡/申請：</strong>長照申請可撥 1966；新北市政府總機 1999 或 02-2960-3456 可轉接長照相關窗口。個別服務單位電話、地址與承作項目，以新北市衛生局長照特約服務清冊逐一電話複核。</div><div class="item-note"><strong>電話確認：</strong>單位是否仍承作三峽區，服務範圍是否包含案家地址；目前是否可接案，是否有等待或時段限制；承作服務是居家服務、日照、小規機、營養餐飲、機構或專業服務哪一類；是否需要先由 1966、照管中心或照專完成評估與照顧計畫；轉介、試服務、費用、請假與暫停服務規則如何處理</div></li></ol>
+        <div class="panel-actions"><button data-copy="phone">複製電話確認</button></div>
+      </article>
+      <article class="panel" data-output-section="full family">
+        <h3>可傳給家屬的短訊</h3>
+        <pre>家屬版資源包：未指定地區 / 照顧及專業 / 2026-06-10
+
+八里區衛生所長照服務與社區資源窗口
+八里區衛生所可協助八里區長照、健康管理、社區服務與地方資源初步分流。適合案家住八里、家屬不知道先找 1966、衛生所、區公所或服務單位時作第一站。
+下一步：先準備案家行政區、失能狀況、主要需求與聯絡方式，再洽八里區衛生所或 1966；若要找居服、日照或專業服務，需再依長照特約清冊逐一聯絡單位。
+聯絡/申請：八里區衛生所電話 02-2610-2137、02-2610-1902；地址新北市八里區舊城路16號；長照服務可另撥 1966。
+可先準備：案家行政區與聯絡方式、身分證明或健保資料、失能/照顧需求摘要、既有就醫與用藥資料、主要照顧者資訊
+
+三芝區長照特約服務單位清冊
+三芝區長照特約服務單位清冊用來協助照顧服務團隊在三芝區案家需要長照服務時，先查找可能承作的居家服務、日照、小規機、營養餐飲、機構或專業服務單位。這張卡是單位查找工具，不等於長照申請核定或已完成派案。
+下一步：先確認案家行政區、長照評估狀態與需要的服務類型，再依新北市長照特約服務清冊找單位名稱、電話與服務類別；正式連結前仍要洽 1966、照管中心或特約單位電話複核承作狀態。
+聯絡/申請：長照申請可撥 1966；新北市政府總機 1999 或 02-2960-3456 可轉接長照相關窗口。個別服務單位電話、地址與承作項目，以新北市衛生局長照特約服務清冊逐一電話複核。
+可先準備：案家行政區與完整服務地址、長照評估或照顧計畫資料、需要的服務類型：居家服務、日照、小規機、營養餐飲、機構或專業服務、失能、失智、照顧負荷與特殊照顧需求摘要、主要照顧者聯絡方式與可配合服務時段
+
+三重助德社區照顧關懷據點
+三重助德社區照顧關懷據點由台灣多元社會福利協會辦理，電話 02-2971-1266，地址新北市三重區過田里過圳街7巷5號1樓。適合三重區長者社區參與、關懷、活動、共餐或健康促進資源查詢。
+下一步：先確認案家住在哪一里、是否能自行到據點、是否需要共餐、健康促進或關懷訪視，再撥 02-2971-1266 詢問服務時段、活動內容、是否限里別與報名方式。
+聯絡/申請：助德據點電話 02-2971-1266；地址：新北市三重區過田里過圳街7巷5號1樓。台灣多元社會福利協會總會電話 02-2892-7001，Email：tapdsw@gmail.com。
+可先準備：長者居住里別與聯絡方式、參與活動、共餐或關懷需求、行動能力與陪同需求、慢性病、飲食或安全注意事項、緊急聯絡人
+
+土城區社區照顧關懷據點服務資訊
+新北市社會局「當我們老在一起」平台說明社區照顧關懷據點可提供健康促進、關懷訪視、電話問安、餐飲服務或社會參與活動。這張卡用於先篩選土城區據點，再安排電話複核。
+下一步：先在平台以土城區篩選據點，記下據點名稱、服務項目與服務時間；再致電據點或洽新北市1999/02-2960-3456轉老人福利科，複核目前服務狀態、是否限里別、是否接受新案。
+聯絡/申請：新北市政府社會局老人福利科：新北市境內市話直撥1999，或洽02-2960-3456轉3801-3808、3810-3818、3891、3892；實際據點電話與地址以平台篩選後列出的據點資料為準。
+可先準備：案家行政區與里別、長者基本資料、主要聯絡方式、共餐、關懷訪視或活動參與需求、行動與陪同需求
+
+三峽區長照特約服務單位清冊
+三峽區長照特約服務單位清冊用來協助照顧服務團隊在三峽區案家需要長照服務時，先查找可能承作的居家服務、日照、小規機、營養餐飲、機構或專業服務單位。這張卡是單位查找工具，不等於長照申請核定或已完成派案。
+下一步：先確認案家行政區、長照評估狀態與需要的服務類型，再依新北市長照特約服務清冊找單位名稱、電話與服務類別；正式連結前仍要洽 1966、照管中心或特約單位電話複核承作狀態。
+聯絡/申請：長照申請可撥 1966；新北市政府總機 1999 或 02-2960-3456 可轉接長照相關窗口。個別服務單位電話、地址與承作項目，以新北市衛生局長照特約服務清冊逐一電話複核。
+可先準備：案家行政區與完整服務地址、長照評估或照顧計畫資料、需要的服務類型：居家服務、日照、小規機、營養餐飲、機構或專業服務、失能、失智、照顧負荷與特殊照顧需求摘要、主要照顧者聯絡方式與可配合服務時段</pre>
+        <div class="panel-actions"><button class="primary" data-copy="family">複製家屬版</button></div>
+      </article>
+      <article class="panel" data-output-section="full admin">
+        <h3>需要先準備的文件</h3>
+        <ul><li>案家行政區與聯絡方式</li><li>身分證明或健保資料</li><li>失能/照顧需求摘要</li><li>既有就醫與用藥資料</li><li>主要照顧者資訊</li><li>案家行政區與完整服務地址</li><li>長照評估或照顧計畫資料</li><li>需要的服務類型：居家服務、日照、小規機、營養餐飲、機構或專業服務</li><li>失能、失智、照顧負荷與特殊照顧需求摘要</li><li>主要照顧者聯絡方式與可配合服務時段</li><li>長者居住里別與聯絡方式</li><li>參與活動、共餐或關懷需求</li><li>行動能力與陪同需求</li><li>慢性病、飲食或安全注意事項</li><li>緊急聯絡人</li><li>案家行政區與里別</li><li>長者基本資料</li><li>主要聯絡方式</li><li>共餐、關懷訪視或活動參與需求</li><li>行動與陪同需求</li></ul>
+        <div class="panel-actions"><button data-copy="admin">複製行政清單</button></div>
+      </article>
+      <article class="panel" data-output-section="full handoff">
+        <h3>風險提醒</h3>
+        <ul><li>衛生所不是全部服務的承作單位</li><li>福利與醫療需求需分流</li><li>特約單位仍需另行電話複核</li><li>清冊是找單位，不是派案核定</li><li>服務單位可能只承作部分服務類型</li><li>可接案狀態與服務時段需電話複核</li><li>正式服務仍需長照評估與照顧計畫</li><li>據點多為社區支持，不等於長照正式服務</li><li>里別與活動時段需電話複核</li><li>共餐或活動名額可能變動</li><li>行動不便者需評估安全</li><li>官方平台需逐點複核</li><li>據點服務狀態會異動</li><li>不可承諾名額或共餐</li><li>跨里服務需先問清楚</li></ul>
+      </article>
+      <article class="panel" data-output-section="full handoff">
+        <h3>交接摘要</h3>
+        <pre>交接摘要：未指定地區 / 照顧及專業 / 2026-06-10
+主題：照顧及專業
+線索：A級官方確認、名冊入口、八里區、居家服務、居家喘息、短照服務、一般、需電話確認、三芝區、長照特約清冊、日照/小規機、機構或專業服務
+已選資源：5 筆</pre>
+        <div class="panel-actions"><button data-copy="handoff">複製交接摘要</button></div>
+      </article>
+    </section>
+
+    <section class="resource-list" aria-label="完整資料集合" data-output-section="full">
+      <p class="eyebrow">完整資料集合</p>
+      
+    <article class="resource-detail" id="resource-bali_health_ltc_resources">
+      <div class="resource-detail-head">
+        <p class="eyebrow">care_professional</p>
+        <h3>1. <a href="https://bali.health.ntpc.gov.tw/article/113%EF%BC%8D%EF%BC%8D114%E5%B9%B4%E5%85%AB%E9%87%8C%E5%8D%80%E9%95%B7%E7%85%A7%E7%89%B9%E7%B4%84%E8%B3%87%E6%BA%90" target="_blank" rel="noopener noreferrer">八里區衛生所長照服務與社區資源窗口</a></h3>
+      </div>
+      <p>八里區衛生所可協助八里區長照、健康管理、社區服務與地方資源初步分流。適合案家住八里、家屬不知道先找 1966、衛生所、區公所或服務單位時作第一站。</p>
+      <dl>
+        <div><dt>下一步</dt><dd>先準備案家行政區、失能狀況、主要需求與聯絡方式，再洽八里區衛生所或 1966；若要找居服、日照或專業服務，需再依長照特約清冊逐一聯絡單位。</dd></div>
+        <div><dt>聯絡/申請</dt><dd>八里區衛生所電話 02-2610-2137、02-2610-1902；地址新北市八里區舊城路16號；長照服務可另撥 1966。</dd></div>
+        <div><dt>常備文件</dt><dd>案家行政區與聯絡方式、身分證明或健保資料、失能/照顧需求摘要、既有就醫與用藥資料、主要照顧者資訊</dd></div>
+        <div><dt>電話確認</dt><dd>衛生所目前能協助哪一類長照或社區資源分流；若案家未申請長照，應由 1966 還是衛生所協助轉介；八里區目前較常用的居服、日照或社區據點如何查詢；若家屬有福利補助或急難需求，應轉哪個窗口；是否需要先預約或準備文件</dd></div>
+        <div><dt>內部註記</dt><dd>2026-05-30 深修。衛生所是分流窗口，不等於所有長照服務承作單位。若是急難、福利補助或物資，可能需轉八里區公所或社福中心；若是醫療照護，需轉醫療院所或居家醫療。</dd></div>
+        <div><dt>風險提醒</dt><dd>衛生所不是全部服務的承作單位、福利與醫療需求需分流、特約單位仍需另行電話複核</dd></div>
+        <div><dt>來源/確認</dt><dd>official｜最後確認：2026-05-30</dd></div>
+      </dl>
+    </article>
+    
+
+    <article class="resource-detail" id="resource-sanzhi_ltc_contract_units_directory">
+      <div class="resource-detail-head">
+        <p class="eyebrow">care_professional</p>
+        <h3>2. <a href="https://www.careyou.ntpc.gov.tw/w/agecare/unit" target="_blank" rel="noopener noreferrer">三芝區長照特約服務單位清冊</a></h3>
+      </div>
+      <p>三芝區長照特約服務單位清冊用來協助照顧服務團隊在三芝區案家需要長照服務時，先查找可能承作的居家服務、日照、小規機、營養餐飲、機構或專業服務單位。這張卡是單位查找工具，不等於長照申請核定或已完成派案。</p>
+      <dl>
+        <div><dt>下一步</dt><dd>先確認案家行政區、長照評估狀態與需要的服務類型，再依新北市長照特約服務清冊找單位名稱、電話與服務類別；正式連結前仍要洽 1966、照管中心或特約單位電話複核承作狀態。</dd></div>
+        <div><dt>聯絡/申請</dt><dd>長照申請可撥 1966；新北市政府總機 1999 或 02-2960-3456 可轉接長照相關窗口。個別服務單位電話、地址與承作項目，以新北市衛生局長照特約服務清冊逐一電話複核。</dd></div>
+        <div><dt>常備文件</dt><dd>案家行政區與完整服務地址、長照評估或照顧計畫資料、需要的服務類型：居家服務、日照、小規機、營養餐飲、機構或專業服務、失能、失智、照顧負荷與特殊照顧需求摘要、主要照顧者聯絡方式與可配合服務時段</dd></div>
+        <div><dt>電話確認</dt><dd>單位是否仍承作三芝區，服務範圍是否包含案家地址；目前是否可接案，是否有等待或時段限制；承作服務是居家服務、日照、小規機、營養餐飲、機構或專業服務哪一類；是否需要先由 1966、照管中心或照專完成評估與照顧計畫；轉介、試服務、費用、請假與暫停服務規則如何處理</dd></div>
+        <div><dt>內部註記</dt><dd>2026-05-30 深修：此卡定位為三芝區長照單位查找與電話複核工具。個管師應把清冊、長照評估、照顧計畫與服務單位承作狀態分開說明，避免家屬以為清冊有名字就一定能收案。</dd></div>
+        <div><dt>風險提醒</dt><dd>清冊是找單位，不是派案核定、服務單位可能只承作部分服務類型、可接案狀態與服務時段需電話複核、正式服務仍需長照評估與照顧計畫</dd></div>
+        <div><dt>來源/確認</dt><dd>official_directory｜最後確認：2026-05-30</dd></div>
+      </dl>
+    </article>
+    
+
+    <article class="resource-detail" id="resource-sanchong_zhude_community_care_point">
+      <div class="resource-detail-head">
+        <p class="eyebrow">care_professional</p>
+        <h3>3. <a href="https://www.tapdsw.org/%E6%9C%8D%E5%8B%99%E9%A0%85%E7%9B%AE/%E5%A4%9A%E5%85%83%E7%A4%BE%E5%8D%80%E9%97%9C%E6%87%B7%E6%93%9A%E9%BB%9E/%E5%8A%A9%E5%BE%B7%E6%93%9A%E9%BB%9E" target="_blank" rel="noopener noreferrer">三重助德社區照顧關懷據點</a></h3>
+      </div>
+      <p>三重助德社區照顧關懷據點由台灣多元社會福利協會辦理，電話 02-2971-1266，地址新北市三重區過田里過圳街7巷5號1樓。適合三重區長者社區參與、關懷、活動、共餐或健康促進資源查詢。</p>
+      <dl>
+        <div><dt>下一步</dt><dd>先確認案家住在哪一里、是否能自行到據點、是否需要共餐、健康促進或關懷訪視，再撥 02-2971-1266 詢問服務時段、活動內容、是否限里別與報名方式。</dd></div>
+        <div><dt>聯絡/申請</dt><dd>助德據點電話 02-2971-1266；地址：新北市三重區過田里過圳街7巷5號1樓。台灣多元社會福利協會總會電話 02-2892-7001，Email：tapdsw@gmail.com。</dd></div>
+        <div><dt>常備文件</dt><dd>長者居住里別與聯絡方式、參與活動、共餐或關懷需求、行動能力與陪同需求、慢性病、飲食或安全注意事項、緊急聯絡人</dd></div>
+        <div><dt>電話確認</dt><dd>目前服務時段與活動內容；是否有共餐、健康促進、電話問安或關懷訪視；是否限過田里或特定里別長者；報名方式、費用與名額；行動不便者是否適合參與或需家屬陪同</dd></div>
+        <div><dt>內部註記</dt><dd>2026-05-30 深修：此卡可補三重社區支持，不應被說成日照或居家服務。家屬版要強調活動、共餐、關懷與健康促進。</dd></div>
+        <div><dt>風險提醒</dt><dd>據點多為社區支持，不等於長照正式服務、里別與活動時段需電話複核、共餐或活動名額可能變動、行動不便者需評估安全</dd></div>
+        <div><dt>來源/確認</dt><dd>service_provider｜最後確認：2026-05-30</dd></div>
+      </dl>
+    </article>
+    
+
+    <article class="resource-detail" id="resource-tucheng_community_care_point_directory">
+      <div class="resource-detail-head">
+        <p class="eyebrow">care_professional</p>
+        <h3>4. <a href="https://lkk.ntpc.gov.tw/home.jsp?id=9539ce925ac3028d" target="_blank" rel="noopener noreferrer">土城區社區照顧關懷據點服務資訊</a></h3>
+      </div>
+      <p>新北市社會局「當我們老在一起」平台說明社區照顧關懷據點可提供健康促進、關懷訪視、電話問安、餐飲服務或社會參與活動。這張卡用於先篩選土城區據點，再安排電話複核。</p>
+      <dl>
+        <div><dt>下一步</dt><dd>先在平台以土城區篩選據點，記下據點名稱、服務項目與服務時間；再致電據點或洽新北市1999/02-2960-3456轉老人福利科，複核目前服務狀態、是否限里別、是否接受新案。</dd></div>
+        <div><dt>聯絡/申請</dt><dd>新北市政府社會局老人福利科：新北市境內市話直撥1999，或洽02-2960-3456轉3801-3808、3810-3818、3891、3892；實際據點電話與地址以平台篩選後列出的據點資料為準。</dd></div>
+        <div><dt>常備文件</dt><dd>案家行政區與里別、長者基本資料、主要聯絡方式、共餐、關懷訪視或活動參與需求、行動與陪同需求</dd></div>
+        <div><dt>電話確認</dt><dd>目前是否服務土城區或案家所在里別；有無關懷訪視、電話問安、餐飲服務、健康促進或社會參與活動；服務時間、活動頻率與是否需事前報名；是否限特定里別、年齡或福利身分；是否可接新案，若不可接案有無鄰近據點可詢問；是否需里辦、公所、個管師或家屬先行聯絡</dd></div>
+        <div><dt>內部註記</dt><dd>來源為新北市社會局官方平台，頁面描述據點服務內容與老人福利科聯絡方式。此卡不是單一據點承諾；土城區據點的服務時段、共餐、關懷訪視、收案限制與跨里服務需逐點複核。家屬版可說明為社區支持線索，不可寫成已安排成功。</dd></div>
+        <div><dt>風險提醒</dt><dd>官方平台需逐點複核、據點服務狀態會異動、不可承諾名額或共餐、跨里服務需先問清楚</dd></div>
+        <div><dt>來源/確認</dt><dd>official｜最後確認：2026-05-30</dd></div>
+      </dl>
+    </article>
+    
+
+    <article class="resource-detail" id="resource-sanxia_ltc_contract_units_directory">
+      <div class="resource-detail-head">
+        <p class="eyebrow">care_professional</p>
+        <h3>5. <a href="https://www.careyou.ntpc.gov.tw/w/agecare/unit" target="_blank" rel="noopener noreferrer">三峽區長照特約服務單位清冊</a></h3>
+      </div>
+      <p>三峽區長照特約服務單位清冊用來協助照顧服務團隊在三峽區案家需要長照服務時，先查找可能承作的居家服務、日照、小規機、營養餐飲、機構或專業服務單位。這張卡是單位查找工具，不等於長照申請核定或已完成派案。</p>
+      <dl>
+        <div><dt>下一步</dt><dd>先確認案家行政區、長照評估狀態與需要的服務類型，再依新北市長照特約服務清冊找單位名稱、電話與服務類別；正式連結前仍要洽 1966、照管中心或特約單位電話複核承作狀態。</dd></div>
+        <div><dt>聯絡/申請</dt><dd>長照申請可撥 1966；新北市政府總機 1999 或 02-2960-3456 可轉接長照相關窗口。個別服務單位電話、地址與承作項目，以新北市衛生局長照特約服務清冊逐一電話複核。</dd></div>
+        <div><dt>常備文件</dt><dd>案家行政區與完整服務地址、長照評估或照顧計畫資料、需要的服務類型：居家服務、日照、小規機、營養餐飲、機構或專業服務、失能、失智、照顧負荷與特殊照顧需求摘要、主要照顧者聯絡方式與可配合服務時段</dd></div>
+        <div><dt>電話確認</dt><dd>單位是否仍承作三峽區，服務範圍是否包含案家地址；目前是否可接案，是否有等待或時段限制；承作服務是居家服務、日照、小規機、營養餐飲、機構或專業服務哪一類；是否需要先由 1966、照管中心或照專完成評估與照顧計畫；轉介、試服務、費用、請假與暫停服務規則如何處理</dd></div>
+        <div><dt>內部註記</dt><dd>2026-05-30 深修：此卡定位為三峽區長照單位查找與電話複核工具。個管師應把清冊、長照評估、照顧計畫與服務單位承作狀態分開說明，避免家屬以為清冊有名字就一定能收案。</dd></div>
+        <div><dt>風險提醒</dt><dd>清冊是找單位，不是派案核定、服務單位可能只承作部分服務類型、可接案狀態與服務時段需電話複核、正式服務仍需長照評估與照顧計畫</dd></div>
+        <div><dt>來源/確認</dt><dd>official_directory｜最後確認：2026-05-30</dd></div>
+      </dl>
+    </article>
+    
+    </section>
+    
+    <section class="share-panel">
+      <div>
+        <p class="eyebrow">分享此資源包結果</p>
+        <h3>QR CODE 與正式連結</h3>
+        <p class="muted">這是正式 Web B 結果連結，可複製給需要查看的人；對外分享前請確認內容不含內部註記。</p>
+      </div>
+      <div class="share-body">
+        <img class="share-qr" src="data:image/png;base64,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" alt="資源包結果 QR Code">
+        <a class="share-link" href="https://chord310.github.io/ob-prod-share/viewer.html?id=32d312d5880da5fc2103" target="_blank" rel="noopener noreferrer">https://chord310.github.io/ob-prod-share/viewer.html?id=32d312d5880da5fc2103</a>
+        <button type="button" data-copy-link>複製連結</button>
+      </div>
+    </section>
+        
+  </main>
+  <textarea id="copyScratch" hidden></textarea>
+  <script type="application/json" id="resourcePackManifest">{"content_hash":"58fea11c3065230b943627eef61940a4ddfa7a67afc954a399683efa2e694b78","export_id":"rpex-2ece13c1ec12a6fa1ef4","exported_at":1781076901.287454,"output_history":[{"created_at":1781076901.226152,"output_id":"32d312d5880da5fc2103","output_mode":"family","qr_status":"pending","share_page_id":"32d312d5880da5fc2103","share_url":"","status":"pending","updated_at":1781076901.226152}],"package_metadata":{"category":"care_professional","created_at":1781076834.885408,"created_by":{"discord_user_id":"1504009765817290822","discord_user_name":"永樂Ａ單位-01"},"district":"","name":"未指定地區 / 照顧及專業 / 2026-06-10","note":"","original_package_id":"pkg-mq7r5a6q-edocd","output_mode":"family","resource_ids":["bali_health_ltc_resources","sanzhi_ltc_contract_units_directory","sanchong_zhude_community_care_point","tucheng_community_care_point_directory","sanxia_ltc_contract_units_directory"],"selected_topic_keys":[],"smart_query_text":"","status":"result_pending","updated_at":1781076901.2244182,"urgency":""},"resource_snapshots":[{"body":"# 八里區衛生所長照服務與社區資源窗口\n\n## 個管師使用重點\n八里區衛生所可協助八里區長照、健康管理、社區服務與地方資源初步分流。適合案家住八里、家屬不知道先找 1966、衛生所、區公所或服務單位時作第一站。\n\n## 可給家屬\n先準備案家行政區、失能狀況、主要需求與聯絡方式，再洽八里區衛生所或 1966；若要找居服、日照或專業服務，需再依長照特約清冊逐一聯絡單位。\n\n聯絡/申請：八里區衛生所電話 02-2610-2137、02-2610-1902；地址新北市八里區舊城路16號；長照服務可另撥 1966。\n\n可先準備:\n- 案家行政區與聯絡方式\n- 身分證明或健保資料\n- 失能/照顧需求摘要\n- 既有就醫與用藥資料\n- 主要照顧者資訊\n\n## 電話複核\n- 衛生所目前能協助哪一類長照或社區資源分流\n- 若案家未申請長照，應由 1966 還是衛生所協助轉介\n- 八里區目前較常用的居服、日照或社區據點如何查詢\n- 若家屬有福利補助或急難需求，應轉哪個窗口\n- 是否需要先預約或準備文件\n\n## 內部提醒\n2026-05-30 深修。衛生所是分流窗口，不等於所有長照服務承作單位。若是急難、福利補助或物資，可能需轉八里區公所或社福中心；若是醫療照護，需轉醫療院所或居家醫療。\n\n風險提醒:\n- 衛生所不是全部服務的承作單位\n- 福利與醫療需求需分流\n- 特約單位仍需另行電話複核\n\n服務範圍：八里區衛生所可作長照申請、社區健康與地方服務分流窗口；特約服務單位仍需另查長照清冊並電話複核。\n\n來源：https://bali.health.ntpc.gov.tw/article/113%EF%BC%8D%EF%BC%8D114%E5%B9%B4%E5%85%AB%E9%87%8C%E5%8D%80%E9%95%B7%E7%85%A7%E7%89%B9%E7%B4%84%E8%B3%87%E6%BA%90","category":"care_professional","confidence":"A級官方窗口深修","contact":"八里區衛生所電話 02-2610-2137、02-2610-1902；地址新北市八里區舊城路16號；長照服務可另撥 1966。","content_hash":"fc723bf955b9973d0c0bf55c1c2b1586399db819b1c22e5ddf5963fda1857c0a","coverage_scope":"district","districts":["八里區"],"eligibility_tags":["A級官方確認","名冊入口","八里區","居家服務","居家喘息","短照服務"],"embedding_text":"八里區衛生所長照服務與社區資源窗口 care_professional ntpc_contract_list home_care respite_service short_term_care district 八里區衛生所可作長照申請、社區健康與地方服務分流窗口；特約服務單位仍需另查長照清冊並電話複核。 八里區 八里區衛生所可協助八里區長照、健康管理、社區服務與地方資源初步分流。適合案家住八里、家屬不知道先找 1966、衛生所、區公所或服務單位時作第一站。 先準備案家行政區、失能狀況、主要需求與聯絡方式，再洽八里區衛生所或 1966；若要找居服、日照或專業服務，需再依長照特約清冊逐一聯絡單位。 案家行政區與聯絡方式 身分證明或健保資料 失能/照顧需求摘要 既有就醫與用藥資料 主要照顧者資訊 衛生所目前能協助哪一類長照或社區資源分流 若案家未申請長照，應由 1966 還是衛生所協助轉介 八里區目前較常用的居服、日照或社區據點如何查詢 若家屬有福利補助或急難需求，應轉哪個窗口 是否需要先預約或準備文件 2026-05-30 深修。衛生所是分流窗口，不等於所有長照服務承作單位。若是急難、福利補助或物資，可能需轉八里區公所或社福中心；若是醫療照護，需轉醫療院所或居家醫療。","id":"bali_health_ltc_resources","internal_notes":"2026-05-30 深修。衛生所是分流窗口，不等於所有長照服務承作單位。若是急難、福利補助或物資，可能需轉八里區公所或社福中心；若是醫療照護，需轉醫療院所或居家醫療。","last_checked_at":"2026-05-30","name":"八里區衛生所長照服務與社區資源窗口","next_review_at":"2026-08-28","next_step":"先準備案家行政區、失能狀況、主要需求與聯絡方式，再洽八里區衛生所或 1966；若要找居服、日照或專業服務，需再依長照特約清冊逐一聯絡單位。","phone_check_questions":["衛生所目前能協助哪一類長照或社區資源分流","若案家未申請長照，應由 1966 還是衛生所協助轉介","八里區目前較常用的居服、日照或社區據點如何查詢","若家屬有福利補助或急難需求，應轉哪個窗口","是否需要先預約或準備文件"],"public_allowed":true,"public_contact":"八里區衛生所電話 02-2610-2137、02-2610-1902；地址新北市八里區舊城路16號；長照服務可另撥 1966。","public_next_step":"先準備案家行政區、失能狀況、主要需求與聯絡方式，再洽八里區衛生所或 1966；若要找居服、日照或專業服務，需再依長照特約清冊逐一聯絡單位。","public_required_documents":["案家行政區與聯絡方式","身分證明或健保資料","失能/照顧需求摘要","既有就醫與用藥資料","主要照顧者資訊"],"public_summary":"八里區衛生所可協助八里區長照、健康管理、社區服務與地方資源初步分流。適合案家住八里、家屬不知道先找 1966、衛生所、區公所或服務單位時作第一站。","region":"新北市","resource_id":"bali_health_ltc_resources","resource_version":"20260531-batch18","risk_flags":["衛生所不是全部服務的承作單位","福利與醫療需求需分流","特約單位仍需另行電話複核"],"service_area_note":"八里區衛生所可作長照申請、社區健康與地方服務分流窗口；特約服務單位仍需另查長照清冊並電話複核。","source_type":"official","source_url":"https://bali.health.ntpc.gov.tw/article/113%EF%BC%8D%EF%BC%8D114%E5%B9%B4%E5%85%AB%E9%87%8C%E5%8D%80%E9%95%B7%E7%85%A7%E7%89%B9%E7%B4%84%E8%B3%87%E6%BA%90","status":"active","summary":"八里區衛生所可協助八里區長照、健康管理、社區服務與地方資源初步分流。適合案家住八里、家屬不知道先找 1966、衛生所、區公所或服務單位時作第一站。","title":"八里區衛生所長照服務與社區資源窗口","topics":["ntpc_contract_list","home_care","respite_service","short_term_care"],"urgency_tags":["一般","需電話確認"]},{"body":"# 三芝區長照特約服務單位清冊\n\n## 個管師使用重點\n三芝區長照特約服務單位清冊用來協助照顧服務團隊在三芝區案家需要長照服務時，先查找可能承作的居家服務、日照、小規機、營養餐飲、機構或專業服務單位。這張卡是單位查找工具，不等於長照申請核定或已完成派案。\n\n## 可給家屬\n先確認案家行政區、長照評估狀態與需要的服務類型，再依新北市長照特約服務清冊找單位名稱、電話與服務類別；正式連結前仍要洽 1966、照管中心或特約單位電話複核承作狀態。\n\n聯絡/申請：長照申請可撥 1966；新北市政府總機 1999 或 02-2960-3456 可轉接長照相關窗口。個別服務單位電話、地址與承作項目，以新北市衛生局長照特約服務清冊逐一電話複核。\n\n可先準備:\n- 案家行政區與完整服務地址\n- 長照評估或照顧計畫資料\n- 需要的服務類型：居家服務、日照、小規機、營養餐飲、機構或專業服務\n- 失能、失智、照顧負荷與特殊照顧需求摘要\n- 主要照顧者聯絡方式與可配合服務時段\n\n## 電話複核\n- 單位是否仍承作三芝區，服務範圍是否包含案家地址\n- 目前是否可接案，是否有等待或時段限制\n- 承作服務是居家服務、日照、小規機、營養餐飲、機構或專業服務哪一類\n- 是否需要先由 1966、照管中心或照專完成評估與照顧計畫\n- 轉介、試服務、費用、請假與暫停服務規則如何處理\n\n## 內部提醒\n2026-05-30 深修：此卡定位為三芝區長照單位查找與電話複核工具。個管師應把清冊、長照評估、照顧計畫與服務單位承作狀態分開說明，避免家屬以為清冊有名字就一定能收案。\n\n風險提醒:\n- 清冊是找單位，不是派案核定\n- 服務單位可能只承作部分服務類型\n- 可接案狀態與服務時段需電話複核\n- 正式服務仍需長照評估與照顧計畫\n\n服務範圍：三芝區行政區長照特約服務單位查找卡；實際承作服務仍要依服務類型、案家地址與單位當日回覆電話複核。\n\n來源：https://www.careyou.ntpc.gov.tw/w/agecare/unit","category":"care_professional","confidence":"A級官方清冊深修","contact":"長照申請可撥 1966；新北市政府總機 1999 或 02-2960-3456 可轉接長照相關窗口。個別服務單位電話、地址與承作項目，以新北市衛生局長照特約服務清冊逐一電話複核。","content_hash":"9b4d700d5465676c88112c05d968d0aa439f4f2c2ffe536bfe839ac0de952708","coverage_scope":"district","districts":["三芝區"],"eligibility_tags":["三芝區","長照特約清冊","居家服務","日照/小規機","機構或專業服務"],"embedding_text":"三芝區長照特約服務單位清冊 care_professional ntpc_contract_list home_care day_care district 三芝區行政區長照特約服務單位查找卡；實際承作服務仍要依服務類型、案家地址與單位當日回覆電話複核。 三芝區 三芝區長照特約服務單位清冊用來協助照顧服務團隊在三芝區案家需要長照服務時，先查找可能承作的居家服務、日照、小規機、營養餐飲、機構或專業服務單位。這張卡是單位查找工具，不等於長照申請核定或已完成派案。 先確認案家行政區、長照評估狀態與需要的服務類型，再依新北市長照特約服務清冊找單位名稱、電話與服務類別；正式連結前仍要洽 1966、照管中心或特約單位電話複核承作狀態。 案家行政區與完整服務地址 長照評估或照顧計畫資料 需要的服務類型：居家服務、日照、小規機、營養餐飲、機構或專業服務 失能、失智、照顧負荷與特殊照顧需求摘要 主要照顧者聯絡方式與可配合服務時段 單位是否仍承作三芝區，服務範圍是否包含案家地址 目前是否可接案，是否有等待或時段限制 承作服務是居家服務、日照、小規機、營養餐飲、機構或專業服務哪一類 是否需要先由 1966、照管中心或照專完成評估與照顧計畫 轉介、試服務、費用、請假與暫停服務規則如何處理 2026-05-30 深修：此卡定位為三芝區長照單位查找與電話複核工具。個管師應把清冊、長照評估、照顧計畫與服務單位承作狀態分開說明，避免家屬以為清冊有名字就一定能收案。","id":"sanzhi_ltc_contract_units_directory","internal_notes":"2026-05-30 深修：此卡定位為三芝區長照單位查找與電話複核工具。個管師應把清冊、長照評估、照顧計畫與服務單位承作狀態分開說明，避免家屬以為清冊有名字就一定能收案。","last_checked_at":"2026-05-30","name":"三芝區長照特約服務單位清冊","next_review_at":"2026-08-30","next_step":"先確認案家行政區、長照評估狀態與需要的服務類型，再依新北市長照特約服務清冊找單位名稱、電話與服務類別；正式連結前仍要洽 1966、照管中心或特約單位電話複核承作狀態。","phone_check_questions":["單位是否仍承作三芝區，服務範圍是否包含案家地址","目前是否可接案，是否有等待或時段限制","承作服務是居家服務、日照、小規機、營養餐飲、機構或專業服務哪一類","是否需要先由 1966、照管中心或照專完成評估與照顧計畫","轉介、試服務、費用、請假與暫停服務規則如何處理"],"public_allowed":true,"public_contact":"長照申請可撥 1966；新北市政府總機 1999 或 02-2960-3456 可轉接長照相關窗口。個別服務單位電話、地址與承作項目，以新北市衛生局長照特約服務清冊逐一電話複核。","public_next_step":"先確認案家行政區、長照評估狀態與需要的服務類型，再依新北市長照特約服務清冊找單位名稱、電話與服務類別；正式連結前仍要洽 1966、照管中心或特約單位電話複核承作狀態。","public_required_documents":["案家行政區與完整服務地址","長照評估或照顧計畫資料","需要的服務類型：居家服務、日照、小規機、營養餐飲、機構或專業服務","失能、失智、照顧負荷與特殊照顧需求摘要","主要照顧者聯絡方式與可配合服務時段"],"public_summary":"三芝區長照特約服務單位清冊用來協助照顧服務團隊在三芝區案家需要長照服務時，先查找可能承作的居家服務、日照、小規機、營養餐飲、機構或專業服務單位。這張卡是單位查找工具，不等於長照申請核定或已完成派案。","region":"新北市","resource_id":"sanzhi_ltc_contract_units_directory","resource_version":"20260531-batch18","risk_flags":["清冊是找單位，不是派案核定","服務單位可能只承作部分服務類型","可接案狀態與服務時段需電話複核","正式服務仍需長照評估與照顧計畫"],"service_area_note":"三芝區行政區長照特約服務單位查找卡；實際承作服務仍要依服務類型、案家地址與單位當日回覆電話複核。","source_type":"official_directory","source_url":"https://www.careyou.ntpc.gov.tw/w/agecare/unit","status":"active","summary":"三芝區長照特約服務單位清冊用來協助照顧服務團隊在三芝區案家需要長照服務時，先查找可能承作的居家服務、日照、小規機、營養餐飲、機構或專業服務單位。這張卡是單位查找工具，不等於長照申請核定或已完成派案。","title":"三芝區長照特約服務單位清冊","topics":["ntpc_contract_list","home_care","day_care"],"urgency_tags":["一般","需電話複核"]},{"body":"# 三重助德社區照顧關懷據點\n\n## 個管師使用重點\n三重助德社區照顧關懷據點由台灣多元社會福利協會辦理，電話 02-2971-1266，地址新北市三重區過田里過圳街7巷5號1樓。適合三重區長者社區參與、關懷、活動、共餐或健康促進資源查詢。\n\n## 可給家屬\n先確認案家住在哪一里、是否能自行到據點、是否需要共餐、健康促進或關懷訪視，再撥 02-2971-1266 詢問服務時段、活動內容、是否限里別與報名方式。\n\n聯絡/申請：助德據點電話 02-2971-1266；地址：新北市三重區過田里過圳街7巷5號1樓。台灣多元社會福利協會總會電話 02-2892-7001，Email：tapdsw@gmail.com。\n\n可先準備:\n- 長者居住里別與聯絡方式\n- 參與活動、共餐或關懷需求\n- 行動能力與陪同需求\n- 慢性病、飲食或安全注意事項\n- 緊急聯絡人\n\n## 電話複核\n- 目前服務時段與活動內容\n- 是否有共餐、健康促進、電話問安或關懷訪視\n- 是否限過田里或特定里別長者\n- 報名方式、費用與名額\n- 行動不便者是否適合參與或需家屬陪同\n\n## 內部提醒\n2026-05-30 深修：此卡可補三重社區支持，不應被說成日照或居家服務。家屬版要強調活動、共餐、關懷與健康促進。\n\n風險提醒:\n- 據點多為社區支持，不等於長照正式服務\n- 里別與活動時段需電話複核\n- 共餐或活動名額可能變動\n- 行動不便者需評估安全\n\n服務範圍：三重區過田里周邊社區據點；跨里或非在地長者需電話複核是否可參與。\n\n來源：https://www.tapdsw.org/%E6%9C%8D%E5%8B%99%E9%A0%85%E7%9B%AE/%E5%A4%9A%E5%85%83%E7%A4%BE%E5%8D%80%E9%97%9C%E6%87%B7%E6%93%9A%E9%BB%9E/%E5%8A%A9%E5%BE%B7%E6%93%9A%E9%BB%9E","category":"care_professional","confidence":"B級據點服務深修","contact":"助德據點電話 02-2971-1266；地址：新北市三重區過田里過圳街7巷5號1樓。台灣多元社會福利協會總會電話 02-2892-7001，Email：tapdsw@gmail.com。","content_hash":"e61e6075d18380fc77f0a4f2766e3f906b0114086afabd062896689a41034b2b","coverage_scope":"district","districts":["三重區"],"eligibility_tags":["三重區","社區據點","長照需求","照顧服務"],"embedding_text":"三重助德社區照顧關懷據點 care_professional community_c_station district 三重區過田里周邊社區據點；跨里或非在地長者需電話複核是否可參與。 三重區 三重助德社區照顧關懷據點由台灣多元社會福利協會辦理，電話 02-2971-1266，地址新北市三重區過田里過圳街7巷5號1樓。適合三重區長者社區參與、關懷、活動、共餐或健康促進資源查詢。 先確認案家住在哪一里、是否能自行到據點、是否需要共餐、健康促進或關懷訪視，再撥 02-2971-1266 詢問服務時段、活動內容、是否限里別與報名方式。 長者居住里別與聯絡方式 參與活動、共餐或關懷需求 行動能力與陪同需求 慢性病、飲食或安全注意事項 緊急聯絡人 目前服務時段與活動內容 是否有共餐、健康促進、電話問安或關懷訪視 是否限過田里或特定里別長者 報名方式、費用與名額 行動不便者是否適合參與或需家屬陪同 2026-05-30 深修：此卡可補三重社區支持，不應被說成日照或居家服務。家屬版要強調活動、共餐、關懷與健康促進。","id":"sanchong_zhude_community_care_point","internal_notes":"2026-05-30 深修：此卡可補三重社區支持，不應被說成日照或居家服務。家屬版要強調活動、共餐、關懷與健康促進。","last_checked_at":"2026-05-30","name":"三重助德社區照顧關懷據點","next_review_at":"2026-08-30","next_step":"先確認案家住在哪一里、是否能自行到據點、是否需要共餐、健康促進或關懷訪視，再撥 02-2971-1266 詢問服務時段、活動內容、是否限里別與報名方式。","phone_check_questions":["目前服務時段與活動內容","是否有共餐、健康促進、電話問安或關懷訪視","是否限過田里或特定里別長者","報名方式、費用與名額","行動不便者是否適合參與或需家屬陪同"],"public_allowed":true,"public_contact":"助德據點電話 02-2971-1266；地址：新北市三重區過田里過圳街7巷5號1樓。台灣多元社會福利協會總會電話 02-2892-7001，Email：tapdsw@gmail.com。","public_next_step":"先確認案家住在哪一里、是否能自行到據點、是否需要共餐、健康促進或關懷訪視，再撥 02-2971-1266 詢問服務時段、活動內容、是否限里別與報名方式。","public_required_documents":["長者居住里別與聯絡方式","參與活動、共餐或關懷需求","行動能力與陪同需求","慢性病、飲食或安全注意事項","緊急聯絡人"],"public_summary":"三重助德社區照顧關懷據點由台灣多元社會福利協會辦理，電話 02-2971-1266，地址新北市三重區過田里過圳街7巷5號1樓。適合三重區長者社區參與、關懷、活動、共餐或健康促進資源查詢。","region":"新北市","resource_id":"sanchong_zhude_community_care_point","resource_version":"20260531-batch18","risk_flags":["據點多為社區支持，不等於長照正式服務","里別與活動時段需電話複核","共餐或活動名額可能變動","行動不便者需評估安全"],"service_area_note":"三重區過田里周邊社區據點；跨里或非在地長者需電話複核是否可參與。","source_type":"service_provider","source_url":"https://www.tapdsw.org/%E6%9C%8D%E5%8B%99%E9%A0%85%E7%9B%AE/%E5%A4%9A%E5%85%83%E7%A4%BE%E5%8D%80%E9%97%9C%E6%87%B7%E6%93%9A%E9%BB%9E/%E5%8A%A9%E5%BE%B7%E6%93%9A%E9%BB%9E","status":"active","summary":"三重助德社區照顧關懷據點由台灣多元社會福利協會辦理，電話 02-2971-1266，地址新北市三重區過田里過圳街7巷5號1樓。適合三重區長者社區參與、關懷、活動、共餐或健康促進資源查詢。","title":"三重助德社區照顧關懷據點","topics":["community_c_station"],"urgency_tags":["一般"]},{"body":"深修批次：2026-05-30 第五批高頻資源深修。已讀取新北市社會局「當我們老在一起」官方頁面，補上服務內容、老人福利科電話與個管師電話複核重點。\n\n## 個管師使用重點\n\n適合土城區長者需要社區活動、關懷訪視、電話問安、共餐或健康促進時使用。這張卡的功能是先找到土城區可能據點，再逐點確認服務狀態。\n\n## 來源重點\n\n新北市社會局頁面說明，社區照顧關懷據點可辦理健康促進活動、關懷訪視、電話問安、餐飲服務或社會參與活動；有些據點也可能銜接巷弄長照站、共餐、預防延緩失能或喘息服務。\n\n## 下一步\n\n1. 在官方平台以「土城區」篩選據點。\n2. 先記錄據點名稱、地址、電話與服務內容。\n3. 致電複核是否仍服務、是否限里別、是否可接新案、是否有共餐或固定活動。\n4. 若案家有失能、交通或陪同限制，要同步詢問到場方式與陪同安排。\n\n## 聯絡與服務區\n\n- 新北市境內市話直撥1999。\n- 新北市政府總機：02-2960-3456，可轉老人福利科3801-3808、3810-3818、3891、3892。\n- 個別據點電話、地址與服務時間以平台篩選結果為準。\n\n## 內部提醒\n\n此卡可放入家屬版作社區支持資源，但家屬版要避免寫成「已可參加」或「一定有共餐」。若家屬需要立即餐食或急難物資，應另搭配實物銀行、急難救助或送餐資源。","category":"care_professional","confidence":"A級官方資料","contact":"新北市政府社會局老人福利科：新北市境內市話直撥1999，或洽02-2960-3456轉3801-3808、3810-3818、3891、3892；實際據點電話與地址以平台篩選後列出的據點資料為準。","content_hash":"649129dca29675af18055d40f4069ad223a089c4f8473a8f0a8193cf54f3825e","coverage_scope":"district","districts":["土城區"],"eligibility_tags":["土城區","社區照顧","關懷據點","共餐","健康促進","新北市官方平台"],"embedding_text":"土城區社區照顧關懷據點服務資訊 care_professional community_c_station district 以土城區為主要篩選範圍；實際服務項目、時段、共餐、關懷訪視與收案方式以據點及新北市社會局平台資料複核。 土城區 新北市社會局「當我們老在一起」平台說明社區照顧關懷據點可提供健康促進、關懷訪視、電話問安、餐飲服務或社會參與活動。這張卡用於先篩選土城區據點，再安排電話複核。 先在平台以土城區篩選據點，記下據點名稱、服務項目與服務時間；再致電據點或洽新北市1999/02-2960-3456轉老人福利科，複核目前服務狀態、是否限里別、是否接受新案。 案家行政區與里別 長者基本資料 主要聯絡方式 共餐、關懷訪視或活動參與需求 行動與陪同需求 目前是否服務土城區或案家所在里別 有無關懷訪視、電話問安、餐飲服務、健康促進或社會參與活動 服務時間、活動頻率與是否需事前報名 是否限特定里別、年齡或福利身分 是否可接新案，若不可接案有無鄰近據點可詢問 是否需里辦、公所、個管師或家屬先行聯絡 來源為新北市社會局官方平台，頁面描述據點服務內容與老人福利科聯絡方式。此卡不是單一據點承諾；土城區據點的服務時段、共餐、關懷訪視、收案限制與跨里服務需逐點複核。家屬版可說明為社區支持線索，不可寫成已安排成功。","id":"tucheng_community_care_point_directory","internal_notes":"來源為新北市社會局官方平台，頁面描述據點服務內容與老人福利科聯絡方式。此卡不是單一據點承諾；土城區據點的服務時段、共餐、關懷訪視、收案限制與跨里服務需逐點複核。家屬版可說明為社區支持線索，不可寫成已安排成功。","last_checked_at":"2026-05-30","name":"土城區社區照顧關懷據點服務資訊","next_review_at":"2026-08-30","next_step":"先在平台以土城區篩選據點，記下據點名稱、服務項目與服務時間；再致電據點或洽新北市1999/02-2960-3456轉老人福利科，複核目前服務狀態、是否限里別、是否接受新案。","phone_check_questions":["目前是否服務土城區或案家所在里別","有無關懷訪視、電話問安、餐飲服務、健康促進或社會參與活動","服務時間、活動頻率與是否需事前報名","是否限特定里別、年齡或福利身分","是否可接新案，若不可接案有無鄰近據點可詢問","是否需里辦、公所、個管師或家屬先行聯絡"],"public_allowed":true,"public_contact":"新北市政府社會局老人福利科：新北市境內市話直撥1999，或洽02-2960-3456轉3801-3808、3810-3818、3891、3892；實際據點電話與地址以平台篩選後列出的據點資料為準。","public_next_step":"先在平台以土城區篩選據點，記下據點名稱、服務項目與服務時間；再致電據點或洽新北市1999/02-2960-3456轉老人福利科，複核目前服務狀態、是否限里別、是否接受新案。","public_required_documents":["案家行政區與里別","長者基本資料","主要聯絡方式","共餐、關懷訪視或活動參與需求","行動與陪同需求"],"public_summary":"新北市社會局「當我們老在一起」平台說明社區照顧關懷據點可提供健康促進、關懷訪視、電話問安、餐飲服務或社會參與活動。這張卡用於先篩選土城區據點，再安排電話複核。","region":"新北市","resource_id":"tucheng_community_care_point_directory","resource_version":"2","risk_flags":["官方平台需逐點複核","據點服務狀態會異動","不可承諾名額或共餐","跨里服務需先問清楚"],"service_area_note":"以土城區為主要篩選範圍；實際服務項目、時段、共餐、關懷訪視與收案方式以據點及新北市社會局平台資料複核。","source_type":"official","source_url":"https://lkk.ntpc.gov.tw/home.jsp?id=9539ce925ac3028d","status":"active","summary":"新北市社會局「當我們老在一起」平台說明社區照顧關懷據點可提供健康促進、關懷訪視、電話問安、餐飲服務或社會參與活動。這張卡用於先篩選土城區據點，再安排電話複核。","title":"土城區社區照顧關懷據點服務資訊","topics":["community_c_station"],"urgency_tags":["一般","需電話複核"]},{"body":"## 個管師使用重點\n\n這張卡適合在三峽區案家已經有居家服務、日照、小規機、營養餐飲、機構或專業服務需求時使用。先把需求拆成服務類型，再用清冊找可能承作單位，最後回到 1966、照管中心或特約單位完成正式複核。\n\n## 可給家屬\n\n可以先依三峽區查找新北市長照特約服務單位。是否能正式提供服務，仍要看長照評估、照顧計畫、單位承作項目與當時可服務狀態。\n\n## 電話複核\n\n- 單位是否仍承作三峽區，服務範圍是否包含案家地址\n- 目前是否可接案，是否有等待或時段限制\n- 承作服務是居家服務、日照、小規機、營養餐飲、機構或專業服務哪一類\n- 是否需要先由 1966、照管中心或照專完成評估與照顧計畫\n- 轉介、試服務、費用、請假與暫停服務規則如何處理\n\n## 內部提醒\n\n清冊不是派案結果。若家屬急著找服務，先用這張卡整理可電話複核的單位清單，再依服務類型與案家地址逐一確認；不要只因為清冊列名就承諾一定可收案。","category":"care_professional","confidence":"A級官方清冊深修","contact":"長照申請可撥 1966；新北市政府總機 1999 或 02-2960-3456 可轉接長照相關窗口。個別服務單位電話、地址與承作項目，以新北市衛生局長照特約服務清冊逐一電話複核。","content_hash":"61257d809ddb3e3a091b66c92f2e18c89a4c136e286ab1e22f9f3aca027d1baf","coverage_scope":"district","districts":["三峽區"],"eligibility_tags":["三峽區","長照特約清冊","居家服務","日照/小規機","機構或專業服務"],"embedding_text":"三峽區長照特約服務單位清冊 care_professional home_care day_care transport_da01 professional_service meal_service district 三峽區行政區長照特約服務單位查找卡；實際承作服務仍要依服務類型、案家地址與單位當日回覆電話複核。 三峽區 三峽區長照特約服務單位清冊用來協助照顧服務團隊在三峽區案家需要長照服務時，先查找可能承作的居家服務、日照、小規機、營養餐飲、機構或專業服務單位。這張卡是單位查找工具，不等於長照申請核定或已完成派案。 先確認案家行政區、長照評估狀態與需要的服務類型，再依新北市長照特約服務清冊找單位名稱、電話與服務類別；正式連結前仍要洽 1966、照管中心或特約單位電話複核承作狀態。 案家行政區與完整服務地址 長照評估或照顧計畫資料 需要的服務類型：居家服務、日照、小規機、營養餐飲、機構或專業服務 失能、失智、照顧負荷與特殊照顧需求摘要 主要照顧者聯絡方式與可配合服務時段 單位是否仍承作三峽區，服務範圍是否包含案家地址 目前是否可接案，是否有等待或時段限制 承作服務是居家服務、日照、小規機、營養餐飲、機構或專業服務哪一類 是否需要先由 1966、照管中心或照專完成評估與照顧計畫 轉介、試服務、費用、請假與暫停服務規則如何處理 2026-05-30 深修：此卡定位為三峽區長照單位查找與電話複核工具。個管師應把清冊、長照評估、照顧計畫與服務單位承作狀態分開說明，避免家屬以為清冊有名字就一定能收案。","id":"sanxia_ltc_contract_units_directory","internal_notes":"2026-05-30 深修：此卡定位為三峽區長照單位查找與電話複核工具。個管師應把清冊、長照評估、照顧計畫與服務單位承作狀態分開說明，避免家屬以為清冊有名字就一定能收案。","last_checked_at":"2026-05-30","name":"三峽區長照特約服務單位清冊","next_review_at":"2026-08-30","next_step":"先確認案家行政區、長照評估狀態與需要的服務類型，再依新北市長照特約服務清冊找單位名稱、電話與服務類別；正式連結前仍要洽 1966、照管中心或特約單位電話複核承作狀態。","phone_check_questions":["單位是否仍承作三峽區，服務範圍是否包含案家地址","目前是否可接案，是否有等待或時段限制","承作服務是居家服務、日照、小規機、營養餐飲、機構或專業服務哪一類","是否需要先由 1966、照管中心或照專完成評估與照顧計畫","轉介、試服務、費用、請假與暫停服務規則如何處理"],"public_allowed":true,"public_contact":"長照申請可撥 1966；新北市政府總機 1999 或 02-2960-3456 可轉接長照相關窗口。個別服務單位電話、地址與承作項目，以新北市衛生局長照特約服務清冊逐一電話複核。","public_next_step":"先確認案家行政區、長照評估狀態與需要的服務類型，再依新北市長照特約服務清冊找單位名稱、電話與服務類別；正式連結前仍要洽 1966、照管中心或特約單位電話複核承作狀態。","public_required_documents":["案家行政區與完整服務地址","長照評估或照顧計畫資料","需要的服務類型：居家服務、日照、小規機、營養餐飲、機構或專業服務","失能、失智、照顧負荷與特殊照顧需求摘要","主要照顧者聯絡方式與可配合服務時段"],"public_summary":"三峽區長照特約服務單位清冊用來協助照顧服務團隊在三峽區案家需要長照服務時，先查找可能承作的居家服務、日照、小規機、營養餐飲、機構或專業服務單位。這張卡是單位查找工具，不等於長照申請核定或已完成派案。","region":"新北市","resource_id":"sanxia_ltc_contract_units_directory","resource_version":"3","risk_flags":["清冊是找單位，不是派案核定","服務單位可能只承作部分服務類型","可接案狀態與服務時段需電話複核","正式服務仍需長照評估與照顧計畫"],"service_area_note":"三峽區行政區長照特約服務單位查找卡；實際承作服務仍要依服務類型、案家地址與單位當日回覆電話複核。","source_type":"official_directory","source_url":"https://www.careyou.ntpc.gov.tw/w/agecare/unit","status":"active","summary":"三峽區長照特約服務單位清冊用來協助照顧服務團隊在三峽區案家需要長照服務時，先查找可能承作的居家服務、日照、小規機、營養餐飲、機構或專業服務單位。這張卡是單位查找工具，不等於長照申請核定或已完成派案。","title":"三峽區長照特約服務單位清冊","topics":["home_care","day_care","transport_da01","professional_service","meal_service"],"urgency_tags":["一般","需電話複核"]}],"schema_version":"resourcepack.v1","signature_status":"unsigned","source_app_version":"resource-nav-20260524-resourcepack-exchange"}</script>
+  <script>
+    const COPY_TEXTS = {'family': '家屬版資源包：未指定地區 / 照顧及專業 / 2026-06-10\n\n八里區衛生所長照服務與社區資源窗口\n八里區衛生所可協助八里區長照、健康管理、社區服務與地方資源初步分流。適合案家住八里、家屬不知道先找 1966、衛生所、區公所或服務單位時作第一站。\n下一步：先準備案家行政區、失能狀況、主要需求與聯絡方式，再洽八里區衛生所或 1966；若要找居服、日照或專業服務，需再依長照特約清冊逐一聯絡單位。\n聯絡/申請：八里區衛生所電話 02-2610-2137、02-2610-1902；地址新北市八里區舊城路16號；長照服務可另撥 1966。\n可先準備：案家行政區與聯絡方式、身分證明或健保資料、失能/照顧需求摘要、既有就醫與用藥資料、主要照顧者資訊\n\n三芝區長照特約服務單位清冊\n三芝區長照特約服務單位清冊用來協助照顧服務團隊在三芝區案家需要長照服務時，先查找可能承作的居家服務、日照、小規機、營養餐飲、機構或專業服務單位。這張卡是單位查找工具，不等於長照申請核定或已完成派案。\n下一步：先確認案家行政區、長照評估狀態與需要的服務類型，再依新北市長照特約服務清冊找單位名稱、電話與服務類別；正式連結前仍要洽 1966、照管中心或特約單位電話複核承作狀態。\n聯絡/申請：長照申請可撥 1966；新北市政府總機 1999 或 02-2960-3456 可轉接長照相關窗口。個別服務單位電話、地址與承作項目，以新北市衛生局長照特約服務清冊逐一電話複核。\n可先準備：案家行政區與完整服務地址、長照評估或照顧計畫資料、需要的服務類型：居家服務、日照、小規機、營養餐飲、機構或專業服務、失能、失智、照顧負荷與特殊照顧需求摘要、主要照顧者聯絡方式與可配合服務時段\n\n三重助德社區照顧關懷據點\n三重助德社區照顧關懷據點由台灣多元社會福利協會辦理，電話 02-2971-1266，地址新北市三重區過田里過圳街7巷5號1樓。適合三重區長者社區參與、關懷、活動、共餐或健康促進資源查詢。\n下一步：先確認案家住在哪一里、是否能自行到據點、是否需要共餐、健康促進或關懷訪視，再撥 02-2971-1266 詢問服務時段、活動內容、是否限里別與報名方式。\n聯絡/申請：助德據點電話 02-2971-1266；地址：新北市三重區過田里過圳街7巷5號1樓。台灣多元社會福利協會總會電話 02-2892-7001，Email：tapdsw@gmail.com。\n可先準備：長者居住里別與聯絡方式、參與活動、共餐或關懷需求、行動能力與陪同需求、慢性病、飲食或安全注意事項、緊急聯絡人\n\n土城區社區照顧關懷據點服務資訊\n新北市社會局「當我們老在一起」平台說明社區照顧關懷據點可提供健康促進、關懷訪視、電話問安、餐飲服務或社會參與活動。這張卡用於先篩選土城區據點，再安排電話複核。\n下一步：先在平台以土城區篩選據點，記下據點名稱、服務項目與服務時間；再致電據點或洽新北市1999/02-2960-3456轉老人福利科，複核目前服務狀態、是否限里別、是否接受新案。\n聯絡/申請：新北市政府社會局老人福利科：新北市境內市話直撥1999，或洽02-2960-3456轉3801-3808、3810-3818、3891、3892；實際據點電話與地址以平台篩選後列出的據點資料為準。\n可先準備：案家行政區與里別、長者基本資料、主要聯絡方式、共餐、關懷訪視或活動參與需求、行動與陪同需求\n\n三峽區長照特約服務單位清冊\n三峽區長照特約服務單位清冊用來協助照顧服務團隊在三峽區案家需要長照服務時，先查找可能承作的居家服務、日照、小規機、營養餐飲、機構或專業服務單位。這張卡是單位查找工具，不等於長照申請核定或已完成派案。\n下一步：先確認案家行政區、長照評估狀態與需要的服務類型，再依新北市長照特約服務清冊找單位名稱、電話與服務類別；正式連結前仍要洽 1966、照管中心或特約單位電話複核承作狀態。\n聯絡/申請：長照申請可撥 1966；新北市政府總機 1999 或 02-2960-3456 可轉接長照相關窗口。個別服務單位電話、地址與承作項目，以新北市衛生局長照特約服務清冊逐一電話複核。\n可先準備：案家行政區與完整服務地址、長照評估或照顧計畫資料、需要的服務類型：居家服務、日照、小規機、營養餐飲、機構或專業服務、失能、失智、照顧負荷與特殊照顧需求摘要、主要照顧者聯絡方式與可配合服務時段', 'phone': '個管師電話確認清單：未指定地區 / 照顧及專業 / 2026-06-10\n\n八里區衛生所長照服務與社區資源窗口\n聯絡/申請：八里區衛生所電話 02-2610-2137、02-2610-1902；地址新北市八里區舊城路16號；長照服務可另撥 1966。\n電話確認：衛生所目前能協助哪一類長照或社區資源分流；若案家未申請長照，應由 1966 還是衛生所協助轉介；八里區目前較常用的居服、日照或社區據點如何查詢；若家屬有福利補助或急難需求，應轉哪個窗口；是否需要先預約或準備文件\n內部提醒：2026-05-30 深修。衛生所是分流窗口，不等於所有長照服務承作單位。若是急難、福利補助或物資，可能需轉八里區公所或社福中心；若是醫療照護，需轉醫療院所或居家醫療。\n\n三芝區長照特約服務單位清冊\n聯絡/申請：長照申請可撥 1966；新北市政府總機 1999 或 02-2960-3456 可轉接長照相關窗口。個別服務單位電話、地址與承作項目，以新北市衛生局長照特約服務清冊逐一電話複核。\n電話確認：單位是否仍承作三芝區，服務範圍是否包含案家地址；目前是否可接案，是否有等待或時段限制；承作服務是居家服務、日照、小規機、營養餐飲、機構或專業服務哪一類；是否需要先由 1966、照管中心或照專完成評估與照顧計畫；轉介、試服務、費用、請假與暫停服務規則如何處理\n內部提醒：2026-05-30 深修：此卡定位為三芝區長照單位查找與電話複核工具。個管師應把清冊、長照評估、照顧計畫與服務單位承作狀態分開說明，避免家屬以為清冊有名字就一定能收案。\n\n三重助德社區照顧關懷據點\n聯絡/申請：助德據點電話 02-2971-1266；地址：新北市三重區過田里過圳街7巷5號1樓。台灣多元社會福利協會總會電話 02-2892-7001，Email：tapdsw@gmail.com。\n電話確認：目前服務時段與活動內容；是否有共餐、健康促進、電話問安或關懷訪視；是否限過田里或特定里別長者；報名方式、費用與名額；行動不便者是否適合參與或需家屬陪同\n內部提醒：2026-05-30 深修：此卡可補三重社區支持，不應被說成日照或居家服務。家屬版要強調活動、共餐、關懷與健康促進。\n\n土城區社區照顧關懷據點服務資訊\n聯絡/申請：新北市政府社會局老人福利科：新北市境內市話直撥1999，或洽02-2960-3456轉3801-3808、3810-3818、3891、3892；實際據點電話與地址以平台篩選後列出的據點資料為準。\n電話確認：目前是否服務土城區或案家所在里別；有無關懷訪視、電話問安、餐飲服務、健康促進或社會參與活動；服務時間、活動頻率與是否需事前報名；是否限特定里別、年齡或福利身分；是否可接新案，若不可接案有無鄰近據點可詢問；是否需里辦、公所、個管師或家屬先行聯絡\n內部提醒：來源為新北市社會局官方平台，頁面描述據點服務內容與老人福利科聯絡方式。此卡不是單一據點承諾；土城區據點的服務時段、共餐、關懷訪視、收案限制與跨里服務需逐點複核。家屬版可說明為社區支持線索，不可寫成已安排成功。\n\n三峽區長照特約服務單位清冊\n聯絡/申請：長照申請可撥 1966；新北市政府總機 1999 或 02-2960-3456 可轉接長照相關窗口。個別服務單位電話、地址與承作項目，以新北市衛生局長照特約服務清冊逐一電話複核。\n電話確認：單位是否仍承作三峽區，服務範圍是否包含案家地址；目前是否可接案，是否有等待或時段限制；承作服務是居家服務、日照、小規機、營養餐飲、機構或專業服務哪一類；是否需要先由 1966、照管中心或照專完成評估與照顧計畫；轉介、試服務、費用、請假與暫停服務規則如何處理\n內部提醒：2026-05-30 深修：此卡定位為三峽區長照單位查找與電話複核工具。個管師應把清冊、長照評估、照顧計畫與服務單位承作狀態分開說明，避免家屬以為清冊有名字就一定能收案。', 'admin': '行政申請清單：未指定地區 / 照顧及專業 / 2026-06-10\n\n八里區衛生所長照服務與社區資源窗口\n狀態：active\n資料來源：https://bali.health.ntpc.gov.tw/article/113%EF%BC%8D%EF%BC%8D114%E5%B9%B4%E5%85%AB%E9%87%8C%E5%8D%80%E9%95%B7%E7%85%A7%E7%89%B9%E7%B4%84%E8%B3%87%E6%BA%90\n最後確認：2026-05-30\n文件：案家行政區與聯絡方式、身分證明或健保資料、失能/照顧需求摘要、既有就醫與用藥資料、主要照顧者資訊\n注意：衛生所不是全部服務的承作單位、福利與醫療需求需分流、特約單位仍需另行電話複核\n\n三芝區長照特約服務單位清冊\n狀態：active\n資料來源：https://www.careyou.ntpc.gov.tw/w/agecare/unit\n最後確認：2026-05-30\n文件：案家行政區與完整服務地址、長照評估或照顧計畫資料、需要的服務類型：居家服務、日照、小規機、營養餐飲、機構或專業服務、失能、失智、照顧負荷與特殊照顧需求摘要、主要照顧者聯絡方式與可配合服務時段\n注意：清冊是找單位，不是派案核定、服務單位可能只承作部分服務類型、可接案狀態與服務時段需電話複核、正式服務仍需長照評估與照顧計畫\n\n三重助德社區照顧關懷據點\n狀態：active\n資料來源：https://www.tapdsw.org/%E6%9C%8D%E5%8B%99%E9%A0%85%E7%9B%AE/%E5%A4%9A%E5%85%83%E7%A4%BE%E5%8D%80%E9%97%9C%E6%87%B7%E6%93%9A%E9%BB%9E/%E5%8A%A9%E5%BE%B7%E6%93%9A%E9%BB%9E\n最後確認：2026-05-30\n文件：長者居住里別與聯絡方式、參與活動、共餐或關懷需求、行動能力與陪同需求、慢性病、飲食或安全注意事項、緊急聯絡人\n注意：據點多為社區支持，不等於長照正式服務、里別與活動時段需電話複核、共餐或活動名額可能變動、行動不便者需評估安全\n\n土城區社區照顧關懷據點服務資訊\n狀態：active\n資料來源：https://lkk.ntpc.gov.tw/home.jsp?id=9539ce925ac3028d\n最後確認：2026-05-30\n文件：案家行政區與里別、長者基本資料、主要聯絡方式、共餐、關懷訪視或活動參與需求、行動與陪同需求\n注意：官方平台需逐點複核、據點服務狀態會異動、不可承諾名額或共餐、跨里服務需先問清楚\n\n三峽區長照特約服務單位清冊\n狀態：active\n資料來源：https://www.careyou.ntpc.gov.tw/w/agecare/unit\n最後確認：2026-05-30\n文件：案家行政區與完整服務地址、長照評估或照顧計畫資料、需要的服務類型：居家服務、日照、小規機、營養餐飲、機構或專業服務、失能、失智、照顧負荷與特殊照顧需求摘要、主要照顧者聯絡方式與可配合服務時段\n注意：清冊是找單位，不是派案核定、服務單位可能只承作部分服務類型、可接案狀態與服務時段需電話複核、正式服務仍需長照評估與照顧計畫', 'handoff': '交接摘要：未指定地區 / 照顧及專業 / 2026-06-10\n主題：照顧及專業\n線索：A級官方確認、名冊入口、八里區、居家服務、居家喘息、短照服務、一般、需電話確認、三芝區、長照特約清冊、日照/小規機、機構或專業服務\n已選資源：5 筆'};
+    const SHARE_URL = 'https://chord310.github.io/ob-prod-share/viewer.html?id=32d312d5880da5fc2103';
+    async function copyText(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        return;
+      }
+      const area = document.getElementById("copyScratch");
+      area.hidden = false;
+      area.value = text;
+      area.select();
+      document.execCommand("copy");
+      area.hidden = true;
+    }
+    const OUTPUT_HELP = {
+      family: "家屬版適合貼 LINE 或訊息，會排除內部註記與不適合外流的提醒。",
+      phone: "電話確認適合個管師打電話前使用，聚焦聯絡方式與要問的問題。",
+      admin: "行政清單整理文件、來源與最後確認日，方便補件或填報。",
+      handoff: "交接摘要給同事或主管接手，聚焦優先順序、風險與下一步。",
+      full: "完整資料顯示所有區塊與內部提醒，適合個管師自己檢查整包內容。",
+    };
+    function setOutputMode(mode) {
+      const safeMode = OUTPUT_HELP[mode] ? mode : "full";
+      try { localStorage.setItem("resource_package_result_mode_v1", safeMode); } catch (e) {}
+      document.querySelectorAll("[data-result-mode]").forEach((button) => {
+        const active = button.dataset.resultMode === safeMode;
+        button.classList.toggle("is-active", active);
+        button.setAttribute("aria-selected", active ? "true" : "false");
+      });
+      document.querySelectorAll("[data-output-section]").forEach((section) => {
+        const modes = String(section.dataset.outputSection || "full").split(/\s+/);
+        section.hidden = !modes.includes(safeMode);
+      });
+      const help = document.getElementById("resultModeHelp");
+      if (help) help.textContent = OUTPUT_HELP[safeMode];
+    }
+    document.querySelectorAll("[data-result-mode]").forEach((button) => {
+      button.addEventListener("click", () => setOutputMode(button.dataset.resultMode || "full"));
+    });
+    document.querySelectorAll("[data-copy]").forEach((button) => {
+      button.addEventListener("click", async () => {
+        await copyText(COPY_TEXTS[button.dataset.copy] || "");
+        button.textContent = "已複製";
+        setTimeout(() => { button.textContent = button.dataset.copy === "family" ? "複製家屬版" : button.dataset.copy === "phone" ? "複製電話確認" : button.dataset.copy === "admin" ? "複製行政清單" : "複製交接摘要"; }, 1200);
+      });
+    });
+    document.querySelectorAll("[data-copy-link]").forEach((button) => {
+      button.addEventListener("click", async () => {
+        await copyText(SHARE_URL);
+        button.textContent = "已複製";
+        setTimeout(() => { button.textContent = "複製連結"; }, 1200);
+      });
+    });
+    const URL_PARAMS = new URLSearchParams(window.location.search);
+    const AUTO_PRINT_QUERY_VALUE = "print=1";
+    const AUTO_PRINT_KEY = 'resource_nav_auto_print_v1:32d312d5880da5fc2103';
+    function shouldAutoPrint() {
+      return URL_PARAMS.get("print") === "1";
+    }
+    function triggerPrint() {
+      setTimeout(() => {
+        try { window.focus(); } catch (e) {}
+        window.print();
+      }, 160);
+    }
+    document.querySelectorAll("[data-print-result]").forEach((button) => {
+      button.addEventListener("click", triggerPrint);
+    });
+    if (shouldAutoPrint()) {
+      let alreadyPrinted = false;
+      try { alreadyPrinted = sessionStorage.getItem(AUTO_PRINT_KEY) === "1"; } catch (e) {}
+      if (!alreadyPrinted) {
+        try { sessionStorage.setItem(AUTO_PRINT_KEY, "1"); } catch (e) {}
+        window.addEventListener("load", triggerPrint, { once: true });
+      }
+    }
+    
+    const LAST_SESSION_ENTRY_KEY = "resource_nav_last_session_entry_v1";
+    function readRememberedEntryUrl() {
+      try {
+        const value = sessionStorage.getItem(LAST_SESSION_ENTRY_KEY) || localStorage.getItem(LAST_SESSION_ENTRY_KEY) || "";
+        if (!value || !value.includes("resource-nav.html") || !value.includes("session=")) return "";
+        return value;
+      } catch (e) {
+        return "";
+      }
+    }
+    const rememberedEntry = readRememberedEntryUrl();
+    if (rememberedEntry) {
+      document.querySelectorAll("[data-return-main]").forEach((link) => { link.href = rememberedEntry; });
+    }
+    
+    let savedMode = "full";
+    try { savedMode = localStorage.getItem("resource_package_result_mode_v1") || "full"; } catch (e) {}
+    setOutputMode(savedMode);
+  </script>
+</body>
+</html>
