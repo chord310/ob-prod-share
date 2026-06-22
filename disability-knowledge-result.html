@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>知識組合結果</title>
+  <link rel="stylesheet" href="disability-resource.css?v=20260622-attribute-collapse-v2" />
+</head>
+<body>
+  <header class="hero result-hero">
+    <div class="brand-block">
+      <p class="eyebrow">知識組合結果</p>
+      <h1>知識組合結果</h1>
+    </div>
+    <div class="action-row compact-actions">
+      <a class="nav-link-pill" href="./disability-resource.html?v=20260622-attribute-collapse-v2">返回知識導航</a>
+      <button type="button" class="nav-link-pill result-print-pill" id="printResultButton">列印 / 另存 PDF</button>
+    </div>
+  </header>
+
+  <main class="result-page-layout">
+    <section class="panel result-summary-card">
+      <h2 id="resultPackageTitle">正在載入知識組合</h2>
+      <p id="resultPackageMeta" class="muted-text">請稍候。</p>
+    </section>
+
+    <section class="panel result-output-switcher">
+      <strong>輸出格式</strong>
+      <div class="result-mode-tabs" role="tablist" aria-label="知識組合輸出格式">
+        <button type="button" data-output-mode="family" class="is-active" role="tab">家屬版</button>
+        <button type="button" data-output-mode="action" role="tab">查證行動</button>
+        <button type="button" data-output-mode="analysis" role="tab">AI 延伸分析</button>
+        <button type="button" data-output-mode="full" role="tab">完整資料</button>
+      </div>
+    </section>
+
+    <section id="resultMissing" class="panel empty-state" hidden>找不到知識組合資料。請回知識導航重新開啟或重新儲存副本。</section>
+
+    <section class="output-card hero-output" data-output-section="family full">
+      <div class="output-header">
+        <div>
+          <p class="eyebrow">家屬版保守說明</p>
+          <h2>可轉成家屬說明的整理</h2>
+        </div>
+        <button class="copy-button" type="button" data-copy-target="familyOutput">複製家屬說明</button>
+      </div>
+      <div id="familyOutput" class="output-text"></div>
+    </section>
+
+    <section class="output-card" data-output-section="action full">
+      <div class="output-header compact">
+        <h3>查證行動</h3>
+        <button class="copy-button" type="button" data-copy-target="actionOutput">複製查證行動</button>
+      </div>
+      <div id="actionOutput" class="output-text"></div>
+    </section>
+
+    <section class="output-card analysis-panel" data-output-section="analysis full">
+      <div class="output-header">
+        <div>
+          <p class="eyebrow">AI 延伸分析</p>
+          <h3>選擇延伸分析方向</h3>
+          <p class="small-note">按下分析方向後會產生提示詞；可複製或開啟 Google Search。外部 AI 回答不會自動回寫正式知識卡。</p>
+        </div>
+        <button class="copy-button" type="button" id="copyAnalysisPromptButton">複製提示詞</button>
+      </div>
+      <div id="analysisActionButtons" class="analysis-action-list"></div>
+      <textarea id="analysisPromptOutput" class="analysis-prompt-output" readonly></textarea>
+      <div class="analysis-toolbar">
+        <button class="copy-button" type="button" id="openGoogleSearchButton">開啟 Google Search</button>
+      </div>
+      <div class="analysis-return-panel">
+        <h4>貼回分析結果</h4>
+        <p>Google AI 或外部搜尋的回答若需要保留，可手動貼回這裡；只會存到目前知識組合，不回寫正式知識卡。</p>
+        <textarea id="analysisReturnText" class="analysis-return-text" placeholder="貼上外部 AI 分析結果..."></textarea>
+        <button class="copy-button" type="button" id="saveAnalysisReturnButton">儲存貼回內容</button>
+      </div>
+    </section>
+
+    <section class="output-card" data-output-section="full">
+      <div class="output-header compact">
+        <h3>完整資料</h3>
+        <button class="copy-button" type="button" data-copy-target="fullOutput">複製完整資料</button>
+      </div>
+      <div id="fullOutput" class="source-list"></div>
+    </section>
+  </main>
+
+  <textarea id="resultCopyScratch" class="sr-only" aria-hidden="true"></textarea>
+  <script src="./disability-knowledge-result.js?v=20260622-attribute-collapse-v2"></script>
+</body>
+</html>
