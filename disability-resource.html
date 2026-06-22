@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>身障／長照知識導航</title>
+  <link rel="stylesheet" href="disability-resource.css?v=20260622-attribute-collapse-v2" />
+  <link rel="preload" href="disability-resource-scenarios.json?v=20260622-attribute-collapse-v2" as="fetch" crossorigin="anonymous" />
+  <link rel="preload" href="disability-knowledge-cards.json?v=20260622-attribute-collapse-v2" as="fetch" crossorigin="anonymous" />
+</head>
+<body>
+  <header class="hero">
+    <div class="brand-block">
+      <p class="eyebrow">身障／長照知識導航</p>
+      <h1>身障／長照知識導航</h1>
+    </div>
+    <span id="loginBadge" class="tool-badge">檢查 Discord 連結中</span>
+  </header>
+
+  <nav class="view-tabs" role="tablist" aria-label="身障與長照知識導航分頁">
+    <button type="button" class="view-tab is-active" id="knowledgeNavTabButton" data-view="knowledgeNav" role="tab" aria-selected="true" aria-controls="knowledgeNavView">知識導航</button>
+    <button type="button" class="view-tab" id="knowledgePackTabButton" data-view="knowledgePack" role="tab" aria-selected="false" aria-controls="knowledgePackView">我的知識組合</button>
+    <button type="button" class="view-tab" id="knowledgeExchangeTabButton" data-view="knowledgeExchange" role="tab" aria-selected="false" aria-controls="knowledgeExchangeView">知識副本</button>
+  </nav>
+
+  <main class="layout tab-panel is-active" id="knowledgeNavView" role="tabpanel" aria-labelledby="knowledgeNavTabButton">
+    <section class="panel controls" aria-labelledby="control-title">
+      <div class="section-heading compact-heading control-heading-row">
+        <h2 id="control-title">輸入問題</h2>
+        <p id="apiStatus" class="small-note inline-status">正在檢查後端服務。</p>
+        <div class="region-field">
+          <button id="regionSelectButton" class="region-select-button" type="button" aria-expanded="false" aria-controls="regionSelectMenu">地區：新北市、中央共通</button>
+          <div id="regionSelectMenu" class="region-select-menu" hidden>
+            <label><input type="checkbox" name="regionScope" value="新北市" checked /> 新北市</label>
+            <label><input type="checkbox" name="regionScope" value="中央共通" checked /> 中央共通</label>
+            <label><input type="checkbox" name="regionScope" value="台北市" /> 台北市</label>
+            <label><input type="checkbox" name="regionScope" value="桃園市" /> 桃園市</label>
+          </div>
+        </div>
+      </div>
+      <label class="question-field">
+        <span class="sr-only">輸入問題</span>
+        <textarea id="questionText" rows="5" placeholder="例如：家屬問爬梯機能不能申請補助，長照沒有列，身障路徑要怎麼查？"></textarea>
+      </label>
+      <div id="draftContextPanel" class="draft-context-panel draft-context-inline">
+        <div class="draft-context-item">
+          <span class="draft-inline-label">輸入問題</span>
+          <strong id="questionRouteStatus">準備查證</strong>
+        </div>
+        <div class="draft-context-item">
+          <span class="draft-inline-label">副本名稱</span>
+          <strong id="draftNameDisplay">尚未產生知識副本</strong>
+        </div>
+        <div class="draft-context-item draft-context-status">
+          <span class="draft-inline-label">副本狀態</span>
+          <p id="draftStatus" class="small-note draft-status-note">輸入問題並尋找知識卡後，系統會先建立目前正在編輯的知識副本。</p>
+        </div>
+        <input id="draftNameInput" type="hidden" value="尚未產生知識副本" />
+      </div>
+      <div id="privacyWarning" class="privacy-warning" hidden></div>
+      <div class="action-row action-row-with-status">
+        <button id="routeButton" class="primary-button" type="button">尋找知識卡</button>
+        <button id="saveDraftInlineButton" class="secondary-button" type="button">儲存此知識副本</button>
+        <button id="clearDraftButton" class="ghost-button" type="button">清除此知識副本</button>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="direction-title">
+      <div class="section-heading scenario-heading">
+        <div>
+          <p class="eyebrow">查證方向</p>
+          <div class="direction-title-row">
+            <h2 id="direction-title">方向與知識卡候選</h2>
+            <p id="directionStatus" class="small-note inline-status">輸入問題後會顯示方向；後端服務不通時仍可使用本頁知識卡。</p>
+          </div>
+        </div>
+        <span id="selectedCount" class="selection-count">已選 0 張知識卡</span>
+      </div>
+      <div id="directionCards" class="direction-grid"></div>
+      <div id="attributeFilters" class="attribute-filter-row" aria-label="知識卡屬性篩選"></div>
+      <div id="knowledgeCards" class="knowledge-grid"></div>
+    </section>
+  </main>
+
+  <section class="workbench-shell tab-panel" id="knowledgePackView" role="tabpanel" aria-labelledby="knowledgePackTabButton" hidden>
+    <div class="workbench-head">
+      <div>
+        <p class="eyebrow">我的知識組合</p>
+        <h2>我的知識組合</h2>
+        <p class="muted-text" id="workbenchStatus">請從 Discord 入口連結身份後查看自己的知識組合。</p>
+      </div>
+      <button id="refreshPackagesButton" class="ghost-button" type="button">刷新紀錄</button>
+    </div>
+
+    <section class="current-pack-panel panel" aria-label="目前編輯中的知識組合">
+      <div class="package-head">
+        <div>
+          <p class="eyebrow">目前知識組合</p>
+          <h2 id="package-title">目前編輯中的知識組合</h2>
+          <p class="muted-text compact-helper" id="loginStatus">從 Discord 入口開啟後可同步儲存。</p>
+        </div>
+        <p class="package-count" id="packageCount">0 張</p>
+      </div>
+      <div class="current-package-layout">
+        <div class="current-package-main">
+          <label class="field">
+            <span>知識組合名稱</span>
+            <input id="workbenchDraftNameInput" type="text" placeholder="例如：新北市／爬梯機申請查證">
+          </label>
+          <p class="privacy-hint compact-helper">勿填姓名、電話、身分證、完整地址。</p>
+          <p class="muted-text" id="packageStatus">尚未加入知識卡。</p>
+          <div id="packageCards" class="current-package-selected-summary" hidden></div>
+        </div>
+        <div class="current-package-actions">
+          <p class="muted-text output-moved-note">結果頁可切換家屬版、查證行動、長照 VS 身障比較與完整資料。</p>
+          <button id="saveDraftButton" class="secondary-button" type="button">更新儲存</button>
+          <button id="viewCurrentResultButton" class="ghost-button current-result-button" type="button" hidden>查看目前結果</button>
+        </div>
+      </div>
+      <div id="packageHint" class="small-note"></div>
+    </section>
+
+    <div class="workbench-empty" id="workbenchEmpty" hidden>
+      目前還沒有知識組合。回到知識導航，尋找並點選知識卡後會先建立草稿。
+    </div>
+    <section class="saved-package-area panel" aria-label="已儲存的知識組合">
+      <div id="savedPackages" class="workbench-grid"></div>
+    </section>
+  </section>
+
+  <section class="exchange-shell tab-panel" id="knowledgeExchangeView" role="tabpanel" aria-labelledby="knowledgeExchangeTabButton" hidden>
+    <div class="workbench-head">
+      <div>
+        <p class="eyebrow">知識副本交換</p>
+        <h2>知識副本</h2>
+        <p class="muted-text" id="knowledgeExchangeStatus">匯入或匯出知識副本封包，方便交接、備份、跨裝置重建草稿。</p>
+      </div>
+    </div>
+    <section class="import-pack-panel panel" aria-label="匯入知識副本">
+      <div class="import-pack-head">
+        <div>
+          <p class="eyebrow">匯入知識副本</p>
+          <h2>匯入知識副本</h2>
+          <p class="muted-text">支援 .knowledgepack.json、含封包區塊的 Markdown，匯入後會建立新的草稿，不覆蓋原本紀錄。</p>
+        </div>
+      </div>
+      <div class="import-pack-grid">
+        <label class="field">
+          <span>上傳封包或 Markdown</span>
+          <input id="knowledgePackFileInput" type="file" accept=".json,.knowledgepack.json,.md,.markdown,application/json,text/markdown">
+        </label>
+      </div>
+      <label class="field">
+        <span>貼上封包 JSON 或 Markdown manifest</span>
+        <textarea id="knowledgePackPasteInput" rows="4" placeholder="可貼上 .knowledgepack.json 內容，或 Markdown 裡的 KNOWLEDGE_PACK_MANIFEST 區塊"></textarea>
+      </label>
+      <div class="import-pack-actions">
+        <button type="button" id="importKnowledgePackButton">匯入知識副本</button>
+        <button type="button" id="clearImportKnowledgePackButton">清除匯入內容</button>
+        <p class="muted-text" id="importKnowledgePackStatus" aria-live="polite">匯入會建立新的知識組合草稿。</p>
+      </div>
+    </section>
+    <section class="exchange-export-panel panel" aria-label="匯出知識副本">
+      <div class="import-pack-head">
+        <div>
+          <p class="eyebrow">匯出知識副本</p>
+          <h2>匯出既有知識組合</h2>
+          <p class="muted-text">選擇自己的知識組合，匯出可再匯入的 JSON 封包，或可閱讀的 Markdown 備份。</p>
+        </div>
+      </div>
+      <div class="exchange-empty" id="knowledgeExchangeEmpty" hidden>目前沒有可匯出的知識組合。</div>
+      <div class="exchange-export-list" id="knowledgeExchangeExportList" aria-live="polite"></div>
+    </section>
+  </section>
+
+  <footer class="page-footer">
+    <strong>安全邊界：</strong>本頁不保存原始問題全文、不做資格核定、不承諾補助；C 級整理來源只作研究線索，家屬版需由 A/B 級官方或受託來源支撐。
+  </footer>
+
+  <div id="cardDetailOverlay" class="detail-overlay" hidden>
+    <article class="detail-drawer" role="dialog" aria-modal="true" aria-labelledby="cardDetailTitle">
+      <div class="detail-drawer-head">
+        <div>
+          <p class="eyebrow">詳細卡片資訊</p>
+          <h2 id="cardDetailTitle">知識卡資訊</h2>
+        </div>
+        <button id="closeCardDetailButton" class="detail-close-button" type="button" aria-label="關閉詳細卡片資訊">×</button>
+      </div>
+      <div id="cardDetailContent" class="detail-drawer-body"></div>
+    </article>
+  </div>
+
+  <script src="disability-resource.js?v=20260622-attribute-collapse-v2"></script>
+</body>
+</html>
