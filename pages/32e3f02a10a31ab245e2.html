@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>未指定地區 / 非正式資源 / 2026-06-24｜長照資源包結果</title>
+  <style>
+    :root { color-scheme: light; --ink:#172033; --muted:#66758a; --line:#d9e2ef; --brand:#0b66c3; --soft:#f4f7fb; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink); background: #eef3f8; }
+    a { color: var(--brand); }
+    .topbar { display:flex; justify-content:space-between; align-items:center; gap:16px; padding:18px 24px; background:#fff; border-bottom:1px solid var(--line); position:sticky; top:0; z-index:10; }
+    .topbar h1 { margin:0; font-size:24px; }
+    .eyebrow { margin:0 0 6px; color:#087f7a; font-size:12px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; }
+    .button, button { border:1px solid #aac4df; background:#fff; color:#17324f; border-radius:8px; padding:10px 14px; font-weight:700; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; justify-content:center; }
+    .button.primary, button.primary { background:var(--brand); border-color:var(--brand); color:#fff; }
+    .button-green { background:#0f8f5f; border-color:#0f8f5f; color:#fff; }
+    .button-red { background:#cf3f3f; border-color:#cf3f3f; color:#fff; }
+    .button-print { background:#f4f8fd; border-color:#9ab8d8; color:#17324f; }
+    .button-print:hover { background:#e8f2fc; transform:translateY(-1px); }
+    main { width:min(1180px, 100%); margin:0 auto; padding:20px; }
+    .hero, .panel, .resource-detail { background:#fff; border:1px solid var(--line); border-radius:10px; padding:18px; box-shadow:0 8px 28px rgba(20,42,70,.06); }
+    .hero { display:grid; grid-template-columns: 1.3fr .7fr; gap:16px; margin-bottom:18px; }
+    .hero h2 { margin:0 0 8px; font-size:28px; }
+    .muted { color:var(--muted); line-height:1.7; }
+    .actions { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+    .top-actions { display:flex; flex-wrap:wrap; gap:10px; justify-content:flex-end; }
+    .panel-actions { margin-top:14px; display:flex; flex-wrap:wrap; gap:10px; }
+    .item-note { margin-top:4px; color:var(--muted); line-height:1.6; }
+    .result-output-switcher { display:flex; justify-content:space-between; gap:16px; align-items:center; border:1px solid var(--line); border-radius:10px; padding:16px 18px; margin-bottom:18px; background:#fff; box-shadow:0 8px 28px rgba(20,42,70,.05); }
+    .result-output-switcher h3 { margin:0 0 4px; font-size:18px; }
+    .result-mode-tabs { display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end; }
+    .result-mode-tabs button { min-height:38px; border-radius:999px; padding:8px 13px; background:#fff; color:var(--ink); transition:transform .12s ease, background .12s ease, border-color .12s ease, box-shadow .12s ease; }
+    .result-mode-tabs button:hover { transform:translateY(-1px); box-shadow:0 8px 18px rgba(24,39,75,.1); }
+    .result-mode-tabs button:active { transform:translateY(1px); }
+    .result-mode-tabs button.is-active { border-color:var(--brand); background:var(--brand); color:#fff; }
+    [data-output-section][hidden] { display:none !important; }
+    .grid { display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap:14px; margin-bottom:18px; }
+    .panel h3, .resource-detail h3 { margin:0 0 10px; }
+    .panel ol, .panel ul { margin:0; padding-left:22px; line-height:1.8; }
+    pre { white-space:pre-wrap; word-break:break-word; background:var(--soft); border:1px solid var(--line); border-radius:8px; padding:12px; line-height:1.7; }
+    .resource-list { display:grid; gap:14px; }
+    .resource-detail dl { display:grid; gap:10px; margin:0; }
+    .resource-detail dl div { padding-top:10px; border-top:1px solid #edf1f6; }
+    dt { font-weight:800; color:#233d58; margin-bottom:4px; }
+    dd { margin:0; color:#26374d; line-height:1.7; }
+    .share-panel { display:grid; gap:12px; margin-top:18px; background:#fff; border:1px solid var(--line); border-radius:10px; padding:18px; box-shadow:0 8px 28px rgba(20,42,70,.06); }
+    .share-body { display:flex; flex-wrap:wrap; align-items:center; gap:12px; }
+    .share-qr { width:min(240px, 100%); border:1px solid var(--line); border-radius:10px; background:#fff; padding:10px; }
+    .share-link { flex:1 1 280px; overflow-wrap:anywhere; }
+    @media print {
+      @page { margin: 14mm; }
+      body { background:#fff; color:#111827; font-size:12pt; }
+      .topbar { position:static; border-bottom:1px solid #d1d5db; padding:0 0 10px; }
+      .top-actions, .result-output-switcher, .panel-actions, .share-body button, #copyScratch { display:none !important; }
+      main { width:100%; max-width:none; padding:0; }
+      .hero, .panel, .resource-detail, .share-panel { box-shadow:none; border-color:#cbd5e1; break-inside:avoid; page-break-inside:avoid; }
+      .hero, .grid { grid-template-columns:1fr; }
+      .grid { gap:10px; }
+      .resource-list { display:block; }
+      .resource-detail { margin:0 0 10px; }
+      pre { background:#fff; border-color:#cbd5e1; }
+      a[href^="http"]::after { content:" (" attr(href) ")"; color:#475569; font-size:9pt; }
+      .share-link::after { content:""; }
+    }
+    @media (max-width: 760px) {
+      .topbar { align-items:flex-start; flex-direction:column; }
+      main { padding:12px; }
+      .hero, .grid { grid-template-columns: 1fr; }
+      .result-output-switcher { align-items:stretch; flex-direction:column; }
+      .result-mode-tabs { justify-content:stretch; }
+      .result-mode-tabs button { flex:1 1 130px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">Resource Package Result</p>
+      <h1>資源包結果</h1>
+    </div>
+    <div class="top-actions">
+      <a class="button button-green" data-return-main href="https://chord310.github.io/ob-prod-share/resource-nav.html?category=informal&amp;source=resource_package_result&amp;district=%E6%96%B0%E5%BA%97%E5%8D%80&amp;guild=1509223295164354630">返回長照資源導航站主頁</a>
+      
+      <button type="button" class="button button-print" data-print-result>列印 / 另存 PDF</button>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <div>
+        <p class="eyebrow">案家資源包</p>
+        <h2>未指定地區 / 非正式資源 / 2026-06-24</h2>
+        <p class="muted">建立者身份來自 Discord session。此頁包含所選資源、電話確認、行政文件與交接摘要；請勿在對外分享時附上內部註記。</p>
+        <p class="muted">更新時間：2026-06-24 21:39｜資源數：3 筆</p>
+        
+      </div>
+    </section>
+
+    <section class="result-output-switcher" aria-label="輸出格式切換">
+      <div>
+        <p class="eyebrow">輸出格式</p>
+        <h3>選擇這份結果要怎麼使用</h3>
+        <p class="muted" id="resultModeHelp">完整資料會顯示全部區塊；其他模式只聚焦在當下要複製或處理的內容。</p>
+        <p class="muted print-help">列印會使用目前選取的輸出格式；若要存檔，請在瀏覽器列印視窗選擇「另存為 PDF」。</p>
+      </div>
+      <div class="result-mode-tabs" role="tablist" aria-label="資源包輸出格式">
+        <button type="button" data-result-mode="family" role="tab">家屬版</button>
+        <button type="button" data-result-mode="phone" role="tab">電話確認</button>
+        <button type="button" data-result-mode="admin" role="tab">行政清單</button>
+        <button type="button" data-result-mode="handoff" role="tab">交接摘要</button>
+        <button type="button" data-result-mode="full" role="tab">完整資料</button>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="panel" data-output-section="full handoff">
+        <h3>建議優先順序</h3>
+        <ol><li><a href="#resource-ntpc_welfare_ltc_service_3">新北市福利補助自己查：長期照顧服務3.0</a></li><li><a href="#resource-ntpcsw_medical_companion_service">新北市社工師公會獨老陪同就醫服務</a></li><li><a href="#resource-ntpc_social_assistance">新北市政府社會局社會救助與急難救助</a></li></ol>
+      </article>
+      <article class="panel" data-output-section="full phone">
+        <h3>先打哪幾通電話</h3>
+        <ol><li><a href="#resource-ntpc_welfare_ltc_service_3">新北市福利補助自己查：長期照顧服務3.0</a><div class="item-note"><strong>聯絡/申請：</strong>長照服務可撥 1966；新北市政府長照相關窗口可洽 02-2257-7155 分機 3632，或由 1999 / 02-2960-3456 轉接。</div><div class="item-note"><strong>電話確認：</strong>案家現在最需要哪一類長照服務；是否已有長照評估與照顧計畫；是否聘有外籍看護，哪些服務受限制；新北市承辦窗口或照管中心下一步如何安排；若急迫需求等不及評估，是否要同步轉社福或緊急資源</div></li><li><a href="#resource-ntpcsw_medical_companion_service">新北市社工師公會獨老陪同就醫服務</a><div class="item-note"><strong>聯絡/申請：</strong>可先洽新北市社工師公會服務頁；若不確定行政窗口，可撥新北市 1999 或 02-2960-3456 請轉老人福利/獨老服務相關承辦。</div><div class="item-note"><strong>電話確認：</strong>目前服務哪些行政區；是否接受新案與需要提前幾天申請；陪同範圍是否含掛號、候診、領藥與交通；是否能搭配復康巴士或計程車；費用或補助方式</div></li><li><a href="#resource-ntpc_social_assistance">新北市政府社會局社會救助與急難救助</a><div class="item-note"><strong>聯絡/申請：</strong>新北市社會局 1999 或 02-2960-3456；實際申請多由案家所在地區公所受理與初審。</div><div class="item-note"><strong>電話確認：</strong>此案應由戶籍地、居住地或事件所在地受理；急難救助受理期限和文件是什麼；是否可與中低收、醫療補助、民間急難並行；是否需要里長、醫療院所、社工或警消證明；若今天缺食、照顧或交通，是否可同步轉社福中心或物資資源</div></li></ol>
+        <div class="panel-actions"><button data-copy="phone">複製電話確認</button></div>
+      </article>
+      <article class="panel" data-output-section="full family">
+        <h3>可傳給家屬的短訊</h3>
+        <pre>家屬版資源包：未指定地區 / 非正式資源 / 2026-06-24
+
+新北市福利補助自己查：長期照顧服務3.0
+新北市福利補助自己查的長期照顧服務3.0頁面整理居家服務、日照、家庭托顧、專業服務、交通接送、喘息等長照服務項目，以及新北市承辦窗口。適合家屬想知道長照有哪些服務時用來做白話說明。
+下一步：先用頁面協助家屬理解可詢問的服務類型，再撥 1966 或新北市長照窗口申請評估；若家庭聘有外籍看護，要特別詢問哪些服務可用、哪些服務受限制。
+聯絡/申請：長照服務可撥 1966；新北市政府長照相關窗口可洽 02-2257-7155 分機 3632，或由 1999 / 02-2960-3456 轉接。
+可先準備：被照顧者基本資料、失能或失智相關資料、主要照顧者資訊、目前照顧困難、是否聘有外籍看護
+
+新北市社工師公會獨老陪同就醫服務
+新北市社工師公會獨老陪同就醫服務可協助無家屬陪同、回診或檢查需要現場協助的獨居長者。適合就醫日期明確、交通與陪同需求都需要先安排的個案。
+下一步：先整理長者是否獨居、就醫日期時間、醫院地點、是否需輪椅或復康巴士、是否已有家屬可協助；再洽公會服務頁或社福窗口確認服務區域、申請流程與等待時間。
+聯絡/申請：可先洽新北市社工師公會服務頁；若不確定行政窗口，可撥新北市 1999 或 02-2960-3456 請轉老人福利/獨老服務相關承辦。
+可先準備：長者基本資料、就醫日期、時間與地點、診療或檢查需求、行動能力與輔具需求、家屬或緊急聯絡人資訊
+
+新北市政府社會局社會救助與急難救助
+新北市政府社會局社會救助與急難救助是全市性社會救助政策與申請資訊來源，適合案家有急難、低收/中低收、醫療、生活陷困或短期經濟壓力時先判斷應走公所、社福中心或市府社救窗口。
+下一步：先整理急難事由、發生日期、家庭人口、收入財產、醫療/喪葬/失業等證明，再洽案家戶籍或居住地區公所確認申請項目、期限、文件與是否可同步社福中心或民間急難。
+聯絡/申請：新北市社會局 1999 或 02-2960-3456；實際申請多由案家所在地區公所受理與初審。
+可先準備：身分證明、戶籍或居住資料、收入與財產資料、急難事由證明、醫療、喪葬、失業、災害或其他困難文件</pre>
+        <div class="panel-actions"><button class="primary" data-copy="family">複製家屬版</button></div>
+      </article>
+      <article class="panel" data-output-section="full admin">
+        <h3>需要先準備的文件</h3>
+        <ul><li>被照顧者基本資料</li><li>失能或失智相關資料</li><li>主要照顧者資訊</li><li>目前照顧困難</li><li>是否聘有外籍看護</li><li>長者基本資料</li><li>就醫日期、時間與地點</li><li>診療或檢查需求</li><li>行動能力與輔具需求</li><li>家屬或緊急聯絡人資訊</li><li>身分證明</li><li>戶籍或居住資料</li><li>收入與財產資料</li><li>急難事由證明</li><li>醫療、喪葬、失業、災害或其他困難文件</li></ul>
+        <div class="panel-actions"><button data-copy="admin">複製行政清單</button></div>
+      </article>
+      <article class="panel" data-output-section="full handoff">
+        <h3>風險提醒</h3>
+        <ul><li>福利查詢頁不是核定結果</li><li>聘有外看家庭限制需問清楚</li><li>長照3.0名稱可能讓家屬誤以為立即可用</li><li>服務區域需複核</li><li>不可保證臨時派員</li><li>需搭配交通安排</li><li>就醫時間變動需重新協調</li><li>社救需資格審查</li><li>戶籍/居住地規則需電話確認</li><li>急迫生活缺口需同步即時資源</li></ul>
+      </article>
+      <article class="panel" data-output-section="full handoff">
+        <h3>交接摘要</h3>
+        <pre>交接摘要：未指定地區 / 非正式資源 / 2026-06-24
+行政區：新店區
+主題：非正式資源
+線索：A級官方資料、流程確認、一般、獨老、陪同就醫、醫療陪伴、需區域確認、社會救助、急難、低收/中低收、區公所
+已選資源：3 筆</pre>
+        <div class="panel-actions"><button data-copy="handoff">複製交接摘要</button></div>
+      </article>
+    </section>
+
+    <section class="resource-list" aria-label="完整資料集合" data-output-section="full">
+      <p class="eyebrow">完整資料集合</p>
+      
+    <article class="resource-detail" id="resource-ntpc_welfare_ltc_service_3">
+      <div class="resource-detail-head">
+        <p class="eyebrow">informal</p>
+        <h3>1. <a href="https://welfare.ntpc.gov.tw/viewService/show/268437004?fromOpa=1" target="_blank" rel="noopener noreferrer">新北市福利補助自己查：長期照顧服務3.0</a></h3>
+      </div>
+      <p>新北市福利補助自己查的長期照顧服務3.0頁面整理居家服務、日照、家庭托顧、專業服務、交通接送、喘息等長照服務項目，以及新北市承辦窗口。適合家屬想知道長照有哪些服務時用來做白話說明。</p>
+      <dl>
+        <div><dt>下一步</dt><dd>先用頁面協助家屬理解可詢問的服務類型，再撥 1966 或新北市長照窗口申請評估；若家庭聘有外籍看護，要特別詢問哪些服務可用、哪些服務受限制。</dd></div>
+        <div><dt>聯絡/申請</dt><dd>長照服務可撥 1966；新北市政府長照相關窗口可洽 02-2257-7155 分機 3632，或由 1999 / 02-2960-3456 轉接。</dd></div>
+        <div><dt>常備文件</dt><dd>被照顧者基本資料、失能或失智相關資料、主要照顧者資訊、目前照顧困難、是否聘有外籍看護</dd></div>
+        <div><dt>電話確認</dt><dd>案家現在最需要哪一類長照服務；是否已有長照評估與照顧計畫；是否聘有外籍看護，哪些服務受限制；新北市承辦窗口或照管中心下一步如何安排；若急迫需求等不及評估，是否要同步轉社福或緊急資源</dd></div>
+        <div><dt>內部註記</dt><dd>2026-05-30 深修。此卡適合拿來向家屬說明長照項目，不適合當作單一申請表。頁面提到聘有外看時居家服務類限制，個管師要在電話時明確問服務項目。</dd></div>
+        <div><dt>風險提醒</dt><dd>福利查詢頁不是核定結果、聘有外看家庭限制需問清楚、長照3.0名稱可能讓家屬誤以為立即可用</dd></div>
+        <div><dt>來源/確認</dt><dd>official｜最後確認：2026-05-30</dd></div>
+      </dl>
+    </article>
+    
+
+    <article class="resource-detail" id="resource-ntpcsw_medical_companion_service">
+      <div class="resource-detail-head">
+        <p class="eyebrow">informal</p>
+        <h3>2. <a href="https://www.ntpcsw.org.tw/OnePage.aspx?id=499&amp;tid=6" target="_blank" rel="noopener noreferrer">新北市社工師公會獨老陪同就醫服務</a></h3>
+      </div>
+      <p>新北市社工師公會獨老陪同就醫服務可協助無家屬陪同、回診或檢查需要現場協助的獨居長者。適合就醫日期明確、交通與陪同需求都需要先安排的個案。</p>
+      <dl>
+        <div><dt>下一步</dt><dd>先整理長者是否獨居、就醫日期時間、醫院地點、是否需輪椅或復康巴士、是否已有家屬可協助；再洽公會服務頁或社福窗口確認服務區域、申請流程與等待時間。</dd></div>
+        <div><dt>聯絡/申請</dt><dd>可先洽新北市社工師公會服務頁；若不確定行政窗口，可撥新北市 1999 或 02-2960-3456 請轉老人福利/獨老服務相關承辦。</dd></div>
+        <div><dt>常備文件</dt><dd>長者基本資料、就醫日期、時間與地點、診療或檢查需求、行動能力與輔具需求、家屬或緊急聯絡人資訊</dd></div>
+        <div><dt>電話確認</dt><dd>目前服務哪些行政區；是否接受新案與需要提前幾天申請；陪同範圍是否含掛號、候診、領藥與交通；是否能搭配復康巴士或計程車；費用或補助方式</dd></div>
+        <div><dt>內部註記</dt><dd>此服務不是臨時陪診保證。需複核服務區域、是否仍接受新案、陪同範圍是否含掛號、候診、領藥、交通，並安排交通資源銜接。</dd></div>
+        <div><dt>風險提醒</dt><dd>服務區域需複核、不可保證臨時派員、需搭配交通安排、就醫時間變動需重新協調</dd></div>
+        <div><dt>來源/確認</dt><dd>community_candidate｜最後確認：2026-05-30</dd></div>
+      </dl>
+    </article>
+    
+
+    <article class="resource-detail" id="resource-ntpc_social_assistance">
+      <div class="resource-detail-head">
+        <p class="eyebrow">informal</p>
+        <h3>3. <a href="https://www.sw.ntpc.gov.tw/home.jsp?id=dff618d9d6f956fa" target="_blank" rel="noopener noreferrer">新北市政府社會局社會救助與急難救助</a></h3>
+      </div>
+      <p>新北市政府社會局社會救助與急難救助是全市性社會救助政策與申請資訊來源，適合案家有急難、低收/中低收、醫療、生活陷困或短期經濟壓力時先判斷應走公所、社福中心或市府社救窗口。</p>
+      <dl>
+        <div><dt>下一步</dt><dd>先整理急難事由、發生日期、家庭人口、收入財產、醫療/喪葬/失業等證明，再洽案家戶籍或居住地區公所確認申請項目、期限、文件與是否可同步社福中心或民間急難。</dd></div>
+        <div><dt>聯絡/申請</dt><dd>新北市社會局 1999 或 02-2960-3456；實際申請多由案家所在地區公所受理與初審。</dd></div>
+        <div><dt>常備文件</dt><dd>身分證明、戶籍或居住資料、收入與財產資料、急難事由證明、醫療、喪葬、失業、災害或其他困難文件</dd></div>
+        <div><dt>電話確認</dt><dd>此案應由戶籍地、居住地或事件所在地受理；急難救助受理期限和文件是什麼；是否可與中低收、醫療補助、民間急難並行；是否需要里長、醫療院所、社工或警消證明；若今天缺食、照顧或交通，是否可同步轉社福中心或物資資源</dd></div>
+        <div><dt>內部註記</dt><dd>2026-05-31 深修。此卡是全市社會救助分流，不是核准承諾。個管師要同時判斷公所正式申請、社福中心即時支持、民間基金會與物資資源，不要只等單一路徑。</dd></div>
+        <div><dt>風險提醒</dt><dd>社救需資格審查、戶籍/居住地規則需電話確認、急迫生活缺口需同步即時資源</dd></div>
+        <div><dt>來源/確認</dt><dd>official｜最後確認：2026-05-30</dd></div>
+      </dl>
+    </article>
+    
+    </section>
+    
+    <section class="share-panel">
+      <div>
+        <p class="eyebrow">分享此資源包結果</p>
+        <h3>QR CODE 與正式連結</h3>
+        <p class="muted">這是正式 Web B 結果連結，可複製給需要查看的人；對外分享前請確認內容不含內部註記。</p>
+      </div>
+      <div class="share-body">
+        <img class="share-qr" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAa4AAAGuCAIAAABHl3XNAAAIY0lEQVR4nO3dwXEjRwxAUcqlPCaWzcChOgPHMpHMFrEXn7q2qhcG0HzvLg41pP5BGFR/Pc/zAvhsf1W/AYB6UggghQBSCCCFAFIIEIxNAKQQQAoBpBBACgGCsQmAFAJIIYAUAkghQDA2AZBCACkEkEIAKQQIxiYAUggghQBSCCCFAMHYBEAKAaQQ4PV6fefdhevHP4fd4vvfv0vuRt51q145711VfSer3vPOfZ7oTrvP/lcIIIUAUggghQBSCBCMTQCkEEAKAaQQIHnbpOqp8R09n87f2TfI2/rY+QR77mZUqXrPE+9GHmMTACkEkEIAKQSQQoBgbAIghQBSCCCFAKXbJmvOoOhwJ/POY5l40kveTsinbX3cLX9fYxMAKQSQQgApBJBCgGBsAiCFAFIIIIUAjbdNzpO3q1C1QbH+2ap9krwtl7W8Ozlxc2MiYxMAKQSQQgApBJBCgGBsAiCFAFIIIIUAb7ZNWui5b5C3m1F13arTS9ZsjHRgbAIghQBSCCCFAFIIIIUAv5ggA0ghgBQC9N02Oe/5+7zTLSZuqlSd5bJWdQ7MDjswf4r/FQJIIYAUAkghgBQCBGMTACkEkEIAKQQo3TapOjdjoqotiJ4/u6PqumtVmyr+Bv/L2ARACgGkEEAKAaQQIBibAEghgBQCSCHA29fzPO7EH/FpGxSftquQdx5L3nX5fcYmAFIIIIUAUggghQDB2ARACgGkEEAKAZLPNsk7+6LK+j3nbSNM3FSZuJuxvm7eu9q57nl/R1WMTQCkEEAKAaQQQAoBgrEJgBQCSCGAFAIkn22St8mQ9/z9xL2OvOv23HPouccy8fSSid/JPMYmAFIIIIUAUggghQDB2ARACgGkEEAKAZK3TdZ6Pp3f81SNntsIaz13FXruz+zouQNztdw1WjM2AZBCACkEkEIAKQQIxiYAUggghQBSCFC6bTLx9JKJz+733EbYUbXJMHEjaOKnfxXdZ2MTACkEkEIAKQSQQoBgbAIghQBSCCCFAMnbJj2fg++5q5B33R0T33Oenmeb7DjvLJcdxiYAUggghQBSCCCFAMHYBEAKAaQQQAoB3r4n3oadJ84n7jlMPBel6j2vTTzrI0/VKSJXy1NijE0ApBBACgGkEEAKAYKxCYAUAkghgBQClJ5tsmPiJsPE5/539NxUmbi3s+O8697ONgHIY4IMIIUAUggghQBSCBCMTQCkEEAKASrPNjlvYyTvPVc9nV+1M9BzY6Tnb3TeX0oV/ysEkEIAKQSQQgApBAjGJgBSCCCFAFII8JFnm0zcRth55Z56bl/03GOp2nK50n52h7NNABKZIANIIYAUAkghgBQCBGMTACkEkEKA3G2TiVsBE8/c6Lkz0PNu9Lzujp7f57Wq6675XyGAFAJIIYAUAkghQDA2AZBCACkEkEKA0rNNJp4jseO8nZDz9mcmfifPO9lmzdkmAIlMkAGkEEAKAaQQQAoBgrEJgBQCSCHA6/X6/rTn4Kv2K3aesP+0zY0deVsfVRtB5+113C3vlf8VAkghgBQCSCGAFAIEYxMAKQSQQgApBEg+22Qt75nynieB9NxVqNq96Xkne34KPa97D9xEWjM2AZBCACkEkEIAKQQIxiYAUggghQBSCFC6bVKl6jn4qhMbqrYCqn7ftfN2JKpcx90rYxMAKQSQQgApBJBCgGBsAiCFAFIIIIUAh55t0vMcibXz9jrOO1Nl57o7nNby/3yCxiYAUggghQBSCCCFAMHYBEAKAaQQQAoB3r4/7TbsbCPk/WzVrsJa3rvquROyc928+9xzm+geeHrJmrEJgBQCSCGAFAJIIUAwNgGQQgApBJBCgORtk54bFD23INby9ljyfqOen9F5+zNrVZsqV8u7sWZsAiCFAFIIIIUAUggQjE0ApBBACgGkEODt63mepDsx8YnzPFU7EhNfeee6E3czeu6i3Gnn/PRkbAIghQBSCCCFAFIIEIxNAKQQQAoBpBAg+WyTPBO3AiY+f3/erkLPHYmqOzlxb+dOe8/GJgBSCCCFAFIIIIUAwdgEQAoBpBBACgEab5tUnblRtSNR9co7eu5mVF0376SXnr/vWs9v7JqxCYAUAkghgBQCSCFAMDYBkEIAKQSQQoDG2yY990nWzjuvY+LdyPt88145z6dtquwwNgGQQgApBJBCACkECMYmAFIIIIUAUgjw9vU8jztx8FkQPU96qdqC6Hl2zY6qLaaeGyM7jE0ApBBACgGkEEAKAYKxCYAUAkghgBQCJJ9t0vO0hx3rZ+irTk3JM/F8kp13lXfd806YuYu2ifK+dcYmAFIIIIUAUggghQDB2ARACgGkEEAKAZK3TSaefuDJ/g77JBM3ZHpyn3+fsQmAFAJIIYAUAkghQDA2AZBCACkEkEKA0m2TtYlnI+RtQVTdjbzNjZ6fb9Wu0cRzb+6W39gdxiYAUggghQBSCCCFAMHYBEAKAaQQQAoBGm+bfJq8XYWqjZH1K+dtufTcc6jaCVnreSevontlbAIghQBSCCCFAFIIEIxNAKQQQAoBpBDgzbbJAD3Pr9iRtwMz8T33PH/mPu48ljVjEwApBJBCACkEkEKAYGwCIIUAUggghQCNt03ynt3P0/O8jp7bF1X3auJpHlVbLlfL6+YxNgGQQgApBJBCACkECMYmAFIIIIUAUgjw9vU8T9Kd6HmCwY6JOxI9dzMmbhNV7aKs5X0KV8u/37xvjrEJgBQCSCGAFAJIIUAwNgGQQgApBJBCgORtE4ApjE0ApBBACgGkEEAKAaQQ4BcTZAApBJBCACkEkEKAYGwCIIUAUggghQBSCBCMTQCkEEAKAaQQQAoBgrEJgBQCSCGAFAJIIUAwNgGQQgApBF68Xj8BE4DWUgvnfdsAAAAASUVORK5CYII=" alt="資源包結果 QR Code">
+        <a class="share-link" href="https://chord310.github.io/ob-prod-share/viewer.html?id=32e3f02a10a31ab245e2" target="_blank" rel="noopener noreferrer">https://chord310.github.io/ob-prod-share/viewer.html?id=32e3f02a10a31ab245e2</a>
+        <button type="button" data-copy-link>複製連結</button>
+      </div>
+    </section>
+        
+  </main>
+  <textarea id="copyScratch" hidden></textarea>
+  <script type="application/json" id="resourcePackManifest">{"content_hash":"14f51c07ec6d2f67e70781d7c2b702b16d4097e87fbfc7c9e8fe673a913ae94d","export_id":"rpex-8bf3344f902559e12da5","exported_at":1782308391.08159,"output_history":[{"created_at":1782308391.036921,"output_id":"32e3f02a10a31ab245e2","output_mode":"family","qr_status":"pending","share_page_id":"32e3f02a10a31ab245e2","share_url":"","status":"pending","updated_at":1782308391.036921}],"package_metadata":{"category":"informal","created_at":1782308231.611972,"created_by":{"discord_user_id":"1477832580832428093","discord_user_name":"慈慈"},"district":"新店區","name":"未指定地區 / 非正式資源 / 2026-06-24","note":"","original_package_id":"pkg-mqs44dcu-a3qnx","output_mode":"family","resource_ids":["ntpc_welfare_ltc_service_3","ntpcsw_medical_companion_service","ntpc_social_assistance"],"selected_topic_keys":[],"smart_query_text":"","status":"result_pending","updated_at":1782308391.0359511,"urgency":""},"resource_snapshots":[{"body":"# 新北市福利補助自己查：長期照顧服務3.0\n\n## 個管師使用重點\n新北市福利補助自己查的長期照顧服務3.0頁面整理居家服務、日照、家庭托顧、專業服務、交通接送、喘息等長照服務項目，以及新北市承辦窗口。適合家屬想知道長照有哪些服務時用來做白話說明。\n\n## 可給家屬\n先用頁面協助家屬理解可詢問的服務類型，再撥 1966 或新北市長照窗口申請評估；若家庭聘有外籍看護，要特別詢問哪些服務可用、哪些服務受限制。\n\n聯絡/申請：長照服務可撥 1966；新北市政府長照相關窗口可洽 02-2257-7155 分機 3632，或由 1999 / 02-2960-3456 轉接。\n\n可先準備：\n- 被照顧者基本資料\n- 失能或失智相關資料\n- 主要照顧者資訊\n- 目前照顧困難\n- 是否聘有外籍看護\n\n## 電話複核\n- 案家現在最需要哪一類長照服務\n- 是否已有長照評估與照顧計畫\n- 是否聘有外籍看護，哪些服務受限制\n- 新北市承辦窗口或照管中心下一步如何安排\n- 若急迫需求等不及評估，是否要同步轉社福或緊急資源\n\n## 內部提醒\n2026-05-30 深修。此卡適合拿來向家屬說明長照項目，不適合當作單一申請表。頁面提到聘有外看時居家服務類限制，個管師要在電話時明確問服務項目。\n\n風險提醒：\n- 福利查詢頁不是核定結果\n- 聘有外看家庭限制需問清楚\n- 長照3.0名稱可能讓家屬誤以為立即可用\n\n服務範圍：新北市級福利補助查詢頁，適合協助家屬理解長照服務項目和申請窗口；正式核定仍由長照評估和照管中心處理。\n\n來源：https://welfare.ntpc.gov.tw/viewService/show/268437004?fromOpa=1","category":"informal","confidence":"A級官方福利查詢深修","contact":"長照服務可撥 1966；新北市政府長照相關窗口可洽 02-2257-7155 分機 3632，或由 1999 / 02-2960-3456 轉接。","content_hash":"cb16cd686dd6e8138d220111736c4aeb36d83664597985510a2af1ce950f1b3a","coverage_scope":"citywide","districts":["新北市"],"eligibility_tags":["A級官方資料","流程確認"],"embedding_text":"新北市福利補助自己查：長期照顧服務3.0 informal home_care_fee_subsidy citywide 新北市級福利補助查詢頁，適合協助家屬理解長照服務項目和申請窗口；正式核定仍由長照評估和照管中心處理。 新北市 新北市福利補助自己查的長期照顧服務3.0頁面整理居家服務、日照、家庭托顧、專業服務、交通接送、喘息等長照服務項目，以及新北市承辦窗口。適合家屬想知道長照有哪些服務時用來做白話說明。 先用頁面協助家屬理解可詢問的服務類型，再撥 1966 或新北市長照窗口申請評估；若家庭聘有外籍看護，要特別詢問哪些服務可用、哪些服務受限制。 被照顧者基本資料 失能或失智相關資料 主要照顧者資訊 目前照顧困難 是否聘有外籍看護 案家現在最需要哪一類長照服務 是否已有長照評估與照顧計畫 是否聘有外籍看護，哪些服務受限制 新北市承辦窗口或照管中心下一步如何安排 若急迫需求等不及評估，是否要同步轉社福或緊急資源 2026-05-30 深修。此卡適合拿來向家屬說明長照項目，不適合當作單一申請表。頁面提到聘有外看時居家服務類限制，個管師要在電話時明確問服務項目。","id":"ntpc_welfare_ltc_service_3","internal_notes":"2026-05-30 深修。此卡適合拿來向家屬說明長照項目，不適合當作單一申請表。頁面提到聘有外看時居家服務類限制，個管師要在電話時明確問服務項目。","last_checked_at":"2026-05-30","name":"新北市福利補助自己查：長期照顧服務3.0","next_review_at":"2026-08-28","next_step":"先用頁面協助家屬理解可詢問的服務類型，再撥 1966 或新北市長照窗口申請評估；若家庭聘有外籍看護，要特別詢問哪些服務可用、哪些服務受限制。","phone_check_questions":["案家現在最需要哪一類長照服務","是否已有長照評估與照顧計畫","是否聘有外籍看護，哪些服務受限制","新北市承辦窗口或照管中心下一步如何安排","若急迫需求等不及評估，是否要同步轉社福或緊急資源"],"public_allowed":true,"public_contact":"長照服務可撥 1966；新北市政府長照相關窗口可洽 02-2257-7155 分機 3632，或由 1999 / 02-2960-3456 轉接。","public_next_step":"先用頁面協助家屬理解可詢問的服務類型，再撥 1966 或新北市長照窗口申請評估；若家庭聘有外籍看護，要特別詢問哪些服務可用、哪些服務受限制。","public_required_documents":["被照顧者基本資料","失能或失智相關資料","主要照顧者資訊","目前照顧困難","是否聘有外籍看護"],"public_summary":"新北市福利補助自己查的長期照顧服務3.0頁面整理居家服務、日照、家庭托顧、專業服務、交通接送、喘息等長照服務項目，以及新北市承辦窗口。適合家屬想知道長照有哪些服務時用來做白話說明。","region":"新北市","resource_id":"ntpc_welfare_ltc_service_3","resource_version":"20260530-batch9","risk_flags":["福利查詢頁不是核定結果","聘有外看家庭限制需問清楚","長照3.0名稱可能讓家屬誤以為立即可用"],"service_area_note":"新北市級福利補助查詢頁，適合協助家屬理解長照服務項目和申請窗口；正式核定仍由長照評估和照管中心處理。","source_type":"official","source_url":"https://welfare.ntpc.gov.tw/viewService/show/268437004?fromOpa=1","status":"active","summary":"新北市福利補助自己查的長期照顧服務3.0頁面整理居家服務、日照、家庭托顧、專業服務、交通接送、喘息等長照服務項目，以及新北市承辦窗口。適合家屬想知道長照有哪些服務時用來做白話說明。","title":"新北市福利補助自己查：長期照顧服務3.0","topics":["home_care_fee_subsidy"],"urgency_tags":["一般"]},{"body":"深修批次：2026-05-30 第二批高頻資源深修。這張卡已從泛用文字改成可操作的個管師工作卡，公開欄位只放家屬可理解的摘要、下一步、文件與聯絡方式；內部提醒保留給個管師判斷。\n\n## 個管師使用重點\n\n適合獨居長者沒有家屬陪同，且有明確回診、檢查或就醫需求時使用。\n\n## 可給家屬\n\n可說明：陪同就醫通常需要提前安排，並且要同時處理交通、就醫時間、輔具與聯絡人資訊。\n\n## 電話複核\n\n- 服務行政區與可申請時間\n- 是否接受新案\n- 陪同範圍與費用\n- 是否可銜接復康巴士或計程車\n\n## 內部提醒\n\n若服務無法安排，要同步準備交通接送、社福中心、家屬協調或其他陪同資源，不要把陪同服務當成必定可用。","category":"informal","confidence":"B級受託/公會資料","contact":"可先洽新北市社工師公會服務頁；若不確定行政窗口，可撥新北市 1999 或 02-2960-3456 請轉老人福利/獨老服務相關承辦。","content_hash":"ece1f0dd415b37e8601241803d884ac59a735311b082cf4604b0e06077d11dec","coverage_scope":"citywide","districts":["全新北"],"eligibility_tags":["獨老","陪同就醫","醫療陪伴","需區域確認"],"embedding_text":"新北市社工師公會獨老陪同就醫服務 informal medical_companion citywide 新北市社工師公會獨老陪同就醫服務需複核服務行政區、預約時程、陪同範圍與交通銜接。 全新北 新北市社工師公會獨老陪同就醫服務可協助無家屬陪同、回診或檢查需要現場協助的獨居長者。適合就醫日期明確、交通與陪同需求都需要先安排的個案。 先整理長者是否獨居、就醫日期時間、醫院地點、是否需輪椅或復康巴士、是否已有家屬可協助；再洽公會服務頁或社福窗口確認服務區域、申請流程與等待時間。 長者基本資料 就醫日期、時間與地點 診療或檢查需求 行動能力與輔具需求 家屬或緊急聯絡人資訊 目前服務哪些行政區 是否接受新案與需要提前幾天申請 陪同範圍是否含掛號、候診、領藥與交通 是否能搭配復康巴士或計程車 費用或補助方式 此服務不是臨時陪診保證。需複核服務區域、是否仍接受新案、陪同範圍是否含掛號、候診、領藥、交通，並安排交通資源銜接。","id":"ntpcsw_medical_companion_service","internal_notes":"此服務不是臨時陪診保證。需複核服務區域、是否仍接受新案、陪同範圍是否含掛號、候診、領藥、交通，並安排交通資源銜接。","last_checked_at":"2026-05-30","name":"新北市社工師公會獨老陪同就醫服務","next_review_at":"2026-08-30","next_step":"先整理長者是否獨居、就醫日期時間、醫院地點、是否需輪椅或復康巴士、是否已有家屬可協助；再洽公會服務頁或社福窗口確認服務區域、申請流程與等待時間。","phone_check_questions":["目前服務哪些行政區","是否接受新案與需要提前幾天申請","陪同範圍是否含掛號、候診、領藥與交通","是否能搭配復康巴士或計程車","費用或補助方式"],"public_allowed":true,"public_contact":"可先洽新北市社工師公會服務頁；若不確定行政窗口，可撥新北市 1999 或 02-2960-3456 請轉老人福利/獨老服務相關承辦。","public_next_step":"先整理長者是否獨居、就醫日期時間、醫院地點、是否需輪椅或復康巴士、是否已有家屬可協助；再洽公會服務頁或社福窗口確認服務區域、申請流程與等待時間。","public_required_documents":["長者基本資料","就醫日期、時間與地點","診療或檢查需求","行動能力與輔具需求","家屬或緊急聯絡人資訊"],"public_summary":"新北市社工師公會獨老陪同就醫服務可協助無家屬陪同、回診或檢查需要現場協助的獨居長者。適合就醫日期明確、交通與陪同需求都需要先安排的個案。","region":"新北市","resource_id":"ntpcsw_medical_companion_service","resource_version":"2","risk_flags":["服務區域需複核","不可保證臨時派員","需搭配交通安排","就醫時間變動需重新協調"],"service_area_note":"新北市社工師公會獨老陪同就醫服務需複核服務行政區、預約時程、陪同範圍與交通銜接。","source_type":"community_candidate","source_url":"https://www.ntpcsw.org.tw/OnePage.aspx?id=499&amp;tid=6","status":"active","summary":"新北市社工師公會獨老陪同就醫服務可協助無家屬陪同、回診或檢查需要現場協助的獨居長者。適合就醫日期明確、交通與陪同需求都需要先安排的個案。","title":"新北市社工師公會獨老陪同就醫服務","topics":["medical_companion"],"urgency_tags":["一般"]},{"body":"# 新北市政府社會局社會救助與急難救助\n\n## 個管師使用重點\n新北市政府社會局社會救助與急難救助是全市性社會救助政策與申請資訊來源，適合案家有急難、低收/中低收、醫療、生活陷困或短期經濟壓力時先判斷應走公所、社福中心或市府社救窗口。\n\n## 可給家屬\n先整理急難事由、發生日期、家庭人口、收入財產、醫療/喪葬/失業等證明，再洽案家戶籍或居住地區公所確認申請項目、期限、文件與是否可同步社福中心或民間急難。\n\n聯絡/申請：新北市社會局 1999 或 02-2960-3456；實際申請多由案家所在地區公所受理與初審。\n\n可先準備：\n- 身分證明\n- 戶籍或居住資料\n- 收入與財產資料\n- 急難事由證明\n- 醫療、喪葬、失業、災害或其他困難文件\n\n## 電話複核\n- 此案應由戶籍地、居住地或事件所在地受理\n- 急難救助受理期限和文件是什麼\n- 是否可與中低收、醫療補助、民間急難並行\n- 是否需要里長、醫療院所、社工或警消證明\n- 若今天缺食、照顧或交通，是否可同步轉社福中心或物資資源\n\n## 內部提醒\n2026-05-31 深修。此卡是全市社會救助分流，不是核准承諾。個管師要同時判斷公所正式申請、社福中心即時支持、民間基金會與物資資源，不要只等單一路徑。\n\n風險提醒：\n- 社救需資格審查\n- 戶籍/居住地規則需電話確認\n- 急迫生活缺口需同步即時資源\n\n服務範圍：新北市級社會救助與急難政策資訊；實際受理窗口與文件以區公所或社會局回覆為準。\n\n來源：https://www.sw.ntpc.gov.tw/home.jsp?id=dff618d9d6f956fa","category":"informal","confidence":"A級官方社會救助資料深修","contact":"新北市社會局 1999 或 02-2960-3456；實際申請多由案家所在地區公所受理與初審。","content_hash":"55d75aae8468e526a6416aa02b5aa16b1e05c5fe6a8c1f0c70e811d8f7b16836","coverage_scope":"citywide","districts":["新北市"],"eligibility_tags":["社會救助","急難","低收/中低收","區公所"],"embedding_text":"新北市政府社會局社會救助與急難救助 informal emergency_aid citywide 新北市級社會救助與急難政策資訊；實際受理窗口與文件以區公所或社會局回覆為準。 新北市 新北市政府社會局社會救助與急難救助是全市性社會救助政策與申請資訊來源，適合案家有急難、低收/中低收、醫療、生活陷困或短期經濟壓力時先判斷應走公所、社福中心或市府社救窗口。 先整理急難事由、發生日期、家庭人口、收入財產、醫療/喪葬/失業等證明，再洽案家戶籍或居住地區公所確認申請項目、期限、文件與是否可同步社福中心或民間急難。 身分證明 戶籍或居住資料 收入與財產資料 急難事由證明 醫療、喪葬、失業、災害或其他困難文件 此案應由戶籍地、居住地或事件所在地受理 急難救助受理期限和文件是什麼 是否可與中低收、醫療補助、民間急難並行 是否需要里長、醫療院所、社工或警消證明 若今天缺食、照顧或交通，是否可同步轉社福中心或物資資源 2026-05-31 深修。此卡是全市社會救助分流，不是核准承諾。個管師要同時判斷公所正式申請、社福中心即時支持、民間基金會與物資資源，不要只等單一路徑。","id":"ntpc_social_assistance","internal_notes":"2026-05-31 深修。此卡是全市社會救助分流，不是核准承諾。個管師要同時判斷公所正式申請、社福中心即時支持、民間基金會與物資資源，不要只等單一路徑。","last_checked_at":"2026-05-30","name":"新北市政府社會局社會救助與急難救助","next_review_at":"2026-08-28","next_step":"先整理急難事由、發生日期、家庭人口、收入財產、醫療/喪葬/失業等證明，再洽案家戶籍或居住地區公所確認申請項目、期限、文件與是否可同步社福中心或民間急難。","phone_check_questions":["此案應由戶籍地、居住地或事件所在地受理","急難救助受理期限和文件是什麼","是否可與中低收、醫療補助、民間急難並行","是否需要里長、醫療院所、社工或警消證明","若今天缺食、照顧或交通，是否可同步轉社福中心或物資資源"],"public_allowed":true,"public_contact":"新北市社會局 1999 或 02-2960-3456；實際申請多由案家所在地區公所受理與初審。","public_next_step":"先整理急難事由、發生日期、家庭人口、收入財產、醫療/喪葬/失業等證明，再洽案家戶籍或居住地區公所確認申請項目、期限、文件與是否可同步社福中心或民間急難。","public_required_documents":["身分證明","戶籍或居住資料","收入與財產資料","急難事由證明","醫療、喪葬、失業、災害或其他困難文件"],"public_summary":"新北市政府社會局社會救助與急難救助是全市性社會救助政策與申請資訊來源，適合案家有急難、低收/中低收、醫療、生活陷困或短期經濟壓力時先判斷應走公所、社福中心或市府社救窗口。","region":"新北市","resource_id":"ntpc_social_assistance","resource_version":"20260531-batch19","risk_flags":["社救需資格審查","戶籍/居住地規則需電話確認","急迫生活缺口需同步即時資源"],"service_area_note":"新北市級社會救助與急難政策資訊；實際受理窗口與文件以區公所或社會局回覆為準。","source_type":"official","source_url":"https://www.sw.ntpc.gov.tw/home.jsp?id=dff618d9d6f956fa","status":"active","summary":"新北市政府社會局社會救助與急難救助是全市性社會救助政策與申請資訊來源，適合案家有急難、低收/中低收、醫療、生活陷困或短期經濟壓力時先判斷應走公所、社福中心或市府社救窗口。","title":"新北市政府社會局社會救助與急難救助","topics":["emergency_aid"],"urgency_tags":["一般"]}],"schema_version":"resourcepack.v1","signature_status":"unsigned","source_app_version":"resource-nav-20260524-resourcepack-exchange"}</script>
+  <script>
+    const COPY_TEXTS = {'family': '家屬版資源包：未指定地區 / 非正式資源 / 2026-06-24\n\n新北市福利補助自己查：長期照顧服務3.0\n新北市福利補助自己查的長期照顧服務3.0頁面整理居家服務、日照、家庭托顧、專業服務、交通接送、喘息等長照服務項目，以及新北市承辦窗口。適合家屬想知道長照有哪些服務時用來做白話說明。\n下一步：先用頁面協助家屬理解可詢問的服務類型，再撥 1966 或新北市長照窗口申請評估；若家庭聘有外籍看護，要特別詢問哪些服務可用、哪些服務受限制。\n聯絡/申請：長照服務可撥 1966；新北市政府長照相關窗口可洽 02-2257-7155 分機 3632，或由 1999 / 02-2960-3456 轉接。\n可先準備：被照顧者基本資料、失能或失智相關資料、主要照顧者資訊、目前照顧困難、是否聘有外籍看護\n\n新北市社工師公會獨老陪同就醫服務\n新北市社工師公會獨老陪同就醫服務可協助無家屬陪同、回診或檢查需要現場協助的獨居長者。適合就醫日期明確、交通與陪同需求都需要先安排的個案。\n下一步：先整理長者是否獨居、就醫日期時間、醫院地點、是否需輪椅或復康巴士、是否已有家屬可協助；再洽公會服務頁或社福窗口確認服務區域、申請流程與等待時間。\n聯絡/申請：可先洽新北市社工師公會服務頁；若不確定行政窗口，可撥新北市 1999 或 02-2960-3456 請轉老人福利/獨老服務相關承辦。\n可先準備：長者基本資料、就醫日期、時間與地點、診療或檢查需求、行動能力與輔具需求、家屬或緊急聯絡人資訊\n\n新北市政府社會局社會救助與急難救助\n新北市政府社會局社會救助與急難救助是全市性社會救助政策與申請資訊來源，適合案家有急難、低收/中低收、醫療、生活陷困或短期經濟壓力時先判斷應走公所、社福中心或市府社救窗口。\n下一步：先整理急難事由、發生日期、家庭人口、收入財產、醫療/喪葬/失業等證明，再洽案家戶籍或居住地區公所確認申請項目、期限、文件與是否可同步社福中心或民間急難。\n聯絡/申請：新北市社會局 1999 或 02-2960-3456；實際申請多由案家所在地區公所受理與初審。\n可先準備：身分證明、戶籍或居住資料、收入與財產資料、急難事由證明、醫療、喪葬、失業、災害或其他困難文件', 'phone': '個管師電話確認清單：未指定地區 / 非正式資源 / 2026-06-24\n\n新北市福利補助自己查：長期照顧服務3.0\n聯絡/申請：長照服務可撥 1966；新北市政府長照相關窗口可洽 02-2257-7155 分機 3632，或由 1999 / 02-2960-3456 轉接。\n電話確認：案家現在最需要哪一類長照服務；是否已有長照評估與照顧計畫；是否聘有外籍看護，哪些服務受限制；新北市承辦窗口或照管中心下一步如何安排；若急迫需求等不及評估，是否要同步轉社福或緊急資源\n內部提醒：2026-05-30 深修。此卡適合拿來向家屬說明長照項目，不適合當作單一申請表。頁面提到聘有外看時居家服務類限制，個管師要在電話時明確問服務項目。\n\n新北市社工師公會獨老陪同就醫服務\n聯絡/申請：可先洽新北市社工師公會服務頁；若不確定行政窗口，可撥新北市 1999 或 02-2960-3456 請轉老人福利/獨老服務相關承辦。\n電話確認：目前服務哪些行政區；是否接受新案與需要提前幾天申請；陪同範圍是否含掛號、候診、領藥與交通；是否能搭配復康巴士或計程車；費用或補助方式\n內部提醒：此服務不是臨時陪診保證。需複核服務區域、是否仍接受新案、陪同範圍是否含掛號、候診、領藥、交通，並安排交通資源銜接。\n\n新北市政府社會局社會救助與急難救助\n聯絡/申請：新北市社會局 1999 或 02-2960-3456；實際申請多由案家所在地區公所受理與初審。\n電話確認：此案應由戶籍地、居住地或事件所在地受理；急難救助受理期限和文件是什麼；是否可與中低收、醫療補助、民間急難並行；是否需要里長、醫療院所、社工或警消證明；若今天缺食、照顧或交通，是否可同步轉社福中心或物資資源\n內部提醒：2026-05-31 深修。此卡是全市社會救助分流，不是核准承諾。個管師要同時判斷公所正式申請、社福中心即時支持、民間基金會與物資資源，不要只等單一路徑。', 'admin': '行政申請清單：未指定地區 / 非正式資源 / 2026-06-24\n\n新北市福利補助自己查：長期照顧服務3.0\n狀態：active\n資料來源：https://welfare.ntpc.gov.tw/viewService/show/268437004?fromOpa=1\n最後確認：2026-05-30\n文件：被照顧者基本資料、失能或失智相關資料、主要照顧者資訊、目前照顧困難、是否聘有外籍看護\n注意：福利查詢頁不是核定結果、聘有外看家庭限制需問清楚、長照3.0名稱可能讓家屬誤以為立即可用\n\n新北市社工師公會獨老陪同就醫服務\n狀態：active\n資料來源：https://www.ntpcsw.org.tw/OnePage.aspx?id=499&tid=6\n最後確認：2026-05-30\n文件：長者基本資料、就醫日期、時間與地點、診療或檢查需求、行動能力與輔具需求、家屬或緊急聯絡人資訊\n注意：服務區域需複核、不可保證臨時派員、需搭配交通安排、就醫時間變動需重新協調\n\n新北市政府社會局社會救助與急難救助\n狀態：active\n資料來源：https://www.sw.ntpc.gov.tw/home.jsp?id=dff618d9d6f956fa\n最後確認：2026-05-30\n文件：身分證明、戶籍或居住資料、收入與財產資料、急難事由證明、醫療、喪葬、失業、災害或其他困難文件\n注意：社救需資格審查、戶籍/居住地規則需電話確認、急迫生活缺口需同步即時資源', 'handoff': '交接摘要：未指定地區 / 非正式資源 / 2026-06-24\n行政區：新店區\n主題：非正式資源\n線索：A級官方資料、流程確認、一般、獨老、陪同就醫、醫療陪伴、需區域確認、社會救助、急難、低收/中低收、區公所\n已選資源：3 筆'};
+    const SHARE_URL = 'https://chord310.github.io/ob-prod-share/viewer.html?id=32e3f02a10a31ab245e2';
+    async function copyText(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        return;
+      }
+      const area = document.getElementById("copyScratch");
+      area.hidden = false;
+      area.value = text;
+      area.select();
+      document.execCommand("copy");
+      area.hidden = true;
+    }
+    const OUTPUT_HELP = {
+      family: "家屬版適合貼 LINE 或訊息，會排除內部註記與不適合外流的提醒。",
+      phone: "電話確認適合個管師打電話前使用，聚焦聯絡方式與要問的問題。",
+      admin: "行政清單整理文件、來源與最後確認日，方便補件或填報。",
+      handoff: "交接摘要給同事或主管接手，聚焦優先順序、風險與下一步。",
+      full: "完整資料顯示所有區塊與內部提醒，適合個管師自己檢查整包內容。",
+    };
+    function setOutputMode(mode) {
+      const safeMode = OUTPUT_HELP[mode] ? mode : "full";
+      try { localStorage.setItem("resource_package_result_mode_v1", safeMode); } catch (e) {}
+      document.querySelectorAll("[data-result-mode]").forEach((button) => {
+        const active = button.dataset.resultMode === safeMode;
+        button.classList.toggle("is-active", active);
+        button.setAttribute("aria-selected", active ? "true" : "false");
+      });
+      document.querySelectorAll("[data-output-section]").forEach((section) => {
+        const modes = String(section.dataset.outputSection || "full").split(/\s+/);
+        section.hidden = !modes.includes(safeMode);
+      });
+      const help = document.getElementById("resultModeHelp");
+      if (help) help.textContent = OUTPUT_HELP[safeMode];
+    }
+    document.querySelectorAll("[data-result-mode]").forEach((button) => {
+      button.addEventListener("click", () => setOutputMode(button.dataset.resultMode || "full"));
+    });
+    document.querySelectorAll("[data-copy]").forEach((button) => {
+      button.addEventListener("click", async () => {
+        await copyText(COPY_TEXTS[button.dataset.copy] || "");
+        button.textContent = "已複製";
+        setTimeout(() => { button.textContent = button.dataset.copy === "family" ? "複製家屬版" : button.dataset.copy === "phone" ? "複製電話確認" : button.dataset.copy === "admin" ? "複製行政清單" : "複製交接摘要"; }, 1200);
+      });
+    });
+    document.querySelectorAll("[data-copy-link]").forEach((button) => {
+      button.addEventListener("click", async () => {
+        await copyText(SHARE_URL);
+        button.textContent = "已複製";
+        setTimeout(() => { button.textContent = "複製連結"; }, 1200);
+      });
+    });
+    const URL_PARAMS = new URLSearchParams(window.location.search);
+    const AUTO_PRINT_QUERY_VALUE = "print=1";
+    const AUTO_PRINT_KEY = 'resource_nav_auto_print_v1:32e3f02a10a31ab245e2';
+    function shouldAutoPrint() {
+      return URL_PARAMS.get("print") === "1";
+    }
+    function triggerPrint() {
+      setTimeout(() => {
+        try { window.focus(); } catch (e) {}
+        window.print();
+      }, 160);
+    }
+    document.querySelectorAll("[data-print-result]").forEach((button) => {
+      button.addEventListener("click", triggerPrint);
+    });
+    if (shouldAutoPrint()) {
+      let alreadyPrinted = false;
+      try { alreadyPrinted = sessionStorage.getItem(AUTO_PRINT_KEY) === "1"; } catch (e) {}
+      if (!alreadyPrinted) {
+        try { sessionStorage.setItem(AUTO_PRINT_KEY, "1"); } catch (e) {}
+        window.addEventListener("load", triggerPrint, { once: true });
+      }
+    }
+    
+    const LAST_SESSION_ENTRY_KEY = "resource_nav_last_session_entry_v1";
+    function readRememberedEntryUrl() {
+      try {
+        const value = sessionStorage.getItem(LAST_SESSION_ENTRY_KEY) || localStorage.getItem(LAST_SESSION_ENTRY_KEY) || "";
+        if (!value || !value.includes("resource-nav.html") || !value.includes("session=")) return "";
+        return value;
+      } catch (e) {
+        return "";
+      }
+    }
+    const rememberedEntry = readRememberedEntryUrl();
+    if (rememberedEntry) {
+      document.querySelectorAll("[data-return-main]").forEach((link) => { link.href = rememberedEntry; });
+    }
+    
+    let savedMode = "full";
+    try { savedMode = localStorage.getItem("resource_package_result_mode_v1") || "full"; } catch (e) {}
+    setOutputMode(savedMode);
+  </script>
+</body>
+</html>
