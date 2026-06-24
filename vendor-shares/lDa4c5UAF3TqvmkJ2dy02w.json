@@ -1,0 +1,229 @@
+{
+  "share_id": "lDa4c5UAF3TqvmkJ2dy02w",
+  "address": "231台灣新北市新店區建國里建國路23號",
+  "home": {
+    "lat": 24.9739658,
+    "lng": 121.5399186,
+    "geocode_provider": "google",
+    "geocode_precision": "rooftop"
+  },
+  "vendors": [
+    {
+      "vendor_id": "ntpc-28decdaf611914dd",
+      "name": "美康中正藥局",
+      "district": "新店區",
+      "address": "新北市新店區中正路215號",
+      "phone": "02-29112669",
+      "service_types": [
+        "購置"
+      ],
+      "vendor_category": "藥局",
+      "source_url": "https://atrc.aihsin.ntpc.gov.tw/NewsInfo/24",
+      "lat": 24.9728111,
+      "lng": 121.5396541,
+      "geocode_provider": "google",
+      "distance_km": 0.131,
+      "route_distance_meters": null,
+      "route_duration_seconds": null,
+      "route_status": "",
+      "route_source": "",
+      "directions_url": "https://www.google.com/maps/dir/?api=1&destination=24.9728111%2C121.5396541&travelmode=driving&origin=24.9739658%2C121.5399186"
+    },
+    {
+      "vendor_id": "ntpc-b4e54e952fff4c32",
+      "name": "新店藥局(大樹)",
+      "district": "新店區",
+      "address": "新北市新店區北新路二段102號",
+      "phone": "02-29186099",
+      "service_types": [
+        "購置"
+      ],
+      "vendor_category": "藥局",
+      "source_url": "https://atrc.aihsin.ntpc.gov.tw/NewsInfo/24",
+      "lat": 24.9738071,
+      "lng": 121.5431776,
+      "geocode_provider": "google",
+      "distance_km": 0.329,
+      "route_distance_meters": null,
+      "route_duration_seconds": null,
+      "route_status": "",
+      "route_source": "",
+      "directions_url": "https://www.google.com/maps/dir/?api=1&destination=24.9738071%2C121.5431776&travelmode=driving&origin=24.9739658%2C121.5399186"
+    },
+    {
+      "vendor_id": "ntpc-4631cfba376e855f",
+      "name": "冠威醫療器材行",
+      "district": "新店區",
+      "address": "新北市新店區華中街58號1樓",
+      "phone": "02-22132392",
+      "service_types": [
+        "購置"
+      ],
+      "vendor_category": "醫材/輔具行",
+      "source_url": "https://atrc.aihsin.ntpc.gov.tw/NewsInfo/24",
+      "lat": 24.9711704,
+      "lng": 121.5412805,
+      "geocode_provider": "google",
+      "distance_km": 0.34,
+      "route_distance_meters": null,
+      "route_duration_seconds": null,
+      "route_status": "",
+      "route_source": "",
+      "directions_url": "https://www.google.com/maps/dir/?api=1&destination=24.9711704%2C121.5412805&travelmode=driving&origin=24.9739658%2C121.5399186"
+    },
+    {
+      "vendor_id": "ntpc-d103a24ab63c5a57",
+      "name": "回春醫療器材行",
+      "district": "新店區",
+      "address": "新北市新店區民族路207號1樓",
+      "phone": "02-29119002",
+      "service_types": [
+        "購置"
+      ],
+      "vendor_category": "醫材/輔具行",
+      "source_url": "https://atrc.aihsin.ntpc.gov.tw/NewsInfo/24",
+      "lat": 24.9759921,
+      "lng": 121.5371037,
+      "geocode_provider": "google",
+      "distance_km": 0.362,
+      "route_distance_meters": null,
+      "route_duration_seconds": null,
+      "route_status": "",
+      "route_source": "",
+      "directions_url": "https://www.google.com/maps/dir/?api=1&destination=24.9759921%2C121.5371037&travelmode=driving&origin=24.9739658%2C121.5399186"
+    },
+    {
+      "vendor_id": "ntpc-88af526a7978b10a",
+      "name": "博士生物科技股份有限公司新店分公司",
+      "district": "新店區",
+      "address": "新北市新店區民族路167號1樓",
+      "phone": "02-89113168",
+      "service_types": [
+        "購置"
+      ],
+      "vendor_category": "個人用品/連鎖門市",
+      "source_url": "https://atrc.aihsin.ntpc.gov.tw/NewsInfo/24",
+      "lat": 24.9764796,
+      "lng": 121.5376067,
+      "geocode_provider": "google",
+      "distance_km": 0.364,
+      "route_distance_meters": null,
+      "route_duration_seconds": null,
+      "route_status": "",
+      "route_source": "",
+      "directions_url": "https://www.google.com/maps/dir/?api=1&destination=24.9764796%2C121.5376067&travelmode=driving&origin=24.9739658%2C121.5399186"
+    },
+    {
+      "vendor_id": "ntpc-92bd00641a68b3aa",
+      "name": "美德耐股份有限公司新店耕莘院外店",
+      "district": "新店區",
+      "address": "新北市新店區民族路229、231號1樓",
+      "phone": "02-29113806",
+      "service_types": [
+        "購置"
+      ],
+      "vendor_category": "醫材/輔具行",
+      "source_url": "https://atrc.aihsin.ntpc.gov.tw/NewsInfo/24",
+      "lat": 24.9756931,
+      "lng": 121.5367913,
+      "geocode_provider": "google",
+      "distance_km": 0.369,
+      "route_distance_meters": null,
+      "route_duration_seconds": null,
+      "route_status": "",
+      "route_source": "",
+      "directions_url": "https://www.google.com/maps/dir/?api=1&destination=24.9756931%2C121.5367913&travelmode=driving&origin=24.9739658%2C121.5399186"
+    },
+    {
+      "vendor_id": "ntpc-7aec263f290d3b2d",
+      "name": "益長源醫療器材行",
+      "district": "新店區",
+      "address": "新北市新店區民族路192號13F",
+      "phone": "02-29119002",
+      "service_types": [
+        "購置"
+      ],
+      "vendor_category": "醫材/輔具行",
+      "source_url": "https://atrc.aihsin.ntpc.gov.tw/NewsInfo/24",
+      "lat": 24.9755967,
+      "lng": 121.5362514,
+      "geocode_provider": "google",
+      "distance_km": 0.412,
+      "route_distance_meters": null,
+      "route_duration_seconds": null,
+      "route_status": "",
+      "route_source": "",
+      "directions_url": "https://www.google.com/maps/dir/?api=1&destination=24.9755967%2C121.5362514&travelmode=driving&origin=24.9739658%2C121.5399186"
+    },
+    {
+      "vendor_id": "ntpc-e1b10c838a2dedfd",
+      "name": "銘華醫療器材行",
+      "district": "新店區",
+      "address": "新北市新店區民族路188號1樓",
+      "phone": "02-22196060",
+      "service_types": [
+        "購置"
+      ],
+      "vendor_category": "醫材/輔具行",
+      "source_url": "https://atrc.aihsin.ntpc.gov.tw/NewsInfo/24",
+      "lat": 24.9765173,
+      "lng": 121.5369334,
+      "geocode_provider": "google",
+      "distance_km": 0.414,
+      "route_distance_meters": null,
+      "route_duration_seconds": null,
+      "route_status": "",
+      "route_source": "",
+      "directions_url": "https://www.google.com/maps/dir/?api=1&destination=24.9765173%2C121.5369334&travelmode=driving&origin=24.9739658%2C121.5399186"
+    },
+    {
+      "vendor_id": "ntpc-f205b52252197c5e",
+      "name": "杏一醫療用品股份有限公司新店耕莘院外門市部",
+      "district": "新店區",
+      "address": "新北市新店區民族路190號1樓",
+      "phone": "02-22197860",
+      "service_types": [
+        "購置"
+      ],
+      "vendor_category": "醫材/輔具行",
+      "source_url": "https://atrc.aihsin.ntpc.gov.tw/NewsInfo/24",
+      "lat": 24.9756448,
+      "lng": 121.5361911,
+      "geocode_provider": "google",
+      "distance_km": 0.42,
+      "route_distance_meters": null,
+      "route_duration_seconds": null,
+      "route_status": "",
+      "route_source": "",
+      "directions_url": "https://www.google.com/maps/dir/?api=1&destination=24.9756448%2C121.5361911&travelmode=driving&origin=24.9739658%2C121.5399186"
+    },
+    {
+      "vendor_id": "ntpc-57ad8dd28222bae5",
+      "name": "健詮藥局",
+      "district": "新店區",
+      "address": "新北市新店區建國路119號1樓",
+      "phone": "02-29116312",
+      "service_types": [
+        "購置"
+      ],
+      "vendor_category": "藥局",
+      "source_url": "https://atrc.aihsin.ntpc.gov.tw/NewsInfo/24",
+      "lat": 24.9777933,
+      "lng": 121.5397445,
+      "geocode_provider": "google",
+      "distance_km": 0.426,
+      "route_distance_meters": null,
+      "route_duration_seconds": null,
+      "route_status": "",
+      "route_source": "",
+      "directions_url": "https://www.google.com/maps/dir/?api=1&destination=24.9777933%2C121.5397445&travelmode=driving&origin=24.9739658%2C121.5399186"
+    }
+  ],
+  "map_url": "https://www.google.com/maps/dir/?api=1&destination=24.9777933%2C121.5397445&travelmode=driving&origin=24.9739658%2C121.5399186&waypoints=24.9728111%2C121.5396541%7C24.9738071%2C121.5431776%7C24.9711704%2C121.5412805%7C24.9759921%2C121.5371037%7C24.9764796%2C121.5376067%7C24.9756931%2C121.5367913%7C24.9755967%2C121.5362514%7C24.9765173%2C121.5369334%7C24.9756448%2C121.5361911",
+  "created_at": 1782307460.18464,
+  "expires_at": 1782912260.18464,
+  "google_maps_browser_key": "",
+  "ok": true,
+  "static_share": true,
+  "static_data_path": "vendor-shares/lDa4c5UAF3TqvmkJ2dy02w.json"
+}
