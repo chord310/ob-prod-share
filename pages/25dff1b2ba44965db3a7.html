@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>未指定地區 / 照顧及專業 / 2026-06-05｜長照資源包結果</title>
+  <style>
+    :root { color-scheme: light; --ink:#172033; --muted:#66758a; --line:#d9e2ef; --brand:#0b66c3; --soft:#f4f7fb; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink); background: #eef3f8; }
+    a { color: var(--brand); }
+    .topbar { display:flex; justify-content:space-between; align-items:center; gap:16px; padding:18px 24px; background:#fff; border-bottom:1px solid var(--line); position:sticky; top:0; z-index:10; }
+    .topbar h1 { margin:0; font-size:24px; }
+    .eyebrow { margin:0 0 6px; color:#087f7a; font-size:12px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; }
+    .button, button { border:1px solid #aac4df; background:#fff; color:#17324f; border-radius:8px; padding:10px 14px; font-weight:700; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; justify-content:center; }
+    .button.primary, button.primary { background:var(--brand); border-color:var(--brand); color:#fff; }
+    .button-green { background:#0f8f5f; border-color:#0f8f5f; color:#fff; }
+    .button-red { background:#cf3f3f; border-color:#cf3f3f; color:#fff; }
+    .button-print { background:#f4f8fd; border-color:#9ab8d8; color:#17324f; }
+    .button-print:hover { background:#e8f2fc; transform:translateY(-1px); }
+    main { width:min(1180px, 100%); margin:0 auto; padding:20px; }
+    .hero, .panel, .resource-detail { background:#fff; border:1px solid var(--line); border-radius:10px; padding:18px; box-shadow:0 8px 28px rgba(20,42,70,.06); }
+    .hero { display:grid; grid-template-columns: 1.3fr .7fr; gap:16px; margin-bottom:18px; }
+    .hero h2 { margin:0 0 8px; font-size:28px; }
+    .muted { color:var(--muted); line-height:1.7; }
+    .actions { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+    .top-actions { display:flex; flex-wrap:wrap; gap:10px; justify-content:flex-end; }
+    .panel-actions { margin-top:14px; display:flex; flex-wrap:wrap; gap:10px; }
+    .item-note { margin-top:4px; color:var(--muted); line-height:1.6; }
+    .result-output-switcher { display:flex; justify-content:space-between; gap:16px; align-items:center; border:1px solid var(--line); border-radius:10px; padding:16px 18px; margin-bottom:18px; background:#fff; box-shadow:0 8px 28px rgba(20,42,70,.05); }
+    .result-output-switcher h3 { margin:0 0 4px; font-size:18px; }
+    .result-mode-tabs { display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end; }
+    .result-mode-tabs button { min-height:38px; border-radius:999px; padding:8px 13px; background:#fff; color:var(--ink); transition:transform .12s ease, background .12s ease, border-color .12s ease, box-shadow .12s ease; }
+    .result-mode-tabs button:hover { transform:translateY(-1px); box-shadow:0 8px 18px rgba(24,39,75,.1); }
+    .result-mode-tabs button:active { transform:translateY(1px); }
+    .result-mode-tabs button.is-active { border-color:var(--brand); background:var(--brand); color:#fff; }
+    [data-output-section][hidden] { display:none !important; }
+    .grid { display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap:14px; margin-bottom:18px; }
+    .panel h3, .resource-detail h3 { margin:0 0 10px; }
+    .panel ol, .panel ul { margin:0; padding-left:22px; line-height:1.8; }
+    pre { white-space:pre-wrap; word-break:break-word; background:var(--soft); border:1px solid var(--line); border-radius:8px; padding:12px; line-height:1.7; }
+    .resource-list { display:grid; gap:14px; }
+    .resource-detail dl { display:grid; gap:10px; margin:0; }
+    .resource-detail dl div { padding-top:10px; border-top:1px solid #edf1f6; }
+    dt { font-weight:800; color:#233d58; margin-bottom:4px; }
+    dd { margin:0; color:#26374d; line-height:1.7; }
+    .share-panel { display:grid; gap:12px; margin-top:18px; background:#fff; border:1px solid var(--line); border-radius:10px; padding:18px; box-shadow:0 8px 28px rgba(20,42,70,.06); }
+    .share-body { display:flex; flex-wrap:wrap; align-items:center; gap:12px; }
+    .share-qr { width:min(240px, 100%); border:1px solid var(--line); border-radius:10px; background:#fff; padding:10px; }
+    .share-link { flex:1 1 280px; overflow-wrap:anywhere; }
+    @media print {
+      @page { margin: 14mm; }
+      body { background:#fff; color:#111827; font-size:12pt; }
+      .topbar { position:static; border-bottom:1px solid #d1d5db; padding:0 0 10px; }
+      .top-actions, .result-output-switcher, .panel-actions, .share-body button, #copyScratch { display:none !important; }
+      main { width:100%; max-width:none; padding:0; }
+      .hero, .panel, .resource-detail, .share-panel { box-shadow:none; border-color:#cbd5e1; break-inside:avoid; page-break-inside:avoid; }
+      .hero, .grid { grid-template-columns:1fr; }
+      .grid { gap:10px; }
+      .resource-list { display:block; }
+      .resource-detail { margin:0 0 10px; }
+      pre { background:#fff; border-color:#cbd5e1; }
+      a[href^="http"]::after { content:" (" attr(href) ")"; color:#475569; font-size:9pt; }
+      .share-link::after { content:""; }
+    }
+    @media (max-width: 760px) {
+      .topbar { align-items:flex-start; flex-direction:column; }
+      main { padding:12px; }
+      .hero, .grid { grid-template-columns: 1fr; }
+      .result-output-switcher { align-items:stretch; flex-direction:column; }
+      .result-mode-tabs { justify-content:stretch; }
+      .result-mode-tabs button { flex:1 1 130px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">Resource Package Result</p>
+      <h1>資源包結果</h1>
+    </div>
+    <div class="top-actions">
+      <a class="button button-green" data-return-main href="https://chord310.github.io/ob-prod-share/resource-nav.html?category=multi_professional&amp;source=resource_package_result&amp;guild=1509223295164354630">返回長照資源導航站主頁</a>
+      
+      <button type="button" class="button button-print" data-print-result>列印 / 另存 PDF</button>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <div>
+        <p class="eyebrow">案家資源包</p>
+        <h2>未指定地區 / 照顧及專業 / 2026-06-05</h2>
+        <p class="muted">建立者身份來自 Discord session。此頁包含所選資源、電話確認、行政文件與交接摘要；請勿在對外分享時附上內部註記。</p>
+        <p class="muted">更新時間：2026-06-24 21:39｜資源數：1 筆</p>
+        
+      </div>
+    </section>
+
+    <section class="result-output-switcher" aria-label="輸出格式切換">
+      <div>
+        <p class="eyebrow">輸出格式</p>
+        <h3>選擇這份結果要怎麼使用</h3>
+        <p class="muted" id="resultModeHelp">完整資料會顯示全部區塊；其他模式只聚焦在當下要複製或處理的內容。</p>
+        <p class="muted print-help">列印會使用目前選取的輸出格式；若要存檔，請在瀏覽器列印視窗選擇「另存為 PDF」。</p>
+      </div>
+      <div class="result-mode-tabs" role="tablist" aria-label="資源包輸出格式">
+        <button type="button" data-result-mode="family" role="tab">家屬版</button>
+        <button type="button" data-result-mode="phone" role="tab">電話確認</button>
+        <button type="button" data-result-mode="admin" role="tab">行政清單</button>
+        <button type="button" data-result-mode="handoff" role="tab">交接摘要</button>
+        <button type="button" data-result-mode="full" role="tab">完整資料</button>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="panel" data-output-section="full handoff">
+        <h3>建議優先順序</h3>
+        <ol><li><a href="#resource-bali_community_care_point_directory">八里區社區照顧關懷據點服務資訊</a></li></ol>
+      </article>
+      <article class="panel" data-output-section="full phone">
+        <h3>先打哪幾通電話</h3>
+        <ol><li><a href="#resource-bali_community_care_point_directory">八里區社區照顧關懷據點服務資訊</a><div class="item-note"><strong>聯絡/申請：</strong>新北市政府社會局老人福利科：新北市境內市話直撥1999，或洽02-2960-3456轉3801-3808、3810-3818、3891、3892；實際據點電話與地址以平台篩選後列出的據點資料為準。</div><div class="item-note"><strong>電話確認：</strong>目前是否服務八里區或案家所在里別；有無關懷訪視、電話問安、餐飲服務、健康促進或社會參與活動；服務時間、活動頻率與是否需事前報名；是否限特定里別、年齡或福利身分；是否可接新案，若不可接案有無鄰近據點可詢問；是否需里辦、公所、個管師或家屬先行聯絡</div></li></ol>
+        <div class="panel-actions"><button data-copy="phone">複製電話確認</button></div>
+      </article>
+      <article class="panel" data-output-section="full family">
+        <h3>可傳給家屬的短訊</h3>
+        <pre>家屬版資源包：未指定地區 / 照顧及專業 / 2026-06-05
+
+八里區社區照顧關懷據點服務資訊
+新北市社會局「當我們老在一起」平台說明社區照顧關懷據點可提供健康促進、關懷訪視、電話問安、餐飲服務或社會參與活動。這張卡用於先篩選八里區據點，再安排電話複核。
+下一步：先在平台以八里區篩選據點，記下據點名稱、服務項目與服務時間；再致電據點或洽新北市1999/02-2960-3456轉老人福利科，複核目前服務狀態、是否限里別、是否接受新案。
+聯絡/申請：新北市政府社會局老人福利科：新北市境內市話直撥1999，或洽02-2960-3456轉3801-3808、3810-3818、3891、3892；實際據點電話與地址以平台篩選後列出的據點資料為準。
+可先準備：案家行政區與里別、長者基本資料、主要聯絡方式、共餐、關懷訪視或活動參與需求、行動與陪同需求</pre>
+        <div class="panel-actions"><button class="primary" data-copy="family">複製家屬版</button></div>
+      </article>
+      <article class="panel" data-output-section="full admin">
+        <h3>需要先準備的文件</h3>
+        <ul><li>案家行政區與里別</li><li>長者基本資料</li><li>主要聯絡方式</li><li>共餐、關懷訪視或活動參與需求</li><li>行動與陪同需求</li></ul>
+        <div class="panel-actions"><button data-copy="admin">複製行政清單</button></div>
+      </article>
+      <article class="panel" data-output-section="full handoff">
+        <h3>風險提醒</h3>
+        <ul><li>官方平台需逐點複核</li><li>據點服務狀態會異動</li><li>不可承諾名額或共餐</li><li>跨里服務需先問清楚</li></ul>
+      </article>
+      <article class="panel" data-output-section="full handoff">
+        <h3>交接摘要</h3>
+        <pre>交接摘要：未指定地區 / 照顧及專業 / 2026-06-05
+主題：多元專業
+線索：八里區、社區照顧、關懷據點、共餐、健康促進、新北市官方平台、一般、需電話複核
+已選資源：1 筆</pre>
+        <div class="panel-actions"><button data-copy="handoff">複製交接摘要</button></div>
+      </article>
+    </section>
+
+    <section class="resource-list" aria-label="完整資料集合" data-output-section="full">
+      <p class="eyebrow">完整資料集合</p>
+      
+    <article class="resource-detail" id="resource-bali_community_care_point_directory">
+      <div class="resource-detail-head">
+        <p class="eyebrow">care_professional</p>
+        <h3>1. <a href="https://lkk.ntpc.gov.tw/home.jsp?id=9539ce925ac3028d" target="_blank" rel="noopener noreferrer">八里區社區照顧關懷據點服務資訊</a></h3>
+      </div>
+      <p>新北市社會局「當我們老在一起」平台說明社區照顧關懷據點可提供健康促進、關懷訪視、電話問安、餐飲服務或社會參與活動。這張卡用於先篩選八里區據點，再安排電話複核。</p>
+      <dl>
+        <div><dt>下一步</dt><dd>先在平台以八里區篩選據點，記下據點名稱、服務項目與服務時間；再致電據點或洽新北市1999/02-2960-3456轉老人福利科，複核目前服務狀態、是否限里別、是否接受新案。</dd></div>
+        <div><dt>聯絡/申請</dt><dd>新北市政府社會局老人福利科：新北市境內市話直撥1999，或洽02-2960-3456轉3801-3808、3810-3818、3891、3892；實際據點電話與地址以平台篩選後列出的據點資料為準。</dd></div>
+        <div><dt>常備文件</dt><dd>案家行政區與里別、長者基本資料、主要聯絡方式、共餐、關懷訪視或活動參與需求、行動與陪同需求</dd></div>
+        <div><dt>電話確認</dt><dd>目前是否服務八里區或案家所在里別；有無關懷訪視、電話問安、餐飲服務、健康促進或社會參與活動；服務時間、活動頻率與是否需事前報名；是否限特定里別、年齡或福利身分；是否可接新案，若不可接案有無鄰近據點可詢問；是否需里辦、公所、個管師或家屬先行聯絡</dd></div>
+        <div><dt>內部註記</dt><dd>來源為新北市社會局官方平台，頁面描述據點服務內容與老人福利科聯絡方式。此卡不是單一據點承諾；八里區據點的服務時段、共餐、關懷訪視、收案限制與跨里服務需逐點複核。家屬版可說明為社區支持線索，不可寫成已安排成功。</dd></div>
+        <div><dt>風險提醒</dt><dd>官方平台需逐點複核、據點服務狀態會異動、不可承諾名額或共餐、跨里服務需先問清楚</dd></div>
+        <div><dt>來源/確認</dt><dd>official｜最後確認：2026-05-30</dd></div>
+      </dl>
+    </article>
+    
+    </section>
+    
+    <section class="share-panel">
+      <div>
+        <p class="eyebrow">分享此資源包結果</p>
+        <h3>QR CODE 與正式連結</h3>
+        <p class="muted">這是正式 Web B 結果連結，可複製給需要查看的人；對外分享前請確認內容不含內部註記。</p>
+      </div>
+      <div class="share-body">
+        <img class="share-qr" src="data:image/png;base64,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" alt="資源包結果 QR Code">
+        <a class="share-link" href="https://chord310.github.io/ob-prod-share/viewer.html?id=25dff1b2ba44965db3a7" target="_blank" rel="noopener noreferrer">https://chord310.github.io/ob-prod-share/viewer.html?id=25dff1b2ba44965db3a7</a>
+        <button type="button" data-copy-link>複製連結</button>
+      </div>
+    </section>
+        
+  </main>
+  <textarea id="copyScratch" hidden></textarea>
+  <script type="application/json" id="resourcePackManifest">{"content_hash":"9a7400b14d50c75f3a4d089d1ad6fc8969bbc983f3799eeb11948e5d4a82d8e0","export_id":"rpex-ca54fe3fe5e36ad37080","exported_at":1782308355.4166982,"output_history":[{"created_at":1782308355.373245,"output_id":"25dff1b2ba44965db3a7","output_mode":"family","qr_status":"pending","share_page_id":"25dff1b2ba44965db3a7","share_url":"","status":"pending","updated_at":1782308355.373245},{"created_at":1782308292.602731,"output_id":"c1ae0476c6d1475323a9","output_mode":"family","qr_status":"ready","share_page_id":"c1ae0476c6d1475323a9","share_url":"https://chord310.github.io/ob-prod-share/viewer.html?id=c1ae0476c6d1475323a9","status":"ready","updated_at":1782308294.4878159}],"package_metadata":{"category":"multi_professional","created_at":1780621421.186193,"created_by":{"discord_user_id":"254859724133105664","discord_user_name":"ＴＥＳＴ-01"},"district":"","name":"未指定地區 / 照顧及專業 / 2026-06-05","note":"","original_package_id":"pkg-mq0807bv-kdtbl","output_mode":"family","resource_ids":["bali_community_care_point_directory"],"selected_topic_keys":[],"smart_query_text":"","status":"result_pending","updated_at":1782308355.372532,"urgency":""},"resource_snapshots":[{"body":"深修批次：2026-05-30 第五批高頻資源深修。已讀取新北市社會局「當我們老在一起」官方頁面，補上服務內容、老人福利科電話與個管師電話複核重點。\n\n## 個管師使用重點\n\n適合八里區長者需要社區活動、關懷訪視、電話問安、共餐或健康促進時使用。這張卡的功能是先找到八里區可能據點，再逐點確認服務狀態。\n\n## 來源重點\n\n新北市社會局頁面說明，社區照顧關懷據點可辦理健康促進活動、關懷訪視、電話問安、餐飲服務或社會參與活動；有些據點也可能銜接巷弄長照站、共餐、預防延緩失能或喘息服務。\n\n## 下一步\n\n1. 在官方平台以「八里區」篩選據點。\n2. 先記錄據點名稱、地址、電話與服務內容。\n3. 致電複核是否仍服務、是否限里別、是否可接新案、是否有共餐或固定活動。\n4. 若案家有失能、交通或陪同限制，要同步詢問到場方式與陪同安排。\n\n## 聯絡與服務區\n\n- 新北市境內市話直撥1999。\n- 新北市政府總機：02-2960-3456，可轉老人福利科3801-3808、3810-3818、3891、3892。\n- 個別據點電話、地址與服務時間以平台篩選結果為準。\n\n## 內部提醒\n\n此卡可放入家屬版作社區支持資源，但家屬版要避免寫成「已可參加」或「一定有共餐」。若家屬需要立即餐食或急難物資，應另搭配實物銀行、急難救助或送餐資源。","category":"care_professional","confidence":"A級官方資料","contact":"新北市政府社會局老人福利科：新北市境內市話直撥1999，或洽02-2960-3456轉3801-3808、3810-3818、3891、3892；實際據點電話與地址以平台篩選後列出的據點資料為準。","content_hash":"1c7e8e0304cde4bc5a75998a7ac19209401fff2923f6bee84a583e5b5dd1c059","coverage_scope":"district","districts":["八里區"],"eligibility_tags":["八里區","社區照顧","關懷據點","共餐","健康促進","新北市官方平台"],"embedding_text":"八里區社區照顧關懷據點服務資訊 care_professional community_c_station district 以八里區為主要篩選範圍；實際服務項目、時段、共餐、關懷訪視與收案方式以據點及新北市社會局平台資料複核。 八里區 新北市社會局「當我們老在一起」平台說明社區照顧關懷據點可提供健康促進、關懷訪視、電話問安、餐飲服務或社會參與活動。這張卡用於先篩選八里區據點，再安排電話複核。 先在平台以八里區篩選據點，記下據點名稱、服務項目與服務時間；再致電據點或洽新北市1999/02-2960-3456轉老人福利科，複核目前服務狀態、是否限里別、是否接受新案。 案家行政區與里別 長者基本資料 主要聯絡方式 共餐、關懷訪視或活動參與需求 行動與陪同需求 目前是否服務八里區或案家所在里別 有無關懷訪視、電話問安、餐飲服務、健康促進或社會參與活動 服務時間、活動頻率與是否需事前報名 是否限特定里別、年齡或福利身分 是否可接新案，若不可接案有無鄰近據點可詢問 是否需里辦、公所、個管師或家屬先行聯絡 來源為新北市社會局官方平台，頁面描述據點服務內容與老人福利科聯絡方式。此卡不是單一據點承諾；八里區據點的服務時段、共餐、關懷訪視、收案限制與跨里服務需逐點複核。家屬版可說明為社區支持線索，不可寫成已安排成功。","id":"bali_community_care_point_directory","internal_notes":"來源為新北市社會局官方平台，頁面描述據點服務內容與老人福利科聯絡方式。此卡不是單一據點承諾；八里區據點的服務時段、共餐、關懷訪視、收案限制與跨里服務需逐點複核。家屬版可說明為社區支持線索，不可寫成已安排成功。","last_checked_at":"2026-05-30","name":"八里區社區照顧關懷據點服務資訊","next_review_at":"2026-08-30","next_step":"先在平台以八里區篩選據點，記下據點名稱、服務項目與服務時間；再致電據點或洽新北市1999/02-2960-3456轉老人福利科，複核目前服務狀態、是否限里別、是否接受新案。","phone_check_questions":["目前是否服務八里區或案家所在里別","有無關懷訪視、電話問安、餐飲服務、健康促進或社會參與活動","服務時間、活動頻率與是否需事前報名","是否限特定里別、年齡或福利身分","是否可接新案，若不可接案有無鄰近據點可詢問","是否需里辦、公所、個管師或家屬先行聯絡"],"public_allowed":true,"public_contact":"新北市政府社會局老人福利科：新北市境內市話直撥1999，或洽02-2960-3456轉3801-3808、3810-3818、3891、3892；實際據點電話與地址以平台篩選後列出的據點資料為準。","public_next_step":"先在平台以八里區篩選據點，記下據點名稱、服務項目與服務時間；再致電據點或洽新北市1999/02-2960-3456轉老人福利科，複核目前服務狀態、是否限里別、是否接受新案。","public_required_documents":["案家行政區與里別","長者基本資料","主要聯絡方式","共餐、關懷訪視或活動參與需求","行動與陪同需求"],"public_summary":"新北市社會局「當我們老在一起」平台說明社區照顧關懷據點可提供健康促進、關懷訪視、電話問安、餐飲服務或社會參與活動。這張卡用於先篩選八里區據點，再安排電話複核。","region":"新北市","resource_id":"bali_community_care_point_directory","resource_version":"2","risk_flags":["官方平台需逐點複核","據點服務狀態會異動","不可承諾名額或共餐","跨里服務需先問清楚"],"service_area_note":"以八里區為主要篩選範圍；實際服務項目、時段、共餐、關懷訪視與收案方式以據點及新北市社會局平台資料複核。","source_type":"official","source_url":"https://lkk.ntpc.gov.tw/home.jsp?id=9539ce925ac3028d","status":"active","summary":"新北市社會局「當我們老在一起」平台說明社區照顧關懷據點可提供健康促進、關懷訪視、電話問安、餐飲服務或社會參與活動。這張卡用於先篩選八里區據點，再安排電話複核。","title":"八里區社區照顧關懷據點服務資訊","topics":["community_c_station"],"urgency_tags":["一般","需電話複核"]}],"schema_version":"resourcepack.v1","signature_status":"unsigned","source_app_version":"resource-nav-20260524-resourcepack-exchange"}</script>
+  <script>
+    const COPY_TEXTS = {'family': '家屬版資源包：未指定地區 / 照顧及專業 / 2026-06-05\n\n八里區社區照顧關懷據點服務資訊\n新北市社會局「當我們老在一起」平台說明社區照顧關懷據點可提供健康促進、關懷訪視、電話問安、餐飲服務或社會參與活動。這張卡用於先篩選八里區據點，再安排電話複核。\n下一步：先在平台以八里區篩選據點，記下據點名稱、服務項目與服務時間；再致電據點或洽新北市1999/02-2960-3456轉老人福利科，複核目前服務狀態、是否限里別、是否接受新案。\n聯絡/申請：新北市政府社會局老人福利科：新北市境內市話直撥1999，或洽02-2960-3456轉3801-3808、3810-3818、3891、3892；實際據點電話與地址以平台篩選後列出的據點資料為準。\n可先準備：案家行政區與里別、長者基本資料、主要聯絡方式、共餐、關懷訪視或活動參與需求、行動與陪同需求', 'phone': '個管師電話確認清單：未指定地區 / 照顧及專業 / 2026-06-05\n\n八里區社區照顧關懷據點服務資訊\n聯絡/申請：新北市政府社會局老人福利科：新北市境內市話直撥1999，或洽02-2960-3456轉3801-3808、3810-3818、3891、3892；實際據點電話與地址以平台篩選後列出的據點資料為準。\n電話確認：目前是否服務八里區或案家所在里別；有無關懷訪視、電話問安、餐飲服務、健康促進或社會參與活動；服務時間、活動頻率與是否需事前報名；是否限特定里別、年齡或福利身分；是否可接新案，若不可接案有無鄰近據點可詢問；是否需里辦、公所、個管師或家屬先行聯絡\n內部提醒：來源為新北市社會局官方平台，頁面描述據點服務內容與老人福利科聯絡方式。此卡不是單一據點承諾；八里區據點的服務時段、共餐、關懷訪視、收案限制與跨里服務需逐點複核。家屬版可說明為社區支持線索，不可寫成已安排成功。', 'admin': '行政申請清單：未指定地區 / 照顧及專業 / 2026-06-05\n\n八里區社區照顧關懷據點服務資訊\n狀態：active\n資料來源：https://lkk.ntpc.gov.tw/home.jsp?id=9539ce925ac3028d\n最後確認：2026-05-30\n文件：案家行政區與里別、長者基本資料、主要聯絡方式、共餐、關懷訪視或活動參與需求、行動與陪同需求\n注意：官方平台需逐點複核、據點服務狀態會異動、不可承諾名額或共餐、跨里服務需先問清楚', 'handoff': '交接摘要：未指定地區 / 照顧及專業 / 2026-06-05\n主題：多元專業\n線索：八里區、社區照顧、關懷據點、共餐、健康促進、新北市官方平台、一般、需電話複核\n已選資源：1 筆'};
+    const SHARE_URL = 'https://chord310.github.io/ob-prod-share/viewer.html?id=25dff1b2ba44965db3a7';
+    async function copyText(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        return;
+      }
+      const area = document.getElementById("copyScratch");
+      area.hidden = false;
+      area.value = text;
+      area.select();
+      document.execCommand("copy");
+      area.hidden = true;
+    }
+    const OUTPUT_HELP = {
+      family: "家屬版適合貼 LINE 或訊息，會排除內部註記與不適合外流的提醒。",
+      phone: "電話確認適合個管師打電話前使用，聚焦聯絡方式與要問的問題。",
+      admin: "行政清單整理文件、來源與最後確認日，方便補件或填報。",
+      handoff: "交接摘要給同事或主管接手，聚焦優先順序、風險與下一步。",
+      full: "完整資料顯示所有區塊與內部提醒，適合個管師自己檢查整包內容。",
+    };
+    function setOutputMode(mode) {
+      const safeMode = OUTPUT_HELP[mode] ? mode : "full";
+      try { localStorage.setItem("resource_package_result_mode_v1", safeMode); } catch (e) {}
+      document.querySelectorAll("[data-result-mode]").forEach((button) => {
+        const active = button.dataset.resultMode === safeMode;
+        button.classList.toggle("is-active", active);
+        button.setAttribute("aria-selected", active ? "true" : "false");
+      });
+      document.querySelectorAll("[data-output-section]").forEach((section) => {
+        const modes = String(section.dataset.outputSection || "full").split(/\s+/);
+        section.hidden = !modes.includes(safeMode);
+      });
+      const help = document.getElementById("resultModeHelp");
+      if (help) help.textContent = OUTPUT_HELP[safeMode];
+    }
+    document.querySelectorAll("[data-result-mode]").forEach((button) => {
+      button.addEventListener("click", () => setOutputMode(button.dataset.resultMode || "full"));
+    });
+    document.querySelectorAll("[data-copy]").forEach((button) => {
+      button.addEventListener("click", async () => {
+        await copyText(COPY_TEXTS[button.dataset.copy] || "");
+        button.textContent = "已複製";
+        setTimeout(() => { button.textContent = button.dataset.copy === "family" ? "複製家屬版" : button.dataset.copy === "phone" ? "複製電話確認" : button.dataset.copy === "admin" ? "複製行政清單" : "複製交接摘要"; }, 1200);
+      });
+    });
+    document.querySelectorAll("[data-copy-link]").forEach((button) => {
+      button.addEventListener("click", async () => {
+        await copyText(SHARE_URL);
+        button.textContent = "已複製";
+        setTimeout(() => { button.textContent = "複製連結"; }, 1200);
+      });
+    });
+    const URL_PARAMS = new URLSearchParams(window.location.search);
+    const AUTO_PRINT_QUERY_VALUE = "print=1";
+    const AUTO_PRINT_KEY = 'resource_nav_auto_print_v1:25dff1b2ba44965db3a7';
+    function shouldAutoPrint() {
+      return URL_PARAMS.get("print") === "1";
+    }
+    function triggerPrint() {
+      setTimeout(() => {
+        try { window.focus(); } catch (e) {}
+        window.print();
+      }, 160);
+    }
+    document.querySelectorAll("[data-print-result]").forEach((button) => {
+      button.addEventListener("click", triggerPrint);
+    });
+    if (shouldAutoPrint()) {
+      let alreadyPrinted = false;
+      try { alreadyPrinted = sessionStorage.getItem(AUTO_PRINT_KEY) === "1"; } catch (e) {}
+      if (!alreadyPrinted) {
+        try { sessionStorage.setItem(AUTO_PRINT_KEY, "1"); } catch (e) {}
+        window.addEventListener("load", triggerPrint, { once: true });
+      }
+    }
+    
+    const LAST_SESSION_ENTRY_KEY = "resource_nav_last_session_entry_v1";
+    function readRememberedEntryUrl() {
+      try {
+        const value = sessionStorage.getItem(LAST_SESSION_ENTRY_KEY) || localStorage.getItem(LAST_SESSION_ENTRY_KEY) || "";
+        if (!value || !value.includes("resource-nav.html") || !value.includes("session=")) return "";
+        return value;
+      } catch (e) {
+        return "";
+      }
+    }
+    const rememberedEntry = readRememberedEntryUrl();
+    if (rememberedEntry) {
+      document.querySelectorAll("[data-return-main]").forEach((link) => { link.href = rememberedEntry; });
+    }
+    
+    let savedMode = "full";
+    try { savedMode = localStorage.getItem("resource_package_result_mode_v1") || "full"; } catch (e) {}
+    setOutputMode(savedMode);
+  </script>
+</body>
+</html>
